@@ -118,7 +118,7 @@
 #define SYSEX_SERVO_DETACH                      0x01
 #define SYSEX_SERVO_WRITE                       0x02
 
-#define OF_ARDUINO_DELAY_LENGTH					4.0
+#define OF_ARDUINO_DELAY_LENGTH					20.0
 
 
 /**

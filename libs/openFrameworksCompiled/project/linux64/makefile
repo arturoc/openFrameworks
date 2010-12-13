@@ -12,7 +12,7 @@
 
 
 COMPILER_OPTIMIZATION = -march=native -mtune=native -finline-functions -funroll-all-loops  -O3
-USER_CFLAGS = 
+USER_CFLAGS = -I /usr/include/python2.6
 
 
 
@@ -33,7 +33,8 @@ else
 	LIBSPATH=linux
 endif
 
-SOURCE_DIRS = $(shell find ../../../openFrameworks -maxdepth 1 -mindepth 1 -type d )
+#SOURCE_DIRS = $(shell find ../../../openFrameworks -maxdepth 1 -mindepth 1 -type d )
+SOURCE_DIRS += ../../../openFrameworks
 SOURCES = $(shell find $(SOURCE_DIRS) -name "*.cpp")
 OBJFILES = $(patsubst ../../../%.cpp,%.o,$(SOURCES))
 CORE_INCLUDES = $(shell find ../../../openFrameworks/ -type d)
@@ -88,11 +89,12 @@ all:
 $(OBJ_OUTPUT)%.o: ../../../%.cpp 
 	@echo "compiling object for " $<
 	mkdir -p $(@D)
-	$(CXX) $(TARGET_CFLAGS) $(CFLAGS) $(USER_CFLAGS) -MMD -MP -MF$(OBJ_OUTPUT)$*.d -MT$(OBJ_OUTPUT)$*.d -o $@ -c $<
+	$(CXX) -fPIC $(TARGET_CFLAGS) $(CFLAGS) $(USER_CFLAGS) -MMD -MP -MF$(OBJ_OUTPUT)$*.d -MT$(OBJ_OUTPUT)$*.d -o $@ -c $<
 
 $(TARGET) : $(OBJS) 
 	echo "creating " $(TARGET)
 	ar cr $@ $(OBJS)
+	#gcc -shared -o $@ $(OBJS) -L../../../fmodex/lib/linux64 -L../../../FreeImage/lib/linux64 -L../../../glee/lib/linux64 -L../../../gstappsink/lib/linux64 -Wl,-rpath=./libs -lfmodex -lfreetype -lfreeimage -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML -lportaudio `pkg-config  gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 gstreamer-app-0.10 libudev --libs` -lglut -lGL -lGLU -lasound -lpython2.6
 
 -include $(DEPFILES)
 

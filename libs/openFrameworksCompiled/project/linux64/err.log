@@ -1,0 +1,1861 @@
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::getFrameRate()':
+ofAppGlutWindow.cpp:(.text+0x0): multiple definition of `ofAppGlutWindow::getFrameRate()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x30): multiple definition of `frameRate'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x30): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::getLastFrameTime()':
+ofAppGlutWindow.cpp:(.text+0x10): multiple definition of `ofAppGlutWindow::getLastFrameTime()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x10): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x38): multiple definition of `lastFrameTime'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x38): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::getFrameNum()':
+ofAppGlutWindow.cpp:(.text+0x20): multiple definition of `ofAppGlutWindow::getFrameNum()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x18): multiple definition of `nFrameCount'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x18): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::getWindowSize()':
+ofAppGlutWindow.cpp:(.text+0x30): multiple definition of `ofAppGlutWindow::getWindowSize()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x54): multiple definition of `windowH'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x54): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x50): multiple definition of `windowW'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x50): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::setFrameRate(float)':
+ofAppGlutWindow.cpp:(.text+0x70): multiple definition of `ofAppGlutWindow::setFrameRate(float)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x70): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x21): multiple definition of `bFrameRateSet'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x21): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x24): multiple definition of `millisForFrame'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x24): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::getWindowMode()':
+ofAppGlutWindow.cpp:(.text+0xc0): multiple definition of `ofAppGlutWindow::getWindowMode()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0xc0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x0): multiple definition of `windowMode'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::toggleFullscreen()':
+ofAppGlutWindow.cpp:(.text+0xd0): multiple definition of `ofAppGlutWindow::toggleFullscreen()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0xd0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x4): multiple definition of `bNewScreenMode'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x4): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::setFullscreen(bool)':
+ofAppGlutWindow.cpp:(.text+0x100): multiple definition of `ofAppGlutWindow::setFullscreen(bool)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x100): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::enableSetupScreen()':
+ofAppGlutWindow.cpp:(.text+0x150): multiple definition of `ofAppGlutWindow::enableSetupScreen()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x150): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x20): multiple definition of `bEnableSetupScreen'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x20): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::disableSetupScreen()':
+ofAppGlutWindow.cpp:(.text+0x160): multiple definition of `ofAppGlutWindow::disableSetupScreen()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x160): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::resize_cb(int, int)':
+ofAppGlutWindow.cpp:(.text+0x1a0): multiple definition of `ofAppGlutWindow::resize_cb(int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x1a0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x68): multiple definition of `nFramesSinceWindowResized'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x68): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::special_key_up_cb(int, int, int)':
+ofAppGlutWindow.cpp:(.text+0x1d0): multiple definition of `ofAppGlutWindow::special_key_up_cb(int, int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x1d0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::keyboard_up_cb(unsigned char, int, int)':
+ofAppGlutWindow.cpp:(.text+0x1e0): multiple definition of `ofAppGlutWindow::keyboard_up_cb(unsigned char, int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x1e0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::special_key_cb(int, int, int)':
+ofAppGlutWindow.cpp:(.text+0x1f0): multiple definition of `ofAppGlutWindow::special_key_cb(int, int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x1f0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::idle_cb()':
+ofAppGlutWindow.cpp:(.text+0x200): multiple definition of `ofAppGlutWindow::idle_cb()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x200): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x28): multiple definition of `prevMillis'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x28): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x8): multiple definition of `timeNow'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x8): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0xc): multiple definition of `timeThen'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0xc): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x10): multiple definition of `fps'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x10): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x2c): multiple definition of `diffMillis'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x2c): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::passive_motion_cb(int, int)':
+ofAppGlutWindow.cpp:(.text+0x300): multiple definition of `ofAppGlutWindow::passive_motion_cb(int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x300): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x60): multiple definition of `ofAppPtr'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x60): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::motion_cb(int, int)':
+ofAppGlutWindow.cpp:(.text+0x340): multiple definition of `ofAppGlutWindow::motion_cb(int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x340): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x1c): multiple definition of `buttonInUse'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x1c): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::mouse_cb(int, int, int, int)':
+ofAppGlutWindow.cpp:(.text+0x380): multiple definition of `ofAppGlutWindow::mouse_cb(int, int, int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x380): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::getScreenSize()':
+ofAppGlutWindow.cpp:(.text+0x3f0): multiple definition of `ofAppGlutWindow::getScreenSize()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x3f0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::getWindowPosition()':
+ofAppGlutWindow.cpp:(.text+0x450): multiple definition of `ofAppGlutWindow::getWindowPosition()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x450): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::setWindowShape(int, int)':
+ofAppGlutWindow.cpp:(.text+0x4b0): multiple definition of `ofAppGlutWindow::setWindowShape(int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x4b0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x40): multiple definition of `requestedWidth'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x40): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x44): multiple definition of `requestedHeight'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x44): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::setWindowPosition(int, int)':
+ofAppGlutWindow.cpp:(.text+0x4f0): multiple definition of `ofAppGlutWindow::setWindowPosition(int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x4f0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::display()':
+ofAppGlutWindow.cpp:(.text+0x500): multiple definition of `ofAppGlutWindow::display()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x500): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x4c): multiple definition of `nonFullScreenY'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x4c): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x48): multiple definition of `nonFullScreenX'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x48): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::showCursor()':
+ofAppGlutWindow.cpp:(.text+0x6d0): multiple definition of `ofAppGlutWindow::showCursor()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x6d0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::hideCursor()':
+ofAppGlutWindow.cpp:(.text+0x6e0): multiple definition of `ofAppGlutWindow::hideCursor()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x6e0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::setWindowTitle(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofAppGlutWindow.cpp:(.text+0x6f0): multiple definition of `ofAppGlutWindow::setWindowTitle(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x6f0): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::exitApp()':
+ofAppGlutWindow.cpp:(.text+0x700): multiple definition of `ofAppGlutWindow::exitApp()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x700): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::keyboard_cb(unsigned char, int, int)':
+ofAppGlutWindow.cpp:(.text+0x720): multiple definition of `ofAppGlutWindow::keyboard_cb(unsigned char, int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x720): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::runAppViaInfiniteLoop(ofBaseApp*)':
+ofAppGlutWindow.cpp:(.text+0x750): multiple definition of `ofAppGlutWindow::runAppViaInfiniteLoop(ofBaseApp*)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x750): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::initializeWindow()':
+ofAppGlutWindow.cpp:(.text+0x780): multiple definition of `ofAppGlutWindow::initializeWindow()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x780): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::setupOpenGL(int, int, int)':
+ofAppGlutWindow.cpp:(.text+0x810): multiple definition of `ofAppGlutWindow::setupOpenGL(int, int, int)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0x810): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::setGlutDisplayString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofAppGlutWindow.cpp:(.text+0xa20): multiple definition of `ofAppGlutWindow::setGlutDisplayString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0xa20): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::ofAppGlutWindow()':
+ofAppGlutWindow.cpp:(.text+0xa30): multiple definition of `ofAppGlutWindow::ofAppGlutWindow()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0xa30): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x14): multiple definition of `nFramesForFPS'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x14): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x5c): multiple definition of `mouseY'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x5c): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x58): multiple definition of `mouseX'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:(.bss+0x58): first defined here
+obj/Release/openFrameworks/app/ofAppGlutWindow.o: In function `ofAppGlutWindow::ofAppGlutWindow()':
+ofAppGlutWindow.cpp:(.text+0xbc0): multiple definition of `ofAppGlutWindow::ofAppGlutWindow()'
+obj/Release/openFrameworks/app/ofAppGlutWindow.o:ofAppGlutWindow.cpp:(.text+0xbc0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSetupOpenGL(ofAppBaseWindow*, int, int, int)':
+ofAppRunner.cpp:(.text+0x0): multiple definition of `ofSetupOpenGL(ofAppBaseWindow*, int, int, int)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x18): multiple definition of `window'
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x18): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetAppPtr()':
+ofAppRunner.cpp:(.text+0x20): multiple definition of `ofGetAppPtr()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x0): multiple definition of `OFSAptr'
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetFrameNum()':
+ofAppRunner.cpp:(.text+0x30): multiple definition of `ofGetFrameNum()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetFrameRate()':
+ofAppRunner.cpp:(.text+0x50): multiple definition of `ofGetFrameRate()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x50): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetLastFrameTime()':
+ofAppRunner.cpp:(.text+0x70): multiple definition of `ofGetLastFrameTime()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x70): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSetFrameRate(int)':
+ofAppRunner.cpp:(.text+0x90): multiple definition of `ofSetFrameRate(int)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x90): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofHideCursor()':
+ofAppRunner.cpp:(.text+0xb0): multiple definition of `ofHideCursor()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0xb0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofShowCursor()':
+ofAppRunner.cpp:(.text+0xd0): multiple definition of `ofShowCursor()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0xd0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSetWindowPosition(int, int)':
+ofAppRunner.cpp:(.text+0xf0): multiple definition of `ofSetWindowPosition(int, int)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0xf0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSetWindowShape(int, int)':
+ofAppRunner.cpp:(.text+0x110): multiple definition of `ofSetWindowShape(int, int)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x110): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetWindowPositionX()':
+ofAppRunner.cpp:(.text+0x130): multiple definition of `ofGetWindowPositionX()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x130): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetWindowPositionY()':
+ofAppRunner.cpp:(.text+0x160): multiple definition of `ofGetWindowPositionY()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x160): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetScreenWidth()':
+ofAppRunner.cpp:(.text+0x190): multiple definition of `ofGetScreenWidth()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x190): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetScreenHeight()':
+ofAppRunner.cpp:(.text+0x1c0): multiple definition of `ofGetScreenHeight()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x1c0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetWidth()':
+ofAppRunner.cpp:(.text+0x1f0): multiple definition of `ofGetWidth()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x1f0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetHeight()':
+ofAppRunner.cpp:(.text+0x220): multiple definition of `ofGetHeight()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x220): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofEnableSetupScreen()':
+ofAppRunner.cpp:(.text+0x250): multiple definition of `ofEnableSetupScreen()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x250): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofDisableSetupScreen()':
+ofAppRunner.cpp:(.text+0x270): multiple definition of `ofDisableSetupScreen()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x270): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofToggleFullscreen()':
+ofAppRunner.cpp:(.text+0x290): multiple definition of `ofToggleFullscreen()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x290): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSetFullscreen(bool)':
+ofAppRunner.cpp:(.text+0x2b0): multiple definition of `ofSetFullscreen(bool)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x2b0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofGetWindowMode()':
+ofAppRunner.cpp:(.text+0x2d0): multiple definition of `ofGetWindowMode()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x2d0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSetVerticalSync(bool)':
+ofAppRunner.cpp:(.text+0x320): multiple definition of `ofSetVerticalSync(bool)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x320): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSleepMillis(int)':
+ofAppRunner.cpp:(.text+0x360): multiple definition of `ofSleepMillis(int)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x360): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofRunApp(ofBaseApp*)':
+ofAppRunner.cpp:(.text+0x370): multiple definition of `ofRunApp(ofBaseApp*)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x370): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofExitCallback()':
+ofAppRunner.cpp:(.text+0x3d0): multiple definition of `ofExitCallback()'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x3d0): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSetupOpenGL(int, int, int)':
+ofAppRunner.cpp:(.text+0x410): multiple definition of `ofSetupOpenGL(int, int, int)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x410): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o: In function `ofSetWindowTitle(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofAppRunner.cpp:(.text+0x490): multiple definition of `ofSetWindowTitle(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/app/ofAppRunner.o:ofAppRunner.cpp:(.text+0x490): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x8): multiple definition of `bMousePressed'
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x8): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x9): multiple definition of `bRightButton'
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x9): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0xc): multiple definition of `width'
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0xc): first defined here
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x10): multiple definition of `height'
+obj/Release/openFrameworks/app/ofAppRunner.o:(.bss+0x10): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofNextPow2(int)':
+ofMath.cpp:(.text+0x1420): multiple definition of `ofNextPow2(int)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1420): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofDistSquared(float, float, float, float)':
+ofMath.cpp:(.text+0x1470): multiple definition of `ofDistSquared(float, float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1470): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofClamp(float, float, float)':
+ofMath.cpp:(.text+0x1490): multiple definition of `ofClamp(float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1490): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofNormalize(float, float, float)':
+ofMath.cpp:(.text+0x14a0): multiple definition of `ofNormalize(float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x14a0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofSign(float)':
+ofMath.cpp:(.text+0x14c0): multiple definition of `ofSign(float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x14c0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofInRange(float, float, float)':
+ofMath.cpp:(.text+0x14e0): multiple definition of `ofInRange(float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x14e0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofRadToDeg(float)':
+ofMath.cpp:(.text+0x14f0): multiple definition of `ofRadToDeg(float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x14f0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofDegToRad(float)':
+ofMath.cpp:(.text+0x1510): multiple definition of `ofDegToRad(float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1510): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofLerp(float, float, float)':
+ofMath.cpp:(.text+0x1530): multiple definition of `ofLerp(float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1530): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofLerpDegrees(float, float, float)':
+ofMath.cpp:(.text+0x1540): multiple definition of `ofLerpDegrees(float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1540): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofLerpRadians(float, float, float)':
+ofMath.cpp:(.text+0x1630): multiple definition of `ofLerpRadians(float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1630): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofNoise(float)':
+ofMath.cpp:(.text+0x17c0): multiple definition of `ofNoise(float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x17c0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofNoise(float, float)':
+ofMath.cpp:(.text+0x18c0): multiple definition of `ofNoise(float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x18c0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofNoise(float, float, float)':
+ofMath.cpp:(.text+0x18e0): multiple definition of `ofNoise(float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x18e0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofNoise(float, float, float, float)':
+ofMath.cpp:(.text+0x1900): multiple definition of `ofNoise(float, float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1900): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofSignedNoise(float, float)':
+ofMath.cpp:(.text+0x1920): multiple definition of `ofSignedNoise(float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1920): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofSignedNoise(float, float, float)':
+ofMath.cpp:(.text+0x1930): multiple definition of `ofSignedNoise(float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1930): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofSignedNoise(float, float, float, float)':
+ofMath.cpp:(.text+0x1940): multiple definition of `ofSignedNoise(float, float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1940): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofInsidePoly(float, float, std::vector<ofPoint, std::allocator<ofPoint> > const&)':
+ofMath.cpp:(.text+0x1950): multiple definition of `ofInsidePoly(float, float, std::vector<ofPoint, std::allocator<ofPoint> > const&)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1950): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofInsidePoly(ofPoint const&, std::vector<ofPoint, std::allocator<ofPoint> > const&)':
+ofMath.cpp:(.text+0x1c10): multiple definition of `ofInsidePoly(ofPoint const&, std::vector<ofPoint, std::allocator<ofPoint> > const&)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1c10): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofLineSegmentIntersection(ofPoint, ofPoint, ofPoint, ofPoint, ofPoint&)':
+ofMath.cpp:(.text+0x1c30): multiple definition of `ofLineSegmentIntersection(ofPoint, ofPoint, ofPoint, ofPoint, ofPoint&)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1c30): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofBezierPoint(ofPoint, ofPoint, ofPoint, ofPoint, float)':
+ofMath.cpp:(.text+0x1d80): multiple definition of `ofBezierPoint(ofPoint, ofPoint, ofPoint, ofPoint, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1d80): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofCurvePoint(ofPoint, ofPoint, ofPoint, ofPoint, float)':
+ofMath.cpp:(.text+0x1ee0): multiple definition of `ofCurvePoint(ofPoint, ofPoint, ofPoint, ofPoint, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x1ee0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofBezierTangent(ofPoint, ofPoint, ofPoint, ofPoint, float)':
+ofMath.cpp:(.text+0x2050): multiple definition of `ofBezierTangent(ofPoint, ofPoint, ofPoint, ofPoint, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2050): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofCurveTangent(ofPoint, ofPoint, ofPoint, ofPoint, float)':
+ofMath.cpp:(.text+0x21d0): multiple definition of `ofCurveTangent(ofPoint, ofPoint, ofPoint, ofPoint, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x21d0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofAngleDifferenceDegrees(float, float)':
+ofMath.cpp:(.text+0x2390): multiple definition of `ofAngleDifferenceDegrees(float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2390): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofAngleDifferenceRadians(float, float)':
+ofMath.cpp:(.text+0x2480): multiple definition of `ofAngleDifferenceRadians(float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2480): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofDist(float, float, float, float)':
+ofMath.cpp:(.text+0x2630): multiple definition of `ofDist(float, float, float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2630): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofMap(float, float, float, float, float, bool)':
+ofMath.cpp:(.text+0x2650): multiple definition of `ofMap(float, float, float, float, float, bool)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2650): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofRandomuf()':
+ofMath.cpp:(.text+0x2720): multiple definition of `ofRandomuf()'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2720): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofRandomf()':
+ofMath.cpp:(.text+0x2740): multiple definition of `ofRandomf()'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2740): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofRandom(float, float)':
+ofMath.cpp:(.text+0x2770): multiple definition of `ofRandom(float, float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2770): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofRandomHeight()':
+ofMath.cpp:(.text+0x27d0): multiple definition of `ofRandomHeight()'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x27d0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofRandomWidth()':
+ofMath.cpp:(.text+0x27f0): multiple definition of `ofRandomWidth()'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x27f0): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofSeedRandom(int)':
+ofMath.cpp:(.text+0x2810): multiple definition of `ofSeedRandom(int)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2810): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofSeedRandom()':
+ofMath.cpp:(.text+0x2820): multiple definition of `ofSeedRandom()'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2820): first defined here
+obj/Release/openFrameworks/utils/ofMath.o: In function `ofSignedNoise(float)':
+ofMath.cpp:(.text+0x2850): multiple definition of `ofSignedNoise(float)'
+obj/Release/openFrameworks/utils/ofMath.o:ofMath.cpp:(.text+0x2850): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofEnableDataPath()':
+ofUtils.cpp:(.text+0x0): multiple definition of `ofEnableDataPath()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofDisableDataPath()':
+ofUtils.cpp:(.text+0x10): multiple definition of `ofDisableDataPath()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x10): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofSetLogLevel(int)':
+ofUtils.cpp:(.text+0x20): multiple definition of `ofSetLogLevel(int)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o:(.data+0x0): multiple definition of `currentLogLevel'
+obj/Release/openFrameworks/utils/ofUtils.o:(.data+0x0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofRestoreConsoleColor()':
+ofUtils.cpp:(.text+0x30): multiple definition of `ofRestoreConsoleColor()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofSetConsoleColor(int)':
+ofUtils.cpp:(.text+0x50): multiple definition of `ofSetConsoleColor(int)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x50): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofLog(int, std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofUtils.cpp:(.text+0x70): multiple definition of `ofLog(int, std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x70): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofLog(int, char const*, ...)':
+ofUtils.cpp:(.text+0x140): multiple definition of `ofLog(int, char const*, ...)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x140): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofToFloat(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)':
+ofUtils.cpp:(.text+0x2c0): multiple definition of `ofToFloat(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x2c0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofToInt(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)':
+ofUtils.cpp:(.text+0x2f0): multiple definition of `ofToInt(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x2f0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetWeekday()':
+ofUtils.cpp:(.text+0x320): multiple definition of `ofGetWeekday()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x320): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetDay()':
+ofUtils.cpp:(.text+0x350): multiple definition of `ofGetDay()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x350): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetMonth()':
+ofUtils.cpp:(.text+0x380): multiple definition of `ofGetMonth()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x380): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetYear()':
+ofUtils.cpp:(.text+0x3b0): multiple definition of `ofGetYear()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x3b0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetHours()':
+ofUtils.cpp:(.text+0x3e0): multiple definition of `ofGetHours()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x3e0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetMinutes()':
+ofUtils.cpp:(.text+0x410): multiple definition of `ofGetMinutes()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x410): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetSeconds()':
+ofUtils.cpp:(.text+0x440): multiple definition of `ofGetSeconds()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x440): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetSystemTime()':
+ofUtils.cpp:(.text+0x470): multiple definition of `ofGetSystemTime()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x470): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofResetElapsedTimeCounter()':
+ofUtils.cpp:(.text+0x530): multiple definition of `ofResetElapsedTimeCounter()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x530): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetElapsedTimef()':
+ofUtils.cpp:(.text+0x550): multiple definition of `ofGetElapsedTimef()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x550): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetElapsedTimeMillis()':
+ofUtils.cpp:(.text+0x570): multiple definition of `ofGetElapsedTimeMillis()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x570): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofSaveScreen(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofUtils.cpp:(.text+0x5e0): multiple definition of `ofSaveScreen(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x5e0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofSetDataPathRoot(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofUtils.cpp:(.text+0x6f0): multiple definition of `ofSetDataPathRoot(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x6f0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofLaunchBrowser(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofUtils.cpp:(.text+0x810): multiple definition of `ofLaunchBrowser(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x810): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofToDataPath(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, bool)':
+ofUtils.cpp:(.text+0x9c0): multiple definition of `ofToDataPath(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, bool)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x9c0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofReadFile(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, ofBuffer&, bool)':
+ofUtils.cpp:(.text+0xfa0): multiple definition of `ofReadFile(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, ofBuffer&, bool)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0xfa0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofToString(double, int)':
+ofUtils.cpp:(.text+0x1450): multiple definition of `ofToString(double, int)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x1450): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofGetVersionInfo()':
+ofUtils.cpp:(.text+0x1970): multiple definition of `ofGetVersionInfo()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x1970): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofToString(int)':
+ofUtils.cpp:(.text+0x1f40): multiple definition of `ofToString(int)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x1f40): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofSaveFrame()':
+ofUtils.cpp:(.text+0x2410): multiple definition of `ofSaveFrame()'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x2410): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o:(.bss+0x0): multiple definition of `saveImageCounter'
+obj/Release/openFrameworks/utils/ofUtils.o:(.bss+0x0): first defined here
+obj/Release/openFrameworks/utils/ofUtils.o: In function `ofSplitString(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)':
+ofUtils.cpp:(.text+0x25a0): multiple definition of `ofSplitString(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)'
+obj/Release/openFrameworks/utils/ofUtils.o:ofUtils.cpp:(.text+0x25a0): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::ofSerial()':
+ofSerial.cpp:(.text+0x0): multiple definition of `ofSerial::ofSerial()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::ofSerial()':
+ofSerial.cpp:(.text+0x20): multiple definition of `ofSerial::ofSerial()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::available()':
+ofSerial.cpp:(.text+0x70): multiple definition of `ofSerial::available()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x70): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::flush(bool, bool)':
+ofSerial.cpp:(.text+0xc0): multiple definition of `ofSerial::flush(bool, bool)'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0xc0): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::readByte()':
+ofSerial.cpp:(.text+0x120): multiple definition of `ofSerial::readByte()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x120): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::readBytes(unsigned char*, int)':
+ofSerial.cpp:(.text+0x1c0): multiple definition of `ofSerial::readBytes(unsigned char*, int)'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x1c0): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::writeByte(unsigned char)':
+ofSerial.cpp:(.text+0x240): multiple definition of `ofSerial::writeByte(unsigned char)'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x240): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::writeBytes(unsigned char*, int)':
+ofSerial.cpp:(.text+0x2f0): multiple definition of `ofSerial::writeBytes(unsigned char*, int)'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x2f0): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::setup(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)':
+ofSerial.cpp:(.text+0x390): multiple definition of `ofSerial::setup(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x390): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::close()':
+ofSerial.cpp:(.text+0x710): multiple definition of `ofSerial::close()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x710): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::~ofSerial()':
+ofSerial.cpp:(.text+0x740): multiple definition of `ofSerial::~ofSerial()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x740): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::~ofSerial()':
+ofSerial.cpp:(.text+0x770): multiple definition of `ofSerial::~ofSerial()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x770): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::~ofSerial()':
+ofSerial.cpp:(.text+0x7a0): multiple definition of `ofSerial::~ofSerial()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x7a0): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::enumerateDevices()':
+ofSerial.cpp:(.text+0x7d0): multiple definition of `ofSerial::enumerateDevices()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x7d0): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::setup(int, int)':
+ofSerial.cpp:(.text+0xbf0): multiple definition of `ofSerial::setup(int, int)'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0xbf0): first defined here
+obj/Release/openFrameworks/communication/ofSerial.o: In function `ofSerial::setup()':
+ofSerial.cpp:(.text+0x1200): multiple definition of `ofSerial::setup()'
+obj/Release/openFrameworks/communication/ofSerial.o:ofSerial.cpp:(.text+0x1200): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::setUseDelay(bool)':
+ofArduino.cpp:(.text+0x0): multiple definition of `ofArduino::setUseDelay(bool)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::setDigitalHistoryLength(int)':
+ofArduino.cpp:(.text+0x10): multiple definition of `ofArduino::setDigitalHistoryLength(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x10): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::setAnalogHistoryLength(int)':
+ofArduino.cpp:(.text+0x20): multiple definition of `ofArduino::setAnalogHistoryLength(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::setSysExHistoryLength(int)':
+ofArduino.cpp:(.text+0x30): multiple definition of `ofArduino::setSysExHistoryLength(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::setStringHistoryLength(int)':
+ofArduino.cpp:(.text+0x40): multiple definition of `ofArduino::setStringHistoryLength(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x40): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getAnalog(int)':
+ofArduino.cpp:(.text+0x50): multiple definition of `ofArduino::getAnalog(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x50): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getDigital(int)':
+ofArduino.cpp:(.text+0xc0): multiple definition of `ofArduino::getDigital(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xc0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getPwm(int)':
+ofArduino.cpp:(.text+0x160): multiple definition of `ofArduino::getPwm(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x160): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getDigitalPinMode(int)':
+ofArduino.cpp:(.text+0x180): multiple definition of `ofArduino::getDigitalPinMode(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x180): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getAnalogPinReporting(int)':
+ofArduino.cpp:(.text+0x190): multiple definition of `ofArduino::getAnalogPinReporting(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x190): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getAnalogHistory(int)':
+ofArduino.cpp:(.text+0x1a0): multiple definition of `ofArduino::getAnalogHistory(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x1a0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getDigitalHistory(int)':
+ofArduino.cpp:(.text+0x1b0): multiple definition of `ofArduino::getDigitalHistory(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x1b0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getSysExHistory()':
+ofArduino.cpp:(.text+0x1c0): multiple definition of `ofArduino::getSysExHistory()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x1c0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getStringHistory()':
+ofArduino.cpp:(.text+0x1d0): multiple definition of `ofArduino::getStringHistory()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x1d0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getMajorProtocolVersion()':
+ofArduino.cpp:(.text+0x1e0): multiple definition of `ofArduino::getMajorProtocolVersion()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x1e0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getMinorProtocolVersion()':
+ofArduino.cpp:(.text+0x1f0): multiple definition of `ofArduino::getMinorProtocolVersion()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x1f0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getMajorFirmwareVersion()':
+ofArduino.cpp:(.text+0x200): multiple definition of `ofArduino::getMajorFirmwareVersion()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x200): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getMinorFirmwareVersion()':
+ofArduino.cpp:(.text+0x210): multiple definition of `ofArduino::getMinorFirmwareVersion()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x210): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::isInitialized()':
+ofArduino.cpp:(.text+0x220): multiple definition of `ofArduino::isInitialized()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x220): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getValueFromTwo7bitBytes(unsigned char, unsigned char)':
+ofArduino.cpp:(.text+0x230): multiple definition of `ofArduino::getValueFromTwo7bitBytes(unsigned char, unsigned char)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x230): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getServo(int)':
+ofArduino.cpp:(.text+0x240): multiple definition of `ofArduino::getServo(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x240): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendByte(unsigned char)':
+ofArduino.cpp:(.text+0x290): multiple definition of `ofArduino::sendByte(unsigned char)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x290): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendServoDetach(int)':
+ofArduino.cpp:(.text+0x2a0): multiple definition of `ofArduino::sendServoDetach(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x2a0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendValueAsTwo7bitBytes(int)':
+ofArduino.cpp:(.text+0x300): multiple definition of `ofArduino::sendValueAsTwo7bitBytes(int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x300): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendServoAttach(int, int, int, int)':
+ofArduino.cpp:(.text+0x340): multiple definition of `ofArduino::sendServoAttach(int, int, int, int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x340): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendServo(int, int, bool)':
+ofArduino.cpp:(.text+0x3d0): multiple definition of `ofArduino::sendServo(int, int, bool)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x3d0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendDigitalPortReporting(int, int)':
+ofArduino.cpp:(.text+0x480): multiple definition of `ofArduino::sendDigitalPortReporting(int, int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x480): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendDigitalPinReporting(int, int)':
+ofArduino.cpp:(.text+0x530): multiple definition of `ofArduino::sendDigitalPinReporting(int, int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x530): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendDigitalPinMode(int, int)':
+ofArduino.cpp:(.text+0x710): multiple definition of `ofArduino::sendDigitalPinMode(int, int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x710): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendAnalogPinReporting(int, int)':
+ofArduino.cpp:(.text+0x780): multiple definition of `ofArduino::sendAnalogPinReporting(int, int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x780): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendReset()':
+ofArduino.cpp:(.text+0x8f0): multiple definition of `ofArduino::sendReset()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x8f0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendFirmwareVersionRequest()':
+ofArduino.cpp:(.text+0x900): multiple definition of `ofArduino::sendFirmwareVersionRequest()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x900): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendProtocolVersionRequest()':
+ofArduino.cpp:(.text+0x930): multiple definition of `ofArduino::sendProtocolVersionRequest()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x930): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendSysExEnd()':
+ofArduino.cpp:(.text+0x940): multiple definition of `ofArduino::sendSysExEnd()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x940): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendSysExBegin()':
+ofArduino.cpp:(.text+0x950): multiple definition of `ofArduino::sendSysExBegin()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x950): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendSysEx(int, std::vector<unsigned char, std::allocator<unsigned char> >)':
+ofArduino.cpp:(.text+0x960): multiple definition of `ofArduino::sendSysEx(int, std::vector<unsigned char, std::allocator<unsigned char> >)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x960): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendPwm(int, int, bool)':
+ofArduino.cpp:(.text+0xa70): multiple definition of `ofArduino::sendPwm(int, int, bool)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xa70): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendDigital(int, int, bool)':
+ofArduino.cpp:(.text+0xaf0): multiple definition of `ofArduino::sendDigital(int, int, bool)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xaf0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getFirmwareName()':
+ofArduino.cpp:(.text+0xbe0): multiple definition of `ofArduino::getFirmwareName()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xbe0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getString()':
+ofArduino.cpp:(.text+0xc00): multiple definition of `ofArduino::getString()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xc00): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::disconnect()':
+ofArduino.cpp:(.text+0xc20): multiple definition of `ofArduino::disconnect()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xc20): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::isArduinoReady()':
+ofArduino.cpp:(.text+0xc30): multiple definition of `ofArduino::isArduinoReady()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xc30): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::sendString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofArduino.cpp:(.text+0xc80): multiple definition of `ofArduino::sendString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xc80): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::connect(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)':
+ofArduino.cpp:(.text+0xd10): multiple definition of `ofArduino::connect(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xd10): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::ofArduino()':
+ofArduino.cpp:(.text+0xe00): multiple definition of `ofArduino::ofArduino()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0xe00): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::ofArduino()':
+ofArduino.cpp:(.text+0x1b50): multiple definition of `ofArduino::ofArduino()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x1b50): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::getSysEx()':
+ofArduino.cpp:(.text+0x28a0): multiple definition of `ofArduino::getSysEx()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x28a0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::~ofArduino()':
+ofArduino.cpp:(.text+0x2950): multiple definition of `ofArduino::~ofArduino()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x2950): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::~ofArduino()':
+ofArduino.cpp:(.text+0x2ea0): multiple definition of `ofArduino::~ofArduino()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x2ea0): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::processDigitalPort(int, unsigned char)':
+ofArduino.cpp:(.text+0x3760): multiple definition of `ofArduino::processDigitalPort(int, unsigned char)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x3760): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::processData(unsigned char)':
+ofArduino.cpp:(.text+0x3c60): multiple definition of `ofArduino::processData(unsigned char)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x3c60): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::update()':
+ofArduino.cpp:(.text+0x4180): multiple definition of `ofArduino::update()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x4180): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::~ofArduino()':
+ofArduino.cpp:(.text+0x4280): multiple definition of `ofArduino::~ofArduino()'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x4280): first defined here
+obj/Release/openFrameworks/communication/ofArduino.o: In function `ofArduino::processSysExData(std::vector<unsigned char, std::allocator<unsigned char> >)':
+ofArduino.cpp:(.text+0x4830): multiple definition of `ofArduino::processSysExData(std::vector<unsigned char, std::allocator<unsigned char> >)'
+obj/Release/openFrameworks/communication/ofArduino.o:ofArduino.cpp:(.text+0x4830): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::isFrameNew()':
+ofVideoPlayer.cpp:(.text+0x0): multiple definition of `ofVideoPlayer::isFrameNew()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::start()':
+ofVideoPlayer.cpp:(.text+0x10): multiple definition of `ofVideoPlayer::start()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x10): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getSpeed()':
+ofVideoPlayer.cpp:(.text+0x20): multiple definition of `ofVideoPlayer::getSpeed()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::setUseTexture(bool)':
+ofVideoPlayer.cpp:(.text+0x30): multiple definition of `non-virtual thunk to ofVideoPlayer::setUseTexture(bool)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setUseTexture(bool)':
+ofVideoPlayer.cpp:(.text+0x40): multiple definition of `ofVideoPlayer::setUseTexture(bool)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x40): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::draw(float, float)':
+ofVideoPlayer.cpp:(.text+0x50): multiple definition of `ofVideoPlayer::draw(float, float)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x50): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::isPaused()':
+ofVideoPlayer.cpp:(.text+0x70): multiple definition of `ofVideoPlayer::isPaused()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x70): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::isLoaded()':
+ofVideoPlayer.cpp:(.text+0x80): multiple definition of `ofVideoPlayer::isLoaded()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x80): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::isPlaying()':
+ofVideoPlayer.cpp:(.text+0x90): multiple definition of `ofVideoPlayer::isPlaying()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x90): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getWidth()':
+ofVideoPlayer.cpp:(.text+0xd0): multiple definition of `ofVideoPlayer::getWidth()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xd0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getHeight()':
+ofVideoPlayer.cpp:(.text+0xf0): multiple definition of `ofVideoPlayer::getHeight()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xf0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getTotalNumFrames()':
+ofVideoPlayer.cpp:(.text+0x110): multiple definition of `ofVideoPlayer::getTotalNumFrames()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x110): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::draw(float, float, float, float)':
+ofVideoPlayer.cpp:(.text+0x120): multiple definition of `ofVideoPlayer::draw(float, float, float, float)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x120): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::resetAnchor()':
+ofVideoPlayer.cpp:(.text+0x140): multiple definition of `ofVideoPlayer::resetAnchor()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x140): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setAnchorPoint(int, int)':
+ofVideoPlayer.cpp:(.text+0x160): multiple definition of `ofVideoPlayer::setAnchorPoint(int, int)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x160): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setAnchorPercent(float, float)':
+ofVideoPlayer.cpp:(.text+0x190): multiple definition of `ofVideoPlayer::setAnchorPercent(float, float)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x190): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setPaused(bool)':
+ofVideoPlayer.cpp:(.text+0x1b0): multiple definition of `ofVideoPlayer::setPaused(bool)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x1b0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setSpeed(float)':
+ofVideoPlayer.cpp:(.text+0x1d0): multiple definition of `ofVideoPlayer::setSpeed(float)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x1d0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::stop()':
+ofVideoPlayer.cpp:(.text+0x1e0): multiple definition of `ofVideoPlayer::stop()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x1e0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::previousFrame()':
+ofVideoPlayer.cpp:(.text+0x220): multiple definition of `ofVideoPlayer::previousFrame()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x220): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::nextFrame()':
+ofVideoPlayer.cpp:(.text+0x260): multiple definition of `ofVideoPlayer::nextFrame()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x260): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::firstFrame()':
+ofVideoPlayer.cpp:(.text+0x2a0): multiple definition of `ofVideoPlayer::firstFrame()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x2a0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getIsMovieDone()':
+ofVideoPlayer.cpp:(.text+0x2e0): multiple definition of `ofVideoPlayer::getIsMovieDone()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x2e0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getCurrentFrame()':
+ofVideoPlayer.cpp:(.text+0x320): multiple definition of `ofVideoPlayer::getCurrentFrame()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x320): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getPosition()':
+ofVideoPlayer.cpp:(.text+0x360): multiple definition of `ofVideoPlayer::getPosition()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x360): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getDuration()':
+ofVideoPlayer.cpp:(.text+0x3a0): multiple definition of `ofVideoPlayer::getDuration()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x3a0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setFrame(int)':
+ofVideoPlayer.cpp:(.text+0x3e0): multiple definition of `ofVideoPlayer::setFrame(int)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x3e0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setPosition(float)':
+ofVideoPlayer.cpp:(.text+0x440): multiple definition of `ofVideoPlayer::setPosition(float)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x440): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setLoopState(int)':
+ofVideoPlayer.cpp:(.text+0x490): multiple definition of `ofVideoPlayer::setLoopState(int)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x490): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::setVolume(int)':
+ofVideoPlayer.cpp:(.text+0x4c0): multiple definition of `ofVideoPlayer::setVolume(int)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x4c0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::play()':
+ofVideoPlayer.cpp:(.text+0x520): multiple definition of `ofVideoPlayer::play()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x520): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::getPixels()':
+ofVideoPlayer.cpp:(.text+0x570): multiple definition of `non-virtual thunk to ofVideoPlayer::getPixels()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x570): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getPixels()':
+ofVideoPlayer.cpp:(.text+0x580): multiple definition of `ofVideoPlayer::getPixels()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x580): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::closeMovie()':
+ofVideoPlayer.cpp:(.text+0x590): multiple definition of `ofVideoPlayer::closeMovie()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x590): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x5e0): multiple definition of `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x5e0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x5f0): multiple definition of `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x5f0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x600): multiple definition of `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x600): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x610): multiple definition of `ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x610): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x730): multiple definition of `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x730): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x740): multiple definition of `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x740): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x750): multiple definition of `non-virtual thunk to ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x750): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x760): multiple definition of `ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x760): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::~ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0x880): multiple definition of `ofVideoPlayer::~ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x880): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::close()':
+ofVideoPlayer.cpp:(.text+0x9a0): multiple definition of `ofVideoPlayer::close()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x9a0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::idleMovie()':
+ofVideoPlayer.cpp:(.text+0x9b0): multiple definition of `ofVideoPlayer::idleMovie()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0x9b0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::update()':
+ofVideoPlayer.cpp:(.text+0xa80): multiple definition of `non-virtual thunk to ofVideoPlayer::update()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xa80): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::update()':
+ofVideoPlayer.cpp:(.text+0xa90): multiple definition of `ofVideoPlayer::update()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xa90): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `non-virtual thunk to ofVideoPlayer::getTextureReference()':
+ofVideoPlayer.cpp:(.text+0xaa0): multiple definition of `non-virtual thunk to ofVideoPlayer::getTextureReference()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xaa0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::getTextureReference()':
+ofVideoPlayer.cpp:(.text+0xab0): multiple definition of `ofVideoPlayer::getTextureReference()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xab0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0xae0): multiple definition of `ofVideoPlayer::ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xae0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::ofVideoPlayer()':
+ofVideoPlayer.cpp:(.text+0xbe0): multiple definition of `ofVideoPlayer::ofVideoPlayer()'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xbe0): first defined here
+obj/Release/openFrameworks/video/ofVideoPlayer.o: In function `ofVideoPlayer::loadMovie(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofVideoPlayer.cpp:(.text+0xce0): multiple definition of `ofVideoPlayer::loadMovie(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/video/ofVideoPlayer.o:ofVideoPlayer.cpp:(.text+0xce0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::setVerbose(bool)':
+ofVideoGrabber.cpp:(.text+0x0): multiple definition of `ofVideoGrabber::setVerbose(bool)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::setDeviceID(int)':
+ofVideoGrabber.cpp:(.text+0x10): multiple definition of `ofVideoGrabber::setDeviceID(int)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x10): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::setDesiredFrameRate(int)':
+ofVideoGrabber.cpp:(.text+0x20): multiple definition of `ofVideoGrabber::setDesiredFrameRate(int)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::isFrameNew()':
+ofVideoGrabber.cpp:(.text+0x30): multiple definition of `ofVideoGrabber::isFrameNew()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::videoSettings()':
+ofVideoGrabber.cpp:(.text+0x40): multiple definition of `ofVideoGrabber::videoSettings()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x40): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::setUseTexture(bool)':
+ofVideoGrabber.cpp:(.text+0x50): multiple definition of `non-virtual thunk to ofVideoGrabber::setUseTexture(bool)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x50): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::setUseTexture(bool)':
+ofVideoGrabber.cpp:(.text+0x60): multiple definition of `ofVideoGrabber::setUseTexture(bool)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x60): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::draw(float, float)':
+ofVideoGrabber.cpp:(.text+0x70): multiple definition of `ofVideoGrabber::draw(float, float)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x70): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::getHeight()':
+ofVideoGrabber.cpp:(.text+0x90): multiple definition of `ofVideoGrabber::getHeight()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x90): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::getWidth()':
+ofVideoGrabber.cpp:(.text+0xa0): multiple definition of `ofVideoGrabber::getWidth()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0xa0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::draw(float, float, float, float)':
+ofVideoGrabber.cpp:(.text+0xe0): multiple definition of `ofVideoGrabber::draw(float, float, float, float)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0xe0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::resetAnchor()':
+ofVideoGrabber.cpp:(.text+0x100): multiple definition of `ofVideoGrabber::resetAnchor()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x100): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::setAnchorPoint(int, int)':
+ofVideoGrabber.cpp:(.text+0x120): multiple definition of `ofVideoGrabber::setAnchorPoint(int, int)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x120): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::setAnchorPercent(float, float)':
+ofVideoGrabber.cpp:(.text+0x150): multiple definition of `ofVideoGrabber::setAnchorPercent(float, float)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x150): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::getPixels()':
+ofVideoGrabber.cpp:(.text+0x170): multiple definition of `non-virtual thunk to ofVideoGrabber::getPixels()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x170): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::getPixels()':
+ofVideoGrabber.cpp:(.text+0x180): multiple definition of `ofVideoGrabber::getPixels()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x180): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::initGrabber(int, int, bool)':
+ofVideoGrabber.cpp:(.text+0x190): multiple definition of `ofVideoGrabber::initGrabber(int, int, bool)'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x190): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::close()':
+ofVideoGrabber.cpp:(.text+0x290): multiple definition of `ofVideoGrabber::close()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x290): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::grabFrame()':
+ofVideoGrabber.cpp:(.text+0x2d0): multiple definition of `ofVideoGrabber::grabFrame()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x2d0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::update()':
+ofVideoGrabber.cpp:(.text+0x380): multiple definition of `non-virtual thunk to ofVideoGrabber::update()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x380): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::update()':
+ofVideoGrabber.cpp:(.text+0x390): multiple definition of `ofVideoGrabber::update()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x390): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::getTextureReference()':
+ofVideoGrabber.cpp:(.text+0x3a0): multiple definition of `non-virtual thunk to ofVideoGrabber::getTextureReference()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x3a0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::getTextureReference()':
+ofVideoGrabber.cpp:(.text+0x3b0): multiple definition of `ofVideoGrabber::getTextureReference()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x3b0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::listDevices()':
+ofVideoGrabber.cpp:(.text+0x3e0): multiple definition of `ofVideoGrabber::listDevices()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x3e0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x3f0): multiple definition of `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x3f0): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x400): multiple definition of `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x400): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x410): multiple definition of `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x410): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x420): multiple definition of `ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x420): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x520): multiple definition of `ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x520): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x620): multiple definition of `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x620): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x630): multiple definition of `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x630): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x640): multiple definition of `non-virtual thunk to ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x640): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::~ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x650): multiple definition of `ofVideoGrabber::~ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x650): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x750): multiple definition of `ofVideoGrabber::ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x750): first defined here
+obj/Release/openFrameworks/video/ofVideoGrabber.o: In function `ofVideoGrabber::ofVideoGrabber()':
+ofVideoGrabber.cpp:(.text+0x850): multiple definition of `ofVideoGrabber::ofVideoGrabber()'
+obj/Release/openFrameworks/video/ofVideoGrabber.o:ofVideoGrabber.cpp:(.text+0x850): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `on_eos_from_source(_GstAppSink*, void*)':
+ofGstUtils.cpp:(.text+0x0): multiple definition of `on_eos_from_source(_GstAppSink*, void*)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::isFrameNew()':
+ofGstUtils.cpp:(.text+0x10): multiple definition of `ofGstUtils::isFrameNew()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x10): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getPixels()':
+ofGstUtils.cpp:(.text+0x20): multiple definition of `ofGstUtils::getPixels()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getTotalNumFrames()':
+ofGstUtils.cpp:(.text+0x30): multiple definition of `ofGstUtils::getTotalNumFrames()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getHeight()':
+ofGstUtils.cpp:(.text+0x40): multiple definition of `ofGstUtils::getHeight()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x40): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getWidth()':
+ofGstUtils.cpp:(.text+0x50): multiple definition of `ofGstUtils::getWidth()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x50): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getSpeed()':
+ofGstUtils.cpp:(.text+0x60): multiple definition of `ofGstUtils::getSpeed()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x60): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getDuration()':
+ofGstUtils.cpp:(.text+0x70): multiple definition of `ofGstUtils::getDuration()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x70): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getIsMovieDone()':
+ofGstUtils.cpp:(.text+0x90): multiple definition of `ofGstUtils::getIsMovieDone()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x90): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setLoopState(int)':
+ofGstUtils.cpp:(.text+0xa0): multiple definition of `ofGstUtils::setLoopState(int)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0xa0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setPaused(bool)':
+ofGstUtils.cpp:(.text+0xe0): multiple definition of `ofGstUtils::setPaused(bool)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0xe0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::play()':
+ofGstUtils.cpp:(.text+0x130): multiple definition of `ofGstUtils::play()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x130): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getPosition()':
+ofGstUtils.cpp:(.text+0x140): multiple definition of `ofGstUtils::getPosition()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x140): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::getCurrentFrame()':
+ofGstUtils.cpp:(.text+0x1d0): multiple definition of `ofGstUtils::getCurrentFrame()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x1d0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setSpeed(float)':
+ofGstUtils.cpp:(.text+0x240): multiple definition of `ofGstUtils::setSpeed(float)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x240): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setPosition(float)':
+ofGstUtils.cpp:(.text+0x410): multiple definition of `ofGstUtils::setPosition(float)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x410): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setFrame(int)':
+ofGstUtils.cpp:(.text+0x520): multiple definition of `ofGstUtils::setFrame(int)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x520): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::previousFrame()':
+ofGstUtils.cpp:(.text+0x560): multiple definition of `ofGstUtils::previousFrame()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x560): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::nextFrame()':
+ofGstUtils.cpp:(.text+0x590): multiple definition of `ofGstUtils::nextFrame()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x590): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::firstFrame()':
+ofGstUtils.cpp:(.text+0x5c0): multiple definition of `ofGstUtils::firstFrame()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x5c0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `getName(GstState)':
+ofGstUtils.cpp:(.text+0x5d0): multiple definition of `getName(GstState)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x5d0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::seek_unlock()':
+ofGstUtils.cpp:(.text+0x6e0): multiple definition of `ofGstUtils::seek_unlock()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x6e0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstDataUnlock(ofGstVideoData*)':
+ofGstUtils.cpp:(.text+0x6f0): multiple definition of `ofGstDataUnlock(ofGstVideoData*)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x6f0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::seek_lock()':
+ofGstUtils.cpp:(.text+0x700): multiple definition of `ofGstUtils::seek_lock()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x700): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstDataLock(ofGstVideoData*)':
+ofGstUtils.cpp:(.text+0x710): multiple definition of `ofGstDataLock(ofGstVideoData*)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x710): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::close()':
+ofGstUtils.cpp:(.text+0x720): multiple definition of `ofGstUtils::close()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x720): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setVolume(int)':
+ofGstUtils.cpp:(.text+0x7b0): multiple definition of `ofGstUtils::setVolume(int)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x7b0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setFrameByFrame(bool)':
+ofGstUtils.cpp:(.text+0x810): multiple definition of `ofGstUtils::setFrameByFrame(bool)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x810): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::allocate()':
+ofGstUtils.cpp:(.text+0x960): multiple definition of `ofGstUtils::allocate()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x960): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::startPipeline()':
+ofGstUtils.cpp:(.text+0xdf0): multiple definition of `ofGstUtils::startPipeline()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0xdf0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::ofGstUtils()':
+ofGstUtils.cpp:(.text+0x14d0): multiple definition of `ofGstUtils::ofGstUtils()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x14d0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::ofGstUtils()':
+ofGstUtils.cpp:(.text+0x16e0): multiple definition of `ofGstUtils::ofGstUtils()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x16e0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::~ofGstUtils()':
+ofGstUtils.cpp:(.text+0x18f0): multiple definition of `ofGstUtils::~ofGstUtils()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x18f0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::~ofGstUtils()':
+ofGstUtils.cpp:(.text+0x1ac0): multiple definition of `ofGstUtils::~ofGstUtils()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x1ac0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::~ofGstUtils()':
+ofGstUtils.cpp:(.text+0x1c90): multiple definition of `ofGstUtils::~ofGstUtils()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x1c90): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::loadMovie(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofGstUtils.cpp:(.text+0x1e50): multiple definition of `ofGstUtils::loadMovie(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x1e50): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setPipelineWithSink(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofGstUtils.cpp:(.text+0x2120): multiple definition of `ofGstUtils::setPipelineWithSink(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x2120): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setPipeline(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, bool, int, int)':
+ofGstUtils.cpp:(.text+0x22c0): multiple definition of `ofGstUtils::setPipeline(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, bool, int, int)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x22c0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::selectFormat(int, int, int)':
+ofGstUtils.cpp:(.text+0x30d0): multiple definition of `ofGstUtils::selectFormat(int, int, int)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x30d0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::setDeviceID(unsigned int)':
+ofGstUtils.cpp:(.text+0x4500): multiple definition of `ofGstUtils::setDeviceID(unsigned int)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x4500): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::initGrabber(int, int, int)':
+ofGstUtils.cpp:(.text+0x4580): multiple definition of `ofGstUtils::initGrabber(int, int, int)'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x4580): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::listDevices()':
+ofGstUtils.cpp:(.text+0x4da0): multiple definition of `ofGstUtils::listDevices()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x4da0): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::gstHandleMessage()':
+ofGstUtils.cpp:(.text+0x5000): multiple definition of `ofGstUtils::gstHandleMessage()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x5000): first defined here
+obj/Release/openFrameworks/video/ofGstUtils.o: In function `ofGstUtils::update()':
+ofGstUtils.cpp:(.text+0x58c0): multiple definition of `ofGstUtils::update()'
+obj/Release/openFrameworks/video/ofGstUtils.o:ofGstUtils.cpp:(.text+0x58c0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `non-virtual thunk to ofImage::getPixels()':
+ofImage.cpp:(.text+0x0): multiple definition of `non-virtual thunk to ofImage::getPixels()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::getPixels()':
+ofImage.cpp:(.text+0x10): multiple definition of `ofImage::getPixels()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x10): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `non-virtual thunk to ofImage::setUseTexture(bool)':
+ofImage.cpp:(.text+0x20): multiple definition of `non-virtual thunk to ofImage::setUseTexture(bool)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::setUseTexture(bool)':
+ofImage.cpp:(.text+0x30): multiple definition of `ofImage::setUseTexture(bool)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::getHeight()':
+ofImage.cpp:(.text+0x40): multiple definition of `ofImage::getHeight()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x40): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::getWidth()':
+ofImage.cpp:(.text+0x50): multiple definition of `ofImage::getWidth()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x50): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::setCompression(ofTexCompression)':
+ofImage.cpp:(.text+0x90): multiple definition of `ofImage::setCompression(ofTexCompression)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x90): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofCloseFreeImage()':
+ofImage.cpp:(.text+0xa0): multiple definition of `ofCloseFreeImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0xa0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::clear()':
+ofImage.cpp:(.text+0xc0): multiple definition of `ofImage::clear()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0xc0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::getBmpFromPixels(ofPixels&)':
+ofImage.cpp:(.text+0x140): multiple definition of `ofImage::getBmpFromPixels(ofPixels&)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x140): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::update()':
+ofImage.cpp:(.text+0x260): multiple definition of `ofImage::update()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x260): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `non-virtual thunk to ofImage::getTextureReference()':
+ofImage.cpp:(.text+0x2b0): multiple definition of `non-virtual thunk to ofImage::getTextureReference()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x2b0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::getTextureReference()':
+ofImage.cpp:(.text+0x2c0): multiple definition of `ofImage::getTextureReference()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x2c0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::unbind()':
+ofImage.cpp:(.text+0x2f0): multiple definition of `ofImage::unbind()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x2f0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::bind()':
+ofImage.cpp:(.text+0x320): multiple definition of `ofImage::bind()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x320): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::draw(float, float, float, float, float)':
+ofImage.cpp:(.text+0x350): multiple definition of `ofImage::draw(float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x350): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::draw(float, float, float)':
+ofImage.cpp:(.text+0x370): multiple definition of `ofImage::draw(float, float, float)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x370): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::draw(float, float)':
+ofImage.cpp:(.text+0x380): multiple definition of `ofImage::draw(float, float)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x380): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::draw(ofPoint)':
+ofImage.cpp:(.text+0x3a0): multiple definition of `ofImage::draw(ofPoint)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x3a0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::draw(float, float, float, float)':
+ofImage.cpp:(.text+0x3c0): multiple definition of `ofImage::draw(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x3c0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::draw(ofPoint, float, float)':
+ofImage.cpp:(.text+0x3e0): multiple definition of `ofImage::draw(ofPoint, float, float)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x3e0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::draw(ofRectangle)':
+ofImage.cpp:(.text+0x430): multiple definition of `ofImage::draw(ofRectangle)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x430): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::resetAnchor()':
+ofImage.cpp:(.text+0x490): multiple definition of `ofImage::resetAnchor()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x490): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::setAnchorPoint(float, float)':
+ofImage.cpp:(.text+0x4b0): multiple definition of `ofImage::setAnchorPoint(float, float)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x4b0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::setAnchorPercent(float, float)':
+ofImage.cpp:(.text+0x4d0): multiple definition of `ofImage::setAnchorPercent(float, float)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x4d0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `non-virtual thunk to ofImage::~ofImage()':
+ofImage.cpp:(.text+0x4f0): multiple definition of `non-virtual thunk to ofImage::~ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x4f0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `non-virtual thunk to ofImage::~ofImage()':
+ofImage.cpp:(.text+0x500): multiple definition of `non-virtual thunk to ofImage::~ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x500): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::~ofImage()':
+ofImage.cpp:(.text+0x510): multiple definition of `ofImage::~ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x510): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `non-virtual thunk to ofImage::~ofImage()':
+ofImage.cpp:(.text+0x5d0): multiple definition of `non-virtual thunk to ofImage::~ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x5d0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `non-virtual thunk to ofImage::~ofImage()':
+ofImage.cpp:(.text+0x5e0): multiple definition of `non-virtual thunk to ofImage::~ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x5e0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::~ofImage()':
+ofImage.cpp:(.text+0x5f0): multiple definition of `ofImage::~ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x5f0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::~ofImage()':
+ofImage.cpp:(.text+0x6b0): multiple definition of `ofImage::~ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x6b0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::ofImage()':
+ofImage.cpp:(.text+0x770): multiple definition of `ofImage::ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x770): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::ofImage()':
+ofImage.cpp:(.text+0x870): multiple definition of `ofImage::ofImage()'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x870): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::loadImageIntoPixels(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, ofPixels&)':
+ofImage.cpp:(.text+0x970): multiple definition of `ofImage::loadImageIntoPixels(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, ofPixels&)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x970): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::loadImage(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofImage.cpp:(.text+0xe30): multiple definition of `ofImage::loadImage(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0xe30): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::saveImageFromPixels(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, ofPixels&)':
+ofImage.cpp:(.text+0xf00): multiple definition of `ofImage::saveImageFromPixels(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, ofPixels&)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0xf00): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::saveImage(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofImage.cpp:(.text+0x1390): multiple definition of `ofImage::saveImage(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1390): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::putBmpIntoPixels(FIBITMAP*, ofPixels&)':
+ofImage.cpp:(.text+0x1420): multiple definition of `ofImage::putBmpIntoPixels(FIBITMAP*, ofPixels&)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1420): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::changeTypeOfPixels(ofPixels&, int)':
+ofImage.cpp:(.text+0x15b0): multiple definition of `ofImage::changeTypeOfPixels(ofPixels&, int)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x15b0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::setImageType(int)':
+ofImage.cpp:(.text+0x1710): multiple definition of `ofImage::setImageType(int)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1710): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::resizePixels(ofPixels&, int, int)':
+ofImage.cpp:(.text+0x1730): multiple definition of `ofImage::resizePixels(ofPixels&, int, int)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1730): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::resize(int, int)':
+ofImage.cpp:(.text+0x17e0): multiple definition of `ofImage::resize(int, int)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x17e0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::clone(ofImage const&)':
+ofImage.cpp:(.text+0x1840): multiple definition of `ofImage::clone(ofImage const&)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1840): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::operator=(ofImage const&)':
+ofImage.cpp:(.text+0x19c0): multiple definition of `ofImage::operator=(ofImage const&)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x19c0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::ofImage(ofImage const&)':
+ofImage.cpp:(.text+0x19e0): multiple definition of `ofImage::ofImage(ofImage const&)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x19e0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::ofImage(ofImage const&)':
+ofImage.cpp:(.text+0x1ac0): multiple definition of `ofImage::ofImage(ofImage const&)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1ac0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::allocate(int, int, int)':
+ofImage.cpp:(.text+0x1ba0): multiple definition of `ofImage::allocate(int, int, int)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1ba0): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::grabScreen(int, int, int, int)':
+ofImage.cpp:(.text+0x1d50): multiple definition of `ofImage::grabScreen(int, int, int, int)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1d50): first defined here
+obj/Release/openFrameworks/graphics/ofImage.o: In function `ofImage::setFromPixels(unsigned char*, int, int, int, bool)':
+ofImage.cpp:(.text+0x1f40): multiple definition of `ofImage::setFromPixels(unsigned char*, int, int, int, bool)'
+obj/Release/openFrameworks/graphics/ofImage.o:ofImage.cpp:(.text+0x1f40): first defined here
+obj/Release/openFrameworks/graphics/ofBitmapFont.o: In function `ofDrawBitmapCharacter(int)':
+ofBitmapFont.cpp:(.text+0x30): multiple definition of `ofDrawBitmapCharacter(int)'
+obj/Release/openFrameworks/graphics/ofBitmapFont.o:ofBitmapFont.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofEnableTextureEdgeHack()':
+ofTexture.cpp:(.text+0x0): multiple definition of `ofEnableTextureEdgeHack()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofDisableTextureEdgeHack()':
+ofTexture.cpp:(.text+0x10): multiple definition of `ofDisableTextureEdgeHack()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x10): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::bAllocated()':
+ofTexture.cpp:(.text+0x20): multiple definition of `ofTexture::bAllocated()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x20): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::setAnchorPercent(float, float)':
+ofTexture.cpp:(.text+0x30): multiple definition of `ofTexture::setAnchorPercent(float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::setAnchorPoint(float, float)':
+ofTexture.cpp:(.text+0x40): multiple definition of `ofTexture::setAnchorPoint(float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x40): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::resetAnchor()':
+ofTexture.cpp:(.text+0x50): multiple definition of `ofTexture::resetAnchor()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x50): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::ofTexture()':
+ofTexture.cpp:(.text+0x60): multiple definition of `ofTexture::ofTexture()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x60): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::ofTexture()':
+ofTexture.cpp:(.text+0x130): multiple definition of `ofTexture::ofTexture()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x130): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::getCoordFromPoint(float, float)':
+ofTexture.cpp:(.text+0x200): multiple definition of `ofTexture::getCoordFromPoint(float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x200): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::getCoordFromPercent(float, float)':
+ofTexture.cpp:(.text+0x2e0): multiple definition of `ofTexture::getCoordFromPercent(float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x2e0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::setCompression(ofTexCompression)':
+ofTexture.cpp:(.text+0x3c0): multiple definition of `ofTexture::setCompression(ofTexCompression)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x3c0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::getHeight()':
+ofTexture.cpp:(.text+0x3d0): multiple definition of `ofTexture::getHeight()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x3d0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::getWidth()':
+ofTexture.cpp:(.text+0x3e0): multiple definition of `ofTexture::getWidth()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x3e0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::draw(ofPoint, ofPoint, ofPoint, ofPoint)':
+ofTexture.cpp:(.text+0x420): multiple definition of `ofTexture::draw(ofPoint, ofPoint, ofPoint, ofPoint)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x420): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::draw(float, float, float, float, float)':
+ofTexture.cpp:(.text+0x6b0): multiple definition of `ofTexture::draw(float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x6b0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::draw(float, float, float)':
+ofTexture.cpp:(.text+0xa00): multiple definition of `ofTexture::draw(float, float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xa00): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::draw(float, float)':
+ofTexture.cpp:(.text+0xa10): multiple definition of `ofTexture::draw(float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xa10): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::draw(ofPoint)':
+ofTexture.cpp:(.text+0xa30): multiple definition of `ofTexture::draw(ofPoint)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xa30): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::draw(float, float, float, float)':
+ofTexture.cpp:(.text+0xa50): multiple definition of `ofTexture::draw(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xa50): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::draw(ofPoint, float, float)':
+ofTexture.cpp:(.text+0xa60): multiple definition of `ofTexture::draw(ofPoint, float, float)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xa60): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::draw(ofRectangle)':
+ofTexture.cpp:(.text+0xa80): multiple definition of `ofTexture::draw(ofRectangle)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xa80): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::unbind()':
+ofTexture.cpp:(.text+0xaa0): multiple definition of `ofTexture::unbind()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xaa0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::bind()':
+ofTexture.cpp:(.text+0xae0): multiple definition of `ofTexture::bind()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xae0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::setTextureMinMagFilter(int, int)':
+ofTexture.cpp:(.text+0xb80): multiple definition of `ofTexture::setTextureMinMagFilter(int, int)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xb80): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::setTextureWrap(int, int)':
+ofTexture.cpp:(.text+0xbe0): multiple definition of `ofTexture::setTextureWrap(int, int)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xbe0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::getTextureData()':
+ofTexture.cpp:(.text+0xc40): multiple definition of `ofTexture::getTextureData()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xc40): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::operator=(ofTexture const&)':
+ofTexture.cpp:(.text+0xcb0): multiple definition of `ofTexture::operator=(ofTexture const&)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xcb0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::ofTexture(ofTexture const&)':
+ofTexture.cpp:(.text+0xcd0): multiple definition of `ofTexture::ofTexture(ofTexture const&)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xcd0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::ofTexture(ofTexture const&)':
+ofTexture.cpp:(.text+0xd60): multiple definition of `ofTexture::ofTexture(ofTexture const&)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xd60): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::loadScreenData(int, int, int, int)':
+ofTexture.cpp:(.text+0xdf0): multiple definition of `ofTexture::loadScreenData(int, int, int, int)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xdf0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::loadData(void*, int, int, int)':
+ofTexture.cpp:(.text+0xf30): multiple definition of `ofTexture::loadData(void*, int, int, int)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0xf30): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::loadData(float*, int, int, int)':
+ofTexture.cpp:(.text+0x13c0): multiple definition of `ofTexture::loadData(float*, int, int, int)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x13c0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::loadData(unsigned char*, int, int, int)':
+ofTexture.cpp:(.text+0x13d0): multiple definition of `ofTexture::loadData(unsigned char*, int, int, int)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x13d0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::allocate(int, int, int)':
+ofTexture.cpp:(.text+0x13e0): multiple definition of `ofTexture::allocate(int, int, int)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x13e0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::clear()':
+ofTexture.cpp:(.text+0x1450): multiple definition of `ofTexture::clear()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x1450): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::allocate(int, int, int, bool)':
+ofTexture.cpp:(.text+0x1480): multiple definition of `ofTexture::allocate(int, int, int, bool)'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x1480): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::~ofTexture()':
+ofTexture.cpp:(.text+0x16b0): multiple definition of `ofTexture::~ofTexture()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x16b0): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::~ofTexture()':
+ofTexture.cpp:(.text+0x1720): multiple definition of `ofTexture::~ofTexture()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x1720): first defined here
+obj/Release/openFrameworks/graphics/ofTexture.o: In function `ofTexture::~ofTexture()':
+ofTexture.cpp:(.text+0x1780): multiple definition of `ofTexture::~ofTexture()'
+obj/Release/openFrameworks/graphics/ofTexture.o:ofTexture.cpp:(.text+0x1780): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::ofTrueTypeFont()':
+ofTrueTypeFont.cpp:(.text+0x0): multiple definition of `ofTrueTypeFont::ofTrueTypeFont()'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::ofTrueTypeFont()':
+ofTrueTypeFont.cpp:(.text+0x30): multiple definition of `ofTrueTypeFont::ofTrueTypeFont()'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::ofNextPow2(int)':
+ofTrueTypeFont.cpp:(.text+0x60): multiple definition of `ofTrueTypeFont::ofNextPow2(int)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x60): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::setLineHeight(float)':
+ofTrueTypeFont.cpp:(.text+0xb0): multiple definition of `ofTrueTypeFont::setLineHeight(float)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0xb0): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::getLineHeight()':
+ofTrueTypeFont.cpp:(.text+0xc0): multiple definition of `ofTrueTypeFont::getLineHeight()'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0xc0): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::drawCharAsShape(int, float, float)':
+ofTrueTypeFont.cpp:(.text+0x100): multiple definition of `ofTrueTypeFont::drawCharAsShape(int, float, float)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x100): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::drawChar(int, float, float)':
+ofTrueTypeFont.cpp:(.text+0x390): multiple definition of `ofTrueTypeFont::drawChar(int, float, float)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x390): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::getStringBoundingBox(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float)':
+ofTrueTypeFont.cpp:(.text+0xb00): multiple definition of `ofTrueTypeFont::getStringBoundingBox(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0xb00): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::drawStringAsShapes(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float)':
+ofTrueTypeFont.cpp:(.text+0x1170): multiple definition of `ofTrueTypeFont::drawStringAsShapes(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x1170): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::drawString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float)':
+ofTrueTypeFont.cpp:(.text+0x19d0): multiple definition of `ofTrueTypeFont::drawString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x19d0): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::stringHeight(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofTrueTypeFont.cpp:(.text+0x1e00): multiple definition of `ofTrueTypeFont::stringHeight(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x1e00): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::stringWidth(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+ofTrueTypeFont.cpp:(.text+0x1e90): multiple definition of `ofTrueTypeFont::stringWidth(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x1e90): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::getCharacterAsPoints(int)':
+ofTrueTypeFont.cpp:(.text+0x1f20): multiple definition of `ofTrueTypeFont::getCharacterAsPoints(int)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x1f20): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::~ofTrueTypeFont()':
+ofTrueTypeFont.cpp:(.text+0x2370): multiple definition of `ofTrueTypeFont::~ofTrueTypeFont()'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x2370): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::~ofTrueTypeFont()':
+ofTrueTypeFont.cpp:(.text+0x2640): multiple definition of `ofTrueTypeFont::~ofTrueTypeFont()'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x2640): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::~ofTrueTypeFont()':
+ofTrueTypeFont.cpp:(.text+0x2910): multiple definition of `ofTrueTypeFont::~ofTrueTypeFont()'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x2910): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::loadFont(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, bool, bool, bool)':
+ofTrueTypeFont.cpp:(.text+0x2be0): multiple definition of `ofTrueTypeFont::loadFont(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, bool, bool, bool)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x2be0): first defined here
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o: In function `ofTrueTypeFont::loadFont(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)':
+ofTrueTypeFont.cpp:(.text+0x6990): multiple definition of `ofTrueTypeFont::loadFont(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)'
+obj/Release/openFrameworks/graphics/ofTrueTypeFont.o:ofTrueTypeFont.cpp:(.text+0x6990): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetRectMode(int)':
+ofGraphics.cpp:(.text+0x0): multiple definition of `ofSetRectMode(int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x14): multiple definition of `cornerMode'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x14): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x20): multiple definition of `currentStyle'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x20): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofGetRectMode()':
+ofGraphics.cpp:(.text+0x60): multiple definition of `ofGetRectMode()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x60): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofGetUsingArbTex()':
+ofGraphics.cpp:(.text+0x70): multiple definition of `ofGetUsingArbTex()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x70): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.data+0x0): multiple definition of `bUsingArbTex'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.data+0x0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofEnableArbTex()':
+ofGraphics.cpp:(.text+0x80): multiple definition of `ofEnableArbTex()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x80): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofDisableArbTex()':
+ofGraphics.cpp:(.text+0x90): multiple definition of `ofDisableArbTex()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x90): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofGetUsingNormalizedTexCoords()':
+ofGraphics.cpp:(.text+0xa0): multiple definition of `ofGetUsingNormalizedTexCoords()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xa0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x11): multiple definition of `bUsingNormalizedTexCoords'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x11): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofEnableNormalizedTexCoords()':
+ofGraphics.cpp:(.text+0xb0): multiple definition of `ofEnableNormalizedTexCoords()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xb0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofDisableNormalizedTexCoords()':
+ofGraphics.cpp:(.text+0xc0): multiple definition of `ofDisableNormalizedTexCoords()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xc0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofGetUsingCustomTextureWrap()':
+ofGraphics.cpp:(.text+0xd0): multiple definition of `ofGetUsingCustomTextureWrap()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xd0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRestoreTextureWrap()':
+ofGraphics.cpp:(.text+0xe0): multiple definition of `ofRestoreTextureWrap()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xe0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofGetUsingCustomMinMagFilters()':
+ofGraphics.cpp:(.text+0xf0): multiple definition of `ofGetUsingCustomMinMagFilters()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xf0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRestoreMinMagFilters()':
+ofGraphics.cpp:(.text+0x100): multiple definition of `ofRestoreMinMagFilters()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x100): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetBackgroundAuto(bool)':
+ofGraphics.cpp:(.text+0x110): multiple definition of `ofSetBackgroundAuto(bool)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x110): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.data+0x1): multiple definition of `bBakgroundAuto'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.data+0x1): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofbClearBg()':
+ofGraphics.cpp:(.text+0x120): multiple definition of `ofbClearBg()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x120): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofBgColorPtr()':
+ofGraphics.cpp:(.text+0x130): multiple definition of `ofBgColorPtr()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x130): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x0): multiple definition of `bgColor'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofNoFill()':
+ofGraphics.cpp:(.text+0x140): multiple definition of `ofNoFill()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x140): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofFill()':
+ofGraphics.cpp:(.text+0x160): multiple definition of `ofFill()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x160): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofGetFill()':
+ofGraphics.cpp:(.text+0x180): multiple definition of `ofGetFill()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x180): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetCurveResolution(int)':
+ofGraphics.cpp:(.text+0x190): multiple definition of `ofSetCurveResolution(int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x190): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.data+0x8): multiple definition of `curveResolution'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.data+0x8): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofEnableSmoothing()':
+ofGraphics.cpp:(.text+0x1a0): multiple definition of `ofEnableSmoothing()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1a0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x10): multiple definition of `bSmoothHinted'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x10): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofDisableSmoothing()':
+ofGraphics.cpp:(.text+0x1c0): multiple definition of `ofDisableSmoothing()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1c0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofGetStyle()':
+ofGraphics.cpp:(.text+0x1e0): multiple definition of `ofGetStyle()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1e0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `tessBegin(int)':
+ofGraphics.cpp:(.text+0x260): multiple definition of `tessBegin(int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x260): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0xa0): multiple definition of `tessVertices'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0xa0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `tessEnd()':
+ofGraphics.cpp:(.text+0x280): multiple definition of `tessEnd()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x280): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `clearCurveVertices()':
+ofGraphics.cpp:(.text+0x2e0): multiple definition of `clearCurveVertices()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x2e0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0xe0): multiple definition of `curveVertices'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0xe0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `clearTessVertices()':
+ofGraphics.cpp:(.text+0x330): multiple definition of `clearTessVertices()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x330): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0xc0): multiple definition of `polyVertices'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0xc0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x80): multiple definition of `newVectrices'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x80): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetPolyMode(int)':
+ofGraphics.cpp:(.text+0x3d0): multiple definition of `ofSetPolyMode(int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x3d0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.data+0x4): multiple definition of `polyMode'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.data+0x4): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `tessError(unsigned int)':
+ofGraphics.cpp:(.text+0x4b0): multiple definition of `tessError(unsigned int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x4b0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRotate(float)':
+ofGraphics.cpp:(.text+0x4e0): multiple definition of `ofRotate(float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x4e0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRotateZ(float)':
+ofGraphics.cpp:(.text+0x500): multiple definition of `ofRotateZ(float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x500): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRotateY(float)':
+ofGraphics.cpp:(.text+0x520): multiple definition of `ofRotateY(float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x520): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRotateX(float)':
+ofGraphics.cpp:(.text+0x540): multiple definition of `ofRotateX(float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x540): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRotate(float, float, float, float)':
+ofGraphics.cpp:(.text+0x560): multiple definition of `ofRotate(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x560): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofScale(float, float, float)':
+ofGraphics.cpp:(.text+0x570): multiple definition of `ofScale(float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x570): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofTranslate(float, float, float)':
+ofGraphics.cpp:(.text+0x580): multiple definition of `ofTranslate(float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x580): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofTranslate(ofPoint const&)':
+ofGraphics.cpp:(.text+0x590): multiple definition of `ofTranslate(ofPoint const&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x590): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofPopMatrix()':
+ofGraphics.cpp:(.text+0x5b0): multiple definition of `ofPopMatrix()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x5b0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofPushMatrix()':
+ofGraphics.cpp:(.text+0x5c0): multiple definition of `ofPushMatrix()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x5c0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofDisableAlphaBlending()':
+ofGraphics.cpp:(.text+0x5d0): multiple definition of `ofDisableAlphaBlending()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x5d0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofEnableAlphaBlending()':
+ofGraphics.cpp:(.text+0x5f0): multiple definition of `ofEnableAlphaBlending()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x5f0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetColor(int, int, int, int)':
+ofGraphics.cpp:(.text+0x620): multiple definition of `ofSetColor(int, int, int, int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x620): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetColor(ofColor const&, int)':
+ofGraphics.cpp:(.text+0x6d0): multiple definition of `ofSetColor(ofColor const&, int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x6d0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetColor(ofColor const&)':
+ofGraphics.cpp:(.text+0x6f0): multiple definition of `ofSetColor(ofColor const&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x6f0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetColor(int, int, int)':
+ofGraphics.cpp:(.text+0x710): multiple definition of `ofSetColor(int, int, int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x710): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetHexColor(int)':
+ofGraphics.cpp:(.text+0x7a0): multiple definition of `ofSetHexColor(int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x7a0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetColor(int)':
+ofGraphics.cpp:(.text+0x7c0): multiple definition of `ofSetColor(int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x7c0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetCircleResolution(int)':
+ofGraphics.cpp:(.text+0x7f0): multiple definition of `ofSetCircleResolution(int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x7f0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `setupCircle()':
+ofGraphics.cpp:(.text+0xa70): multiple definition of `setupCircle()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xa70): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `endSmoothing()':
+ofGraphics.cpp:(.text+0xa80): multiple definition of `endSmoothing()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xa80): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `startSmoothing()':
+ofGraphics.cpp:(.text+0xa90): multiple definition of `startSmoothing()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xa90): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofBeginShape()':
+ofGraphics.cpp:(.text+0xae0): multiple definition of `ofBeginShape()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xae0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `tessVertex(void*)':
+ofGraphics.cpp:(.text+0x2d10): multiple definition of `tessVertex(void*)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x2d10): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `tessCombine(double*, void**, float*, void**)':
+ofGraphics.cpp:(.text+0x4c80): multiple definition of `tessCombine(double*, void**, float*, void**)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x4c80): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRect(float, float, float, float, float)':
+ofGraphics.cpp:(.text+0xc50): multiple definition of `ofRect(float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xc50): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRect(float, float, float, float)':
+ofGraphics.cpp:(.text+0xe60): multiple definition of `ofRect(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xe60): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRect(ofPoint const&, float, float)':
+ofGraphics.cpp:(.text+0xe70): multiple definition of `ofRect(ofPoint const&, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xe70): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofRect(ofRectangle const&)':
+ofGraphics.cpp:(.text+0xe90): multiple definition of `ofRect(ofRectangle const&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xe90): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofLine(float, float, float, float, float, float)':
+ofGraphics.cpp:(.text+0xeb0): multiple definition of `ofLine(float, float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xeb0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofLine(float, float, float, float)':
+ofGraphics.cpp:(.text+0xf90): multiple definition of `ofLine(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xf90): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofLine(ofPoint const&, ofPoint const&)':
+ofGraphics.cpp:(.text+0xfb0): multiple definition of `ofLine(ofPoint const&, ofPoint const&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xfb0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofEllipse(float, float, float, float, float)':
+ofGraphics.cpp:(.text+0xfe0): multiple definition of `ofEllipse(float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0xfe0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofEllipse(float, float, float, float)':
+ofGraphics.cpp:(.text+0x13b0): multiple definition of `ofEllipse(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x13b0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofEllipse(ofPoint const&, float, float)':
+ofGraphics.cpp:(.text+0x13c0): multiple definition of `ofEllipse(ofPoint const&, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x13c0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofCircle(float, float, float, float)':
+ofGraphics.cpp:(.text+0x13e0): multiple definition of `ofCircle(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x13e0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofCircle(float, float, float)':
+ofGraphics.cpp:(.text+0x1920): multiple definition of `ofCircle(float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1920): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofCircle(ofPoint const&, float)':
+ofGraphics.cpp:(.text+0x1930): multiple definition of `ofCircle(ofPoint const&, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1930): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofTriangle(float, float, float, float, float, float, float, float, float)':
+ofGraphics.cpp:(.text+0x1950): multiple definition of `ofTriangle(float, float, float, float, float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1950): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofTriangle(float, float, float, float, float, float)':
+ofGraphics.cpp:(.text+0x1ac0): multiple definition of `ofTriangle(float, float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1ac0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofTriangle(ofPoint const&, ofPoint const&, ofPoint const&)':
+ofGraphics.cpp:(.text+0x1af0): multiple definition of `ofTriangle(ofPoint const&, ofPoint const&, ofPoint const&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1af0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetLineWidth(float)':
+ofGraphics.cpp:(.text+0x1b30): multiple definition of `ofSetLineWidth(float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1b30): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetStyle(ofStyle)':
+ofGraphics.cpp:(.text+0x1b60): multiple definition of `ofSetStyle(ofStyle)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1b60): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofBackground(int, int, int, int)':
+ofGraphics.cpp:(.text+0x1bf0): multiple definition of `ofBackground(int, int, int, int)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1bf0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetupGraphicDefaults()':
+ofGraphics.cpp:(.text+0x1c70): multiple definition of `ofSetupGraphicDefaults()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1c70): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofBackground(int, float)':
+ofGraphics.cpp:(.text+0x1ce0): multiple definition of `ofBackground(int, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1ce0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofBackground(ofColor const&)':
+ofGraphics.cpp:(.text+0x1d00): multiple definition of `ofBackground(ofColor const&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1d00): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofClear(float, float, float, float)':
+ofGraphics.cpp:(.text+0x1d20): multiple definition of `ofClear(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1d20): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetMinMagFilters(float, float)':
+ofGraphics.cpp:(.text+0x1d40): multiple definition of `ofSetMinMagFilters(float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1d40): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetTextureWrap(float, float)':
+ofGraphics.cpp:(.text+0x1da0): multiple definition of `ofSetTextureWrap(float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1da0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofClearAlpha()':
+ofGraphics.cpp:(.text+0x1e00): multiple definition of `ofClearAlpha()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1e00): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofPopView()':
+ofGraphics.cpp:(.text+0x1e60): multiple definition of `ofPopView()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1e60): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofPushView()':
+ofGraphics.cpp:(.text+0x1e90): multiple definition of `ofPushView()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1e90): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetupScreenOrtho(float, float, bool, float, float)':
+ofGraphics.cpp:(.text+0x1ec0): multiple definition of `ofSetupScreenOrtho(float, float, bool, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1ec0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetupScreenPerspective(float, float, bool, float, float, float)':
+ofGraphics.cpp:(.text+0x1fd0): multiple definition of `ofSetupScreenPerspective(float, float, bool, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x1fd0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofSetupScreen()':
+ofGraphics.cpp:(.text+0x2200): multiple definition of `ofSetupScreen()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x2200): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofViewport(float, float, float, float)':
+ofGraphics.cpp:(.text+0x2220): multiple definition of `ofViewport(float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x2220): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x60): multiple definition of `styleHistory'
+obj/Release/openFrameworks/graphics/ofGraphics.o:(.bss+0x60): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofPopStyle()':
+ofGraphics.cpp:(.text+0x2420): multiple definition of `ofPopStyle()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x2420): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofDrawBitmapString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float, float)':
+ofGraphics.cpp:(.text+0x29c0): multiple definition of `ofDrawBitmapString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x29c0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofDrawBitmapString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, ofPoint const&)':
+ofGraphics.cpp:(.text+0x2de0): multiple definition of `ofDrawBitmapString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, ofPoint const&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x2de0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofDrawBitmapString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float)':
+ofGraphics.cpp:(.text+0x2e90): multiple definition of `ofDrawBitmapString(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x2e90): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofPushStyle()':
+ofGraphics.cpp:(.text+0x2f30): multiple definition of `ofPushStyle()'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x2f30): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofEndShape(bool)':
+ofGraphics.cpp:(.text+0x3bc0): multiple definition of `ofEndShape(bool)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x3bc0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofVertex(float, float)':
+ofGraphics.cpp:(.text+0x40e0): multiple definition of `ofVertex(float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x40e0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofBezierVertex(float, float, float, float, float, float)':
+ofGraphics.cpp:(.text+0x4170): multiple definition of `ofBezierVertex(float, float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x4170): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofCurveVertex(ofPoint&)':
+ofGraphics.cpp:(.text+0x44f0): multiple definition of `ofCurveVertex(ofPoint&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x44f0): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofVertex(ofPoint&)':
+ofGraphics.cpp:(.text+0x4500): multiple definition of `ofVertex(ofPoint&)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x4500): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofBezier(float, float, float, float, float, float, float, float)':
+ofGraphics.cpp:(.text+0x4510): multiple definition of `ofBezier(float, float, float, float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x4510): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofCurve(float, float, float, float, float, float, float, float)':
+ofGraphics.cpp:(.text+0x4800): multiple definition of `ofCurve(float, float, float, float, float, float, float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x4800): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofCurveVertex(float, float)':
+ofGraphics.cpp:(.text+0x4d10): multiple definition of `ofCurveVertex(float, float)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x4d10): first defined here
+obj/Release/openFrameworks/graphics/ofGraphics.o: In function `ofNextContour(bool)':
+ofGraphics.cpp:(.text+0x52a0): multiple definition of `ofNextContour(bool)'
+obj/Release/openFrameworks/graphics/ofGraphics.o:ofGraphics.cpp:(.text+0x52a0): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyKeyReleased(int)':
+ofEvents.cpp:(.text+0x280): multiple definition of `ofNotifyKeyReleased(int)'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0x280): first defined here
+obj/Release/openFrameworks/events/ofEvents.o:(.bss+0x0): multiple definition of `ofEvents'
+obj/Release/openFrameworks/events/ofEvents.o:(.bss+0x0): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyKeyPressed(int)':
+ofEvents.cpp:(.text+0x2c0): multiple definition of `ofNotifyKeyPressed(int)'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0x2c0): first defined here
+obj/Release/openFrameworks/events/ofEvents.o:(.bss+0xa18): multiple definition of `voidEventArgs'
+obj/Release/openFrameworks/events/ofEvents.o:(.bss+0xa18): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifySetup()':
+ofEvents.cpp:(.text+0x5e0): multiple definition of `ofNotifySetup()'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0x5e0): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyUpdate()':
+ofEvents.cpp:(.text+0x610): multiple definition of `ofNotifyUpdate()'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0x610): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyDraw()':
+ofEvents.cpp:(.text+0x640): multiple definition of `ofNotifyDraw()'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0x640): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyExit()':
+ofEvents.cpp:(.text+0x670): multiple definition of `ofNotifyExit()'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0x670): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyMouseMoved(int, int)':
+ofEvents.cpp:(.text+0x920): multiple definition of `ofNotifyMouseMoved(int, int)'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0x920): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyMouseDragged(int, int, int)':
+ofEvents.cpp:(.text+0x9a0): multiple definition of `ofNotifyMouseDragged(int, int, int)'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0x9a0): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyMouseReleased(int, int, int)':
+ofEvents.cpp:(.text+0xa30): multiple definition of `ofNotifyMouseReleased(int, int, int)'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0xa30): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyMousePressed(int, int, int)':
+ofEvents.cpp:(.text+0xad0): multiple definition of `ofNotifyMousePressed(int, int, int)'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0xad0): first defined here
+obj/Release/openFrameworks/events/ofEvents.o: In function `ofNotifyWindowResized(int, int)':
+ofEvents.cpp:(.text+0xb60): multiple definition of `ofNotifyWindowResized(int, int)'
+obj/Release/openFrameworks/events/ofEvents.o:ofEvents.cpp:(.text+0xb60): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o: In function `ofSoundStreamStart()':
+ofSoundStream.cpp:(.text+0x30): multiple definition of `ofSoundStreamStart()'
+obj/Release/openFrameworks/sound/ofSoundStream.o:ofSoundStream.cpp:(.text+0x30): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o:(.bss+0x0): multiple definition of `audio'
+obj/Release/openFrameworks/sound/ofSoundStream.o:(.bss+0x0): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o: In function `ofSoundStreamStop()':
+ofSoundStream.cpp:(.text+0x90): multiple definition of `ofSoundStreamStop()'
+obj/Release/openFrameworks/sound/ofSoundStream.o:ofSoundStream.cpp:(.text+0x90): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o: In function `ofSoundStreamClose()':
+ofSoundStream.cpp:(.text+0xf0): multiple definition of `ofSoundStreamClose()'
+obj/Release/openFrameworks/sound/ofSoundStream.o:ofSoundStream.cpp:(.text+0xf0): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o: In function `ofSoundStreamSetup(int, int, ofBaseApp*, int, int, int)':
+ofSoundStream.cpp:(.text+0x180): multiple definition of `ofSoundStreamSetup(int, int, ofBaseApp*, int, int, int)'
+obj/Release/openFrameworks/sound/ofSoundStream.o:ofSoundStream.cpp:(.text+0x180): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o:(.bss+0x8): multiple definition of `nInputChannels'
+obj/Release/openFrameworks/sound/ofSoundStream.o:(.bss+0x8): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o:(.bss+0xc): multiple definition of `nOutputChannels'
+obj/Release/openFrameworks/sound/ofSoundStream.o:(.bss+0xc): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o: In function `receiveAudioBufferAndCallSimpleApp(void*, void*, unsigned int, double, unsigned int, void*)':
+ofSoundStream.cpp:(.text+0x1370): multiple definition of `receiveAudioBufferAndCallSimpleApp(void*, void*, unsigned int, double, unsigned int, void*)'
+obj/Release/openFrameworks/sound/ofSoundStream.o:ofSoundStream.cpp:(.text+0x1370): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o: In function `ofSoundStreamSetup(int, int, int, int, int)':
+ofSoundStream.cpp:(.text+0x410): multiple definition of `ofSoundStreamSetup(int, int, int, int, int)'
+obj/Release/openFrameworks/sound/ofSoundStream.o:ofSoundStream.cpp:(.text+0x410): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o: In function `ofSoundStreamSetup(int, int, ofBaseApp*)':
+ofSoundStream.cpp:(.text+0x420): multiple definition of `ofSoundStreamSetup(int, int, ofBaseApp*)'
+obj/Release/openFrameworks/sound/ofSoundStream.o:ofSoundStream.cpp:(.text+0x420): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o: In function `ofSoundStreamListDevices()':
+ofSoundStream.cpp:(.text+0x440): multiple definition of `ofSoundStreamListDevices()'
+obj/Release/openFrameworks/sound/ofSoundStream.o:ofSoundStream.cpp:(.text+0x440): first defined here
+obj/Release/openFrameworks/sound/ofSoundStream.o:(.bss+0x10): multiple definition of `audioEventArgs'
+obj/Release/openFrameworks/sound/ofSoundStream.o:(.bss+0x10): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::ofSoundPlayer()':
+ofSoundPlayer.cpp:(.text+0x0): multiple definition of `ofSoundPlayer::ofSoundPlayer()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::ofSoundPlayer()':
+ofSoundPlayer.cpp:(.text+0x40): multiple definition of `ofSoundPlayer::ofSoundPlayer()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x40): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::getSpeed()':
+ofSoundPlayer.cpp:(.text+0x80): multiple definition of `ofSoundPlayer::getSpeed()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x80): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::getPan()':
+ofSoundPlayer.cpp:(.text+0x90): multiple definition of `ofSoundPlayer::getPan()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x90): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::setMultiPlay(bool)':
+ofSoundPlayer.cpp:(.text+0xa0): multiple definition of `ofSoundPlayer::setMultiPlay(bool)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0xa0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::stop()':
+ofSoundPlayer.cpp:(.text+0xe0): multiple definition of `ofSoundPlayer::stop()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0xe0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::play()':
+ofSoundPlayer.cpp:(.text+0xf0): multiple definition of `ofSoundPlayer::play()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0xf0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundUpdate()':
+ofSoundPlayer.cpp:(.text+0x1b0): multiple definition of `ofSoundUpdate()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x1b0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x0): multiple definition of `bFmodInitialized'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::getIsPlaying()':
+ofSoundPlayer.cpp:(.text+0x1d0): multiple definition of `ofSoundPlayer::getIsPlaying()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x1d0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::setLoop(bool)':
+ofSoundPlayer.cpp:(.text+0x200): multiple definition of `ofSoundPlayer::setLoop(bool)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x200): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::setSpeed(float)':
+ofSoundPlayer.cpp:(.text+0x250): multiple definition of `ofSoundPlayer::setSpeed(float)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x250): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::setPaused(bool)':
+ofSoundPlayer.cpp:(.text+0x290): multiple definition of `ofSoundPlayer::setPaused(bool)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x290): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::setPan(float)':
+ofSoundPlayer.cpp:(.text+0x2e0): multiple definition of `ofSoundPlayer::setPan(float)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x2e0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::getPosition()':
+ofSoundPlayer.cpp:(.text+0x320): multiple definition of `ofSoundPlayer::getPosition()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x320): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::setPosition(float)':
+ofSoundPlayer.cpp:(.text+0x380): multiple definition of `ofSoundPlayer::setPosition(float)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x380): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::setVolume(float)':
+ofSoundPlayer.cpp:(.text+0x3d0): multiple definition of `ofSoundPlayer::setVolume(float)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x3d0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::unloadSound()':
+ofSoundPlayer.cpp:(.text+0x410): multiple definition of `ofSoundPlayer::unloadSound()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x410): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::~ofSoundPlayer()':
+ofSoundPlayer.cpp:(.text+0x440): multiple definition of `ofSoundPlayer::~ofSoundPlayer()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x440): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::~ofSoundPlayer()':
+ofSoundPlayer.cpp:(.text+0x460): multiple definition of `ofSoundPlayer::~ofSoundPlayer()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x460): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::closeFmod()':
+ofSoundPlayer.cpp:(.text+0x480): multiple definition of `ofSoundPlayer::closeFmod()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x480): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::initializeFmod()':
+ofSoundPlayer.cpp:(.text+0x4b0): multiple definition of `ofSoundPlayer::initializeFmod()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x4b0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::~ofSoundPlayer()':
+ofSoundPlayer.cpp:(.text+0x510): multiple definition of `ofSoundPlayer::~ofSoundPlayer()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x510): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundGetSpectrum(int)':
+ofSoundPlayer.cpp:(.text+0x530): multiple definition of `ofSoundGetSpectrum(int)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0x530): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x8020): multiple definition of `fftInterpValues'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x8020): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x10020): multiple definition of `fftSpectrum'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x10020): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x20): multiple definition of `fftValues'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x20): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundSetVolume(float)':
+ofSoundPlayer.cpp:(.text+0xde0): multiple definition of `ofSoundSetVolume(float)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0xde0): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundStopAll()':
+ofSoundPlayer.cpp:(.text+0xe10): multiple definition of `ofSoundStopAll()'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0xe10): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o: In function `ofSoundPlayer::loadSound(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, bool)':
+ofSoundPlayer.cpp:(.text+0xe30): multiple definition of `ofSoundPlayer::loadSound(std::basic_string<char, std::char_traits<char>, std::allocator<char> >, bool)'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:ofSoundPlayer.cpp:(.text+0xe30): first defined here
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x1): multiple definition of `bUseSpectrum'
+obj/Release/openFrameworks/sound/ofSoundPlayer.o:(.bss+0x1): first defined here
+collect2: ld returned 1 exit status
+make: *** [../../lib/linux64/libopenFrameworks.a] Error 1

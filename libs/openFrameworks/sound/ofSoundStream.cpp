@@ -1,21 +1,32 @@
 #include "ofSoundStream.h"
-#include "RtAudio.h"
+#include "portaudio.h"
+#include "ofUtils.h"
 
 //----------------------------------- static variables:
-static ofBaseApp 	* 		OFSAptr = NULL;
-RtAudio				*		audio = NULL;
+static ofBaseApp 	* 		OFSAptr;
+PaStream 			*		stream;
 int 						nInputChannels;
 int 						nOutputChannels;
 ofAudioEventArgs 			audioEventArgs;
 
 
-int receiveAudioBufferAndCallSimpleApp(void *outputBuffer, void *inputBuffer, unsigned int bufferSize,
-           double streamTime, RtAudioStreamStatus status, void *data);
+int receiveAudioBufferAndCallSimpleApp(const void *inputBuffer,
+        void *outputBuffer,
+        unsigned long bufferSize,
+        const PaStreamCallbackTimeInfo* streamTime,
+        PaStreamCallbackFlags status,
+        void *data );
+//(void *outputBuffer, void *inputBuffer, unsigned int bufferSize,
+//           double streamTime, RtAudioStreamStatus status, void *data);
 
 
 //------------------------------------------------------------------------------
-int receiveAudioBufferAndCallSimpleApp(void *outputBuffer, void *inputBuffer, unsigned int bufferSize,
-           double streamTime, RtAudioStreamStatus status, void *data){
+int receiveAudioBufferAndCallSimpleApp(const void *inputBuffer,
+        void *outputBuffer,
+        unsigned long bufferSize,
+        const PaStreamCallbackTimeInfo* streamTime,
+        PaStreamCallbackFlags status,
+        void *data ){
 
 
 	if ( status ) std::cout << "Stream over/underflow detected." << std::endl;
@@ -33,19 +44,19 @@ int receiveAudioBufferAndCallSimpleApp(void *outputBuffer, void *inputBuffer, un
 
 
 	if (nInputChannels > 0){
-		if(OFSAptr) OFSAptr->audioReceived(fPtrIn, bufferSize, nInputChannels);
+		if(OFSAptr)OFSAptr->audioReceived(fPtrIn, bufferSize, nInputChannels);
+		memset(fPtrIn, 0, bufferSize * nInputChannels * sizeof(float));
 		#ifdef OF_USING_POCO
 			audioEventArgs.buffer = fPtrIn;
 			audioEventArgs.bufferSize = bufferSize;
 			audioEventArgs.nChannels = nInputChannels;
 			ofNotifyEvent( ofEvents.audioReceived, audioEventArgs );
 		#endif
-		memset(fPtrIn, 0, bufferSize * nInputChannels * sizeof(float));
 	}
 
 
 	if (nOutputChannels > 0) {
-		if(OFSAptr) OFSAptr->audioRequested(fPtrOut, bufferSize, nOutputChannels);
+		if(OFSAptr)OFSAptr->audioRequested(fPtrOut, bufferSize, nOutputChannels);
 		#ifdef OF_USING_POCO
 			audioEventArgs.buffer = fPtrOut;
 			audioEventArgs.bufferSize = bufferSize;
@@ -75,103 +86,80 @@ void ofSoundStreamSetup(int nOutputs, int nInputs, ofBaseApp * OFSA, int sampleR
 	bufferSize = ofNextPow2(bufferSize);	// must be pow2
 
 
-	try {
-		audio = new RtAudio();
-	}	catch (RtError &error) {
-		error.printMessage();
-		//std::exit(EXIT_FAILURE); // need case here
-	}
+	PaError err;
+	err = Pa_Initialize();
+	if( err != paNoError )
+		ofLog(OF_LOG_ERROR,"PortAudio error: %s\n",Pa_GetErrorText( err ));
 
 
-	RtAudio::StreamParameters * outputParameters=NULL;
-	if(nOutputChannels >0){
-		outputParameters = new RtAudio::StreamParameters();
-		outputParameters->deviceId = audio->getDefaultOutputDevice();
-		outputParameters->nChannels = nOutputChannels;
-	}
+	err = Pa_OpenDefaultStream( &stream,
+									nInputChannels,          /* no input channels */
+									nOutputChannels,          /* stereo output */
+									paFloat32,  /* 64 bit floating point output */
+									sampleRate,
+									bufferSize,        /* frames per buffer, i.e. the number
+													   of sample frames that PortAudio will
+													   request from the callback. Many apps
+													   may want to use
+													   paFramesPerBufferUnspecified, which
+													   tells PortAudio to pick the best,
+													   possibly changing, buffer size.*/
+									&receiveAudioBufferAndCallSimpleApp, /* this is your callback function */
+									NULL ); /*This is a pointer that will be passed to
+													   your callback*/
 
-	RtAudio::StreamParameters * inputParameters = NULL;
-	if(nInputChannels>0){
-		inputParameters = new RtAudio::StreamParameters;
-		inputParameters->deviceId = audio->getDefaultInputDevice();
-		inputParameters->nChannels = nInputChannels;
-	}
+	err = Pa_StartStream( stream );
+    if( err != paNoError )
+    	ofLog(OF_LOG_ERROR,"PortAudio error: %s\n",Pa_GetErrorText( err ));
 
-	unsigned int bufferFrames = (unsigned int)bufferSize; // 256 sample frames
-
-	RtAudio::StreamOptions options;
-	options.flags = RTAUDIO_SCHEDULE_REALTIME;
-	options.numberOfBuffers = nBuffers;
-	options.priority = 1;
-
-	try {
-
-		audio ->openStream( outputParameters, inputParameters, RTAUDIO_FLOAT32,
-							sampleRate, &bufferFrames, &receiveAudioBufferAndCallSimpleApp, &options);
-		audio->startStream();
-	} catch (RtError &error) {
-		error.printMessage();
-	}
 
 }
 
 //---------------------------------------------------------
 void ofSoundStreamStop(){
-	try {
-    	audio->stopStream();
-  	} catch (RtError &error) {
-   		error.printMessage();
- 	}
+	int err = Pa_StopStream(stream);
+    if( err != paNoError )
+    	ofLog(OF_LOG_ERROR,"PortAudio error: %s\n",Pa_GetErrorText( err ));
 }
 
 
 
 //---------------------------------------------------------
 void ofSoundStreamStart(){
-	try{
-		audio->startStream();
-	} catch (RtError &error) {
-		error.printMessage();
-	}
+	int err = Pa_StartStream( stream );
+    if( err != paNoError )
+    	ofLog(OF_LOG_ERROR,"PortAudio error: %s\n",Pa_GetErrorText( err ));
 }
 
 
 //---------------------------------------------------------
 void ofSoundStreamClose(){
-	if(!audio) return;
-	try {
-    	audio->stopStream();
-    	audio->closeStream();
-  	} catch (RtError &error) {
-   		error.printMessage();
- 	}
-	delete audio;
+	int err = Pa_Terminate();
+	if( err != paNoError )
+    	ofLog(OF_LOG_ERROR,"PortAudio error: %s\n",Pa_GetErrorText( err ));
 }
 
 
 //---------------------------------------------------------
 void ofSoundStreamListDevices(){
-	RtAudio *audioTemp = 0;
-	try {
-		audioTemp = new RtAudio();
-	} catch (RtError &error) {
-		error.printMessage();
-	}
- 	int devices = audioTemp->getDeviceCount();
-	RtAudio::DeviceInfo info;
-	for (int i=0; i< devices; i++) {
-		try {
-			info = audioTemp->getDeviceInfo(i);
-		} catch (RtError &error) {
-			error.printMessage();
-			break;
-		}
-		std::cout << "device = " << i << " (" << info.name << ")\n";
-		if (info.isDefaultInput) std::cout << "----* default ----* \n";
-		std::cout << "maximum output channels = " << info.outputChannels << "\n";
-		std::cout << "maximum input channels = " << info.inputChannels << "\n";
-		std::cout << "-----------------------------------------\n";
+	int numDevices;
 
+	numDevices = Pa_GetDeviceCount();
+	if( numDevices < 0 )
+	{
+    	ofLog(OF_LOG_ERROR,"PortAudio error: %s\n",Pa_GetErrorText( numDevices ));
+    	return;
 	}
-	delete audioTemp;
+	const   PaDeviceInfo *deviceInfo;
+
+	for( int i=0; i<numDevices; i++ )
+	{
+		deviceInfo = Pa_GetDeviceInfo( i );
+		cout << deviceInfo->name << endl;
+		cout << "api: " << deviceInfo->hostApi << endl;
+		cout << "max in channels" << deviceInfo->maxInputChannels << endl;
+		cout << "max out channels" << deviceInfo->maxOutputChannels << endl;
+		cout << "default sample rate:" << deviceInfo->defaultSampleRate << endl;
+	}
+
 }
