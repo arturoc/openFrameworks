@@ -12,7 +12,9 @@ public:
 	bool rendersPathDirectly(){
 		return false;
 	}
-
+	bool needsCopyPerShape(){
+		return true;
+	}
 private:
 	vector<ofVboMesh> vbos;
 	ofVbo vboOutline;

@@ -70,6 +70,16 @@ static ofShape shape;
 static ofBaseRenderer * renderer = new ofVARenderer;
 
 void ofSetDefaultRenderer(ofBaseRenderer * renderer_){
+	if(renderer_->needsCopyPerShape()){
+		ofLogError("of") << "this renderer needs to be set for each individual shape/path not as the default renderer";
+		if(renderer){
+			ofLogError("of") << "using previous default renderer instead";
+			return;
+		}else{
+			ofLogError("of") << "using ofVARenderer instead";
+			return;
+		}
+	}
 	if(renderer) delete renderer;
 	renderer = renderer_;
 }

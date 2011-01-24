@@ -192,6 +192,7 @@ class ofBaseRenderer{
 public:
 	virtual ~ofBaseRenderer(){}
 	virtual bool rendersPathDirectly()=0;
+	virtual bool needsCopyPerShape(){return false;}
 	virtual void draw(ofShape & shape)=0;
 	virtual void draw(ofPath & shape)=0;
 };
