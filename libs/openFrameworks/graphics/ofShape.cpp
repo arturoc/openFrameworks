@@ -47,7 +47,8 @@ void ofShape::clear(){
 		paths.clear();
 		hasChanged = true;
 	}else{
-		polylines.clear();
+		polylines.resize(1);
+		polylines[0].clear();
 		bNeedsTessellation = true;
 	}
 }
@@ -57,6 +58,32 @@ void ofShape::newPath(){
 		paths.push_back(ofPath());
 	}else{
 		polylines.push_back(ofPolyline());
+	}
+}
+
+void ofShape::addVertex( const ofPoint& p ){
+	if(mode==PATHS){
+		lastPath().addCommand(ofPath::Command(ofPath::Command::lineTo,p));
+		hasChanged = true;
+	}else{
+		lastPolyline().addVertex(p);
+		bNeedsTessellation = true;
+	}
+}
+
+void ofShape::addVertex( float x, float y, float z=0 ){
+	addVertex(ofPoint(x,y,z));
+}
+
+void ofShape::addVertexes( const vector<ofPoint>& verts ){
+	if(mode==PATHS){
+		for(int i=0;i<verts.size();i++){
+			lastPath().addCommand(ofPath::Command(ofPath::Command::lineTo,verts[i]));
+		}
+		hasChanged = true;
+	}else{
+		lastPolyline().addVertexes(verts);
+		bNeedsTessellation = true;
 	}
 }
 

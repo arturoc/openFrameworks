@@ -80,6 +80,10 @@ public:
 	// closes current path, next command starts a new one
 	void close();
 
+	void addVertex( const ofPoint& p );
+	void addVertex( float x, float y, float z=0 );
+	void addVertexes( const vector<ofPoint>& verts );
+
 	void lineTo(const ofPoint & p);
 	void lineTo(float x, float y);
 	void lineTo(float x, float y, float z);
