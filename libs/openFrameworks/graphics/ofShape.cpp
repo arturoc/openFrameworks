@@ -71,7 +71,7 @@ void ofShape::addVertex( const ofPoint& p ){
 	}
 }
 
-void ofShape::addVertex( float x, float y, float z=0 ){
+void ofShape::addVertex( float x, float y, float z){
 	addVertex(ofPoint(x,y,z));
 }
 
