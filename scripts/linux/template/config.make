@@ -19,16 +19,15 @@ USER_CFLAGS =
 
 USER_LDFLAGS = 
 
+# android specific, in case you want to use different optimizations
+USER_LIBS_ARM = 
+USER_LIBS_ARM7 = 
+USER_LIBS_NEON = 
 
-# use this to add system libraries for example:
-# USER_LIBS = -lpango
- 
-USER_LIBS =
+# android optimizations
+
+ANDROID_COMPILER_OPTIMIZATION = -Os
+NDK_PLATFORM = android-8
 
 
-# change this to add different compiler optimizations to your project
-
-USER_COMPILER_OPTIMIZATION = -march=native -mtune=native -Os
-
-
-EXCLUDE_FROM_SOURCE="bin,.xcodeproj,obj,.git"
+EXCLUDE_FROM_SOURCE="bin,.xcodeproj,obj"
