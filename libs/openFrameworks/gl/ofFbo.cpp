@@ -458,17 +458,19 @@ void ofFbo::allocate(Settings _settings) {
 			stencilBuffer = createAndAttachRenderbuffer(settings.depthStencilInternalFormat, depthAttachment);
 		}
 	}else{
-		createAndAttachDepthStencilTexture(settings.textureTarget,settings.depthStencilInternalFormat,depthFormat,depthPixelType,depthAttachment);
-#ifdef TARGET_OPENGLES
-		// if there's depth and stencil the texture should be attached as
-		// depth and stencil attachments
-		// http://www.khronos.org/registry/gles/extensions/OES/OES_packed_depth_stencil.txt
-		if(settings.useDepth && settings.useStencil){
-	        glFramebufferTexture2D(GL_FRAMEBUFFER,
-	                               GL_STENCIL_ATTACHMENT,
-	                               GL_TEXTURE_2D, depthBufferTex.texData.textureID, 0);
+		if(settings.useDepth || settings.useStencil){
+			createAndAttachDepthStencilTexture(settings.textureTarget,settings.depthStencilInternalFormat,depthFormat,depthPixelType,depthAttachment);
+			#ifdef TARGET_OPENGLES
+				// if there's depth and stencil the texture should be attached as
+				// depth and stencil attachments
+				// http://www.khronos.org/registry/gles/extensions/OES/OES_packed_depth_stencil.txt
+				if(settings.useDepth && settings.useStencil){
+					glFramebufferTexture2D(GL_FRAMEBUFFER,
+										   GL_STENCIL_ATTACHMENT,
+										   GL_TEXTURE_2D, depthBufferTex.texData.textureID, 0);
+				}
+			#endif
 		}
-#endif
 	}
 
 	// if we want MSAA, create a new fbo for textures
