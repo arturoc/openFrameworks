@@ -28,18 +28,15 @@ printf("setup()\n");
 		curveVertices[i].bBeingDragged 	= false;
 		curveVertices[i].radius = 4;
 	}
-printf("setup() done\n");
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-printf("update()\n");
 
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-printf("draw\n");
 	ofFill();
 	ofSetHexColor(0xe0be21);
 
@@ -61,7 +58,6 @@ printf("draw\n");
 		ofVertex(50,25);
 	ofEndShape();
 	
-printf("poly winding odd\n");
 	
 	//------(b)--------------------------------------
 	// 
@@ -400,7 +396,6 @@ printf("poly winding odd\n");
 	
 	ofSetHexColor(0x000000);
 	ofDrawBitmapString("(i) ofNextContour\ncan even be used for CSG operations\nsuch as union and intersection", 260,620);
-printf("draw done\n");	
 }
 
 //--------------------------------------------------------------

@@ -1,5 +1,6 @@
 #include "ofAppGlutWindow.h"
-#ifndef TARGET_OPENGLES
+
+#if defined( TARGET_ARMV7L_GENERIC ) || !defined( TARGET_OPENGLES )
 #include "ofBaseApp.h"
 #include "ofEvents.h"
 #include "ofUtils.h"
@@ -15,8 +16,12 @@
 	#include "../../../libs/glut/lib/osx/GLUT.framework/Versions/A/Headers/glut.h"
 	#include <Carbon/Carbon.h>
 #endif
-#if defined( TARGET_LINUX) && !defined(TARGET_ARMV7L_GENERIC)
-	#include <GL/glut.h>
+#if defined( TARGET_LINUX) 
+	#ifndef TARGET_ARMV7L_GENERIC
+		#include <GL/glut.h>
+	#else
+		#include "glutes.h"
+	#endif
 #endif
 
 

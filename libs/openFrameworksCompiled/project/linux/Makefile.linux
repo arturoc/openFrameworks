@@ -2,7 +2,9 @@
 ifeq ($(ARCH),armv7l)
 	LIBSPATH=linuxarmv7l
 	COMPILER_OPTIMIZATION=$(LINUX_ARM7_COMPILER_OPTIMIZATIONS)
+	SYSTEMLIBS += -lglutes -lGLESv1_CM
 else
+	SYSTEMLIBS += -lglut -lGL $(shell pkg-config glew --libs)
 	ifeq ($(ARCH),x86_64)
 		LIBSPATH=linux64
 		COMPILER_OPTIMIZATION=$(USER_COMPILER_OPTIMIZATION)
@@ -31,8 +33,8 @@ endif
 
 
 LDFLAGS = -Wl,-rpath=./libs
-SYSTEMLIBS += $(shell pkg-config glew gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 gstreamer-app-0.10 libudev --libs)
-SYSTEMLIBS += -lglut -lGL -lasound -lopenal -lsndfile -lvorbis -lFLAC -logg -lfreeimage
+SYSTEMLIBS += $(shell pkg-config gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 gstreamer-app-0.10 libudev --libs)
+SYSTEMLIBS +=  -lasound -lopenal -lsndfile -lvorbis -lFLAC -logg -lfreeimage
 
 ifeq ($(findstring Debug,$(MAKECMDGOALS)),Debug)
 	TARGET_NAME = Debug

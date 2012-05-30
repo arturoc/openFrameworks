@@ -1,0 +1,19 @@
+basic howto for Pandaboard:
+
+. download ubuntu-11.10-preinstalled-desktop-armel+omap4.img.gz , extract to SDCard and follow the install 
+procedure as per https://wiki.ubuntu.com/ARM/OMAP 
+
+. once installed drop to a terminal and install ubuntu-omap4-extras and ubuntu-omap4-extras-graphics-dev
+
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:tiomap-dev/release
+sudo apt-get update
+sudo apt-get install ubuntu-omap4-extras ubuntu-omap4-extras-graphics-dev
+
+. install additional packages for convenience
+
+sudo apt-get install openssh-server synergy vim git bash-completion
+
+. clone openFrameworks, run scripts/linuxARM/ubuntu/install_dependencies.sh
+
+
