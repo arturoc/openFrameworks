@@ -46,6 +46,8 @@ public:
 	bool isLoaded();
 	float getVolume();
 
+	ofSoundBuffer & getCurrentBuffer();
+
 	ofEvent<ofSoundBuffer> resampledBufferE;
 
 private:

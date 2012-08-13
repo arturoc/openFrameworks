@@ -205,3 +205,8 @@ void ofBasicSoundPlayer::audioOut(float * output, int bSize, int nChannels, int 
 		}
 	}
 }
+
+
+ofSoundBuffer & ofBasicSoundPlayer::getCurrentBuffer(){
+	return buffer;
+}
