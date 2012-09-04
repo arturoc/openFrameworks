@@ -1,6 +1,12 @@
 #pragma once
 
-#include "ofxGuiGroup.h"
+#include "ofxBaseGui.h"
+#include "ofConstants.h"
+#include "ofxSlider.h"
+#include "ofxButton.h"
+#include "ofxToggle.h"
+#include "ofRectangle.h"
+#include "ofImage.h"
 
 class ofxGuiGroup;
 
