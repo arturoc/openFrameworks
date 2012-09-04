@@ -7,6 +7,7 @@
 #include "ofxToggle.h"
 #include "ofRectangle.h"
 #include "ofImage.h"
+#include "ofxGuiGroup.h"
 
 class ofxGuiGroup;
 
