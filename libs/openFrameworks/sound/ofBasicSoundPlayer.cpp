@@ -15,6 +15,9 @@ bool ofBasicSoundPlayer::initialized = false;
 int ofBasicSoundPlayer::samplerate = 44100;
 int ofBasicSoundPlayer::bufferSize = 256;
 int ofBasicSoundPlayer::channels = 2;
+int ofBasicSoundPlayer::maxSoundsTotal=128;
+int ofBasicSoundPlayer::maxSoundsPerPlayer=16;
+
 
 ofBasicSoundPlayer::ofBasicSoundPlayer() {
 	volume = 1;
@@ -29,6 +32,7 @@ ofBasicSoundPlayer::ofBasicSoundPlayer() {
 	volumesLeft.resize(1,1);
 	volumesRight.resize(1,1);
 	pan = 0;
+	maxSounds = maxSoundsPerPlayer;
 }
 
 ofBasicSoundPlayer::~ofBasicSoundPlayer() {
@@ -73,7 +77,7 @@ void ofBasicSoundPlayer::unloadSound(){
 void ofBasicSoundPlayer::play(){
 	if(!multiplay || !isPlaying){
 		positions.back() = 0;
-	}else{
+	}else if(maxSounds>(int)positions.size()){
 		positions.push_back(0);
 		relativeSpeed.push_back(speed*(double(soundFile.getSampleRate())/double(samplerate)));
 		float left,right;
@@ -185,6 +189,7 @@ void ofBasicSoundPlayer::audioOut(float * output, int bSize, int nChannels, int 
 		if(streaming){
 			soundFile.readTo(buffer,bufferSize);
 			buffer.stereoPan(volumesLeft.back(),volumesRight.back());
+			newBufferE.notify(this,buffer);
 			buffer.copyTo(output,bufferSize,channels,0);
 		}else{
 			for(int i=0;i<(int)positions.size();i++){
@@ -194,7 +199,7 @@ void ofBasicSoundPlayer::audioOut(float * output, int bSize, int nChannels, int 
 					buffer.resampleTo(resampledBuffer,positions[i],bufferSize,relativeSpeed[i],loop);
 				}
 				resampledBuffer.stereoPan(volumesLeft[i],volumesRight[i]);
-				//resampledBufferE.notify(this,resampledBuffer);
+				newBufferE.notify(this,resampledBuffer);
 				resampledBuffer.addTo(output,bufferSize,channels,0,loop);
 			}
 			updatePositions(bufferSize);
@@ -206,7 +211,26 @@ void ofBasicSoundPlayer::audioOut(float * output, int bSize, int nChannels, int 
 	}
 }
 
-
 ofSoundBuffer & ofBasicSoundPlayer::getCurrentBuffer(){
-	return buffer;
+	if(streaming){
+		return buffer;
+	}else{
+		return resampledBuffer;
+	}
+}
+
+ofSoundStream & ofBasicSoundPlayer::getSoundStream(){
+	return stream;
+}
+
+void ofBasicSoundPlayer::setMaxSoundsTotal(int max){
+	maxSoundsTotal = max;
+}
+
+void ofBasicSoundPlayer::setMaxSoundsPerPlayer(int max){
+	maxSoundsPerPlayer = max;
+}
+
+void ofBasicSoundPlayer::setMaxSounds(int max){
+	maxSounds = max;
 }

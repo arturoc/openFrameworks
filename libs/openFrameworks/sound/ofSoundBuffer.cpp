@@ -43,7 +43,7 @@ int ofSoundBuffer::getNumChannels() const{
 }
 
 unsigned long ofSoundBuffer::getDuration() const{
-	return bufferSize()*1000/samplerate;
+	return float(bufferSize()*1000)/float(samplerate);
 }
 
 int ofSoundBuffer::getSampleRate() const{
@@ -230,10 +230,10 @@ void ofSoundBuffer::linearResampleTo(ofSoundBuffer & resBuffer, unsigned int sam
 	resBuffer.setNumChannels(channels);
 	resBuffer.setSampleRate(samplerate);
 	unsigned int start = sampleBegin;
-	unsigned int end = start*channels + float(numsamples*channels)*speed;
-	float position = start;
+	unsigned int end = start*channels + double(numsamples*channels)*speed;
+	double position = start;
 	unsigned int intPosition = position;
-	float increment = speed;
+	double increment = speed;
 	unsigned int copySize = channels*sizeof(float);
 	unsigned int to;
 	float a,b;
@@ -245,7 +245,7 @@ void ofSoundBuffer::linearResampleTo(ofSoundBuffer & resBuffer, unsigned int sam
 	}else{
 		to = float(bufferSize()-2-sampleBegin)/speed;
 	}
-	float remainder = position - intPosition;
+	double remainder = position - intPosition;
 	float * resBufferPtr = &resBuffer[0];
 
 	for(unsigned int i=0;i<to;i++){
@@ -284,15 +284,15 @@ void ofSoundBuffer::linearResampleTo(ofSoundBuffer & resBuffer, unsigned int sam
 // based on maximilian optimized for performance.
 // might loose 1 to 3 samples when it reaches the end of the buffer
 void ofSoundBuffer::hermiteResampleTo(ofSoundBuffer & resBuffer, unsigned int sampleBegin, unsigned int numsamples, float speed, bool loop){
-	resBuffer.resize((unsigned int)numsamples*channels);
+	resBuffer.resize((unsigned int)numsamples*channels,0);
 	resBuffer.setNumChannels(channels);
 	resBuffer.setSampleRate(samplerate);
 	unsigned int start = sampleBegin;
-	unsigned int end = start*channels + float(numsamples*channels)*speed;
-	float position = start;
+	unsigned int end = start*channels + double(numsamples*channels)*speed;
+	double position = start;
 	unsigned int intPosition = position;
-	float remainder = position - intPosition;
-	float increment = speed;
+	double remainder = position - intPosition;
+	double increment = speed;
 	unsigned int copySize = channels*sizeof(float);
 	unsigned int to;
 
@@ -301,7 +301,7 @@ void ofSoundBuffer::hermiteResampleTo(ofSoundBuffer & resBuffer, unsigned int sa
 	}else if(sampleBegin+3>bufferSize()){
 		to = 0;
 	}else{
-		to = float(bufferSize()-3-sampleBegin)/speed;
+		to = double(bufferSize()-3-sampleBegin)/speed;
 	}
 	float * resBufferPtr = &resBuffer[0];
 
@@ -407,3 +407,23 @@ void ofSoundBuffer::setChannel(const ofSoundBuffer & buffer, int channel){
 		}
 	}
 }
+
+float ofSoundBuffer::getRMSAmplitude(){
+	float rmsAmplitude  = 0;
+	for(unsigned int i=0;i<size();i++){
+		rmsAmplitude += abs(buffer[i]);
+	}
+	rmsAmplitude /= size();
+	return rmsAmplitude;
+}
+
+float ofSoundBuffer::getRMSAmplitudeChannel(unsigned int channel){
+	if(channel>getNumChannels()-1) return 0;
+	float rmsAmplitude  = 0;
+	for(unsigned int i=0;i<bufferSize();i++){
+		rmsAmplitude += abs(buffer[i*getNumChannels()+channel]);
+	}
+	rmsAmplitude /= bufferSize();
+	return rmsAmplitude;
+}
+
