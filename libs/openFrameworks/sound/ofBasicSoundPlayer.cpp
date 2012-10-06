@@ -9,12 +9,6 @@
 #include "ofSoundUtils.h"
 #include <float.h>
 
-ofPtr<ofBaseSoundStream> ofBasicSoundPlayer::stream(new ofSoundStream);
-ofSoundMixer ofBasicSoundPlayer::mixer;
-bool ofBasicSoundPlayer::initialized = false;
-int ofBasicSoundPlayer::samplerate = 44100;
-int ofBasicSoundPlayer::bufferSize = 256;
-int ofBasicSoundPlayer::channels = 2;
 int ofBasicSoundPlayer::maxSoundsTotal=128;
 int ofBasicSoundPlayer::maxSoundsPerPlayer=16;
 
@@ -36,34 +30,43 @@ ofBasicSoundPlayer::ofBasicSoundPlayer() {
 }
 
 ofBasicSoundPlayer::~ofBasicSoundPlayer() {
-	// TODO Auto-generated destructor stub
+	unloadSound();
 }
 
 
 
 bool ofBasicSoundPlayer::loadSound(string fileName, bool _stream){
+	
 	ofLogNotice() << "loading " << fileName;
-	if(!initialized){
-		mixer.setup(bufferSize,channels,samplerate);
-		stream->setup(channels,0,samplerate,bufferSize,4);
-		stream->setOutput(&mixer);
-		initialized = true;
-	}
-	ofLogNotice() << "adding output to mixer ";
-	mixer.addSoundOutput(*this,volume);
+
 	ofLogNotice() << "opening file ";
 	bIsLoaded = soundFile.open(fileName);
 	if(!bIsLoaded) return false;
-	if(!_stream){
-		ofLogNotice() << "reading whole file ";
-		soundFile.readTo(buffer);
-	}else{
-		ofLogNotice() << "resizing buffer ";
-		buffer.resize(bufferSize*channels,0);
-	}
 
 	streaming = _stream;
+	if ( streaming ){
+		speed = 1;
+	}
+	
+	if(!streaming){
+		ofLogNotice() << "reading whole file ";
+		soundFile.readTo(buffer);
+	}// else, buffer will be resized on audioOutBuffersChanged
+
+	ofLogNotice() << "adding output to mixer ";
+	ofSoundMixerGetSystemMixer()->addSoundOutput(*this,volume);
+
 	return true;
+}
+
+void ofBasicSoundPlayer::audioOutBuffersChanged(int nFrames, int nChannels, int sampleRate){
+	if(streaming){
+		ofLogNotice() << "resizing buffer ";
+		buffer.resize(nFrames*nChannels,0);
+	}
+	playerNumFrames = nFrames;
+	playerNumChannels = nChannels;
+	playerSampleRate = sampleRate;
 }
 
 void ofBasicSoundPlayer::unloadSound(){
@@ -72,24 +75,41 @@ void ofBasicSoundPlayer::unloadSound(){
 	isPlaying = false;
 	bIsLoaded = false;
 	positions.resize(1,0);
+	ofSoundMixerGetSystemMixer()->removeSoundOutput(*this);
 }
 
 void ofBasicSoundPlayer::play(){
-	if(!multiplay || !isPlaying){
-		positions.back() = 0;
-	}else if(maxSounds>(int)positions.size()){
-		positions.push_back(0);
-		relativeSpeed.push_back(speed*(double(soundFile.getSampleRate())/double(samplerate)));
-		float left,right;
-		ofStereoVolumes(volume,pan,left,right);
-		volumesLeft.push_back(left);
-		volumesRight.push_back(right);
+	int pos=0;
+	float relSpeed = speed*(double(soundFile.getSampleRate())/double(playerSampleRate));
+	float left,right;
+	ofStereoVolumes(volume,pan,left,right);
+
+	if (multiplay) {
+		if(maxSounds>(int)positions.size()){
+			positions.push_back(pos);
+			relativeSpeed.push_back(relSpeed);
+			volumesLeft.push_back(left);
+			volumesRight.push_back(right);
+		}
+	}else{
+		if (streaming) {
+			soundFile.seekTo(pos);
+		}
+		positions.back() = pos;
+		relativeSpeed.back() = relSpeed;
+		volumesLeft.back() = left;
+		volumesRight.back() = right;
 	}
 	isPlaying = true;
 }
 
 void ofBasicSoundPlayer::stop(){
 	isPlaying = false;
+
+	if (streaming){
+		soundFile.seekTo(0);
+	}
+
 }
 
 
@@ -104,8 +124,12 @@ void ofBasicSoundPlayer::setPan(float _pan){
 }
 
 void ofBasicSoundPlayer::setSpeed(float spd){
+	if ( streaming && fabsf(spd-1.0f)<FLT_EPSILON ){
+		ofLogWarning("ofBasicSoundPlayer") << "setting speed is not supported on streaming sounds";
+		return;
+	}
 	speed = spd;
-	relativeSpeed.back() = speed*(double(soundFile.getSampleRate())/double(samplerate));
+	relativeSpeed.back() = speed*(double(soundFile.getSampleRate())/double(playerSampleRate));
 }
 
 void ofBasicSoundPlayer::setPaused(bool bP){
@@ -127,16 +151,16 @@ void ofBasicSoundPlayer::setMultiPlay(bool bMp){
 }
 
 void ofBasicSoundPlayer::setPosition(float pct){
-	positions.back() = pct*buffer.bufferSize();
+	positions.back() = pct*buffer.getNumFrames();
 }
 
 void ofBasicSoundPlayer::setPositionMS(int ms){
-	setPosition(float(ms)/float(buffer.getDuration()));
+	setPosition(float(ms)/float(buffer.getDurationMS()));
 }
 
 
 float ofBasicSoundPlayer::getPosition(){
-	return float(positions.back())/float(buffer.bufferSize());
+	return float(positions.back())/float(buffer.getNumFrames());
 }
 
 int ofBasicSoundPlayer::getPositionMS(){
@@ -164,17 +188,20 @@ float ofBasicSoundPlayer::getVolume(){
 }
 
 unsigned long ofBasicSoundPlayer::getDurationMS(){
-	return buffer.getDuration();
+	return buffer.getDurationMS();
 }
 
-void ofBasicSoundPlayer::updatePositions(int bufferSize){
+void ofBasicSoundPlayer::updatePositions(int nFrames){
 	for(int i=0;i<(int)positions.size();i++){
-		positions[i] += bufferSize*relativeSpeed[i];
+		// update positions
+		positions[i] += nFrames*relativeSpeed[i];
 		if(loop){
-			positions[i] %= buffer.bufferSize();
+			positions[i] %= buffer.getNumFrames();
 		}else{
-			positions[i] = ofClamp(positions[i],0,buffer.bufferSize());
-			if(positions[i]==buffer.bufferSize()){
+			positions[i] = ofClamp(positions[i],0,buffer.getNumFrames());
+			// finished?
+			if(positions[i]==buffer.getNumFrames()){
+				// yes: remove multiplay instances
 				if(positions.size()>1){
 					positions.erase(positions.begin()+i);
 					relativeSpeed.erase(relativeSpeed.begin()+i);
@@ -185,32 +212,42 @@ void ofBasicSoundPlayer::updatePositions(int bufferSize){
 			}
 		}
 	}
-	if(!loop && positions.size()==1 && positions[0]==buffer.bufferSize()) isPlaying = false;
+	// finished?
+	if(!loop && positions.size()==1 && positions[0]==buffer.getNumFrames()){
+		isPlaying = false;
+	}
 }
 
-void ofBasicSoundPlayer::audioOut(float * output, int bSize, int nChannels, int deviceID, long unsigned long tickCount){
+void ofBasicSoundPlayer::audioOut(ofSoundBuffer& outputBuffer){
+	
+	int nFrames = outputBuffer.getNumFrames();
+	int nChannels = outputBuffer.getNumChannels();
+	
 	if(isPlaying){
 		if(streaming){
-			soundFile.readTo(buffer,bufferSize);
-			buffer.stereoPan(volumesLeft.back(),volumesRight.back());
-			newBufferE.notify(this,buffer);
-			buffer.copyTo(output,bufferSize,channels,0);
+			int samplesRead = soundFile.readTo(buffer,nFrames);
+			if ( samplesRead==0 ){
+				isPlaying=false;
+				soundFile.seekTo(0);
+			}
+			else{
+				buffer.stereoPan(volumesLeft.back(),volumesRight.back());
+				newBufferE.notify(this,buffer);
+				buffer.copyTo(outputBuffer);
+			}
 		}else{
 			for(int i=0;i<(int)positions.size();i++){
+				//assert( resampledBuffer.getNumFrames() == bufferSize*relativeSpeed[i] );
 				if(abs(relativeSpeed[i] - 1)<FLT_EPSILON){
-					buffer.copyTo(resampledBuffer,bufferSize,channels,positions[i],loop);
+					buffer.copyTo(resampledBuffer,nFrames,nChannels,positions[i],loop);
 				}else{
-					buffer.resampleTo(resampledBuffer,positions[i],bufferSize,relativeSpeed[i],loop);
+					buffer.resampleTo(resampledBuffer,positions[i],nFrames,relativeSpeed[i],loop);
 				}
 				resampledBuffer.stereoPan(volumesLeft[i],volumesRight[i]);
 				newBufferE.notify(this,resampledBuffer);
-				resampledBuffer.addTo(output,bufferSize,channels,0,loop);
+				resampledBuffer.addTo(outputBuffer,0,loop);
 			}
-			updatePositions(bufferSize);
-		}
-	}else{
-		for(int i=0;i<bufferSize*nChannels;i++){
-			output[i] = 0;
+			updatePositions(nFrames);
 		}
 	}
 }
@@ -221,15 +258,6 @@ ofSoundBuffer & ofBasicSoundPlayer::getCurrentBuffer(){
 	}else{
 		return resampledBuffer;
 	}
-}
-
-ofPtr<ofBaseSoundStream> ofBasicSoundPlayer::getSoundStream(){
-	return stream;
-}
-
-void ofBasicSoundPlayer::setSoundStream(ofPtr<ofBaseSoundStream> _stream){
-	stream = _stream;
-	stream->setOutput(&mixer);
 }
 
 void ofBasicSoundPlayer::setMaxSoundsTotal(int max){

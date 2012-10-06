@@ -23,7 +23,6 @@ public:
 	ofBasicSoundPlayer();
 	virtual ~ofBasicSoundPlayer();
 
-
 	bool loadSound(string fileName, bool stream = false);
 	void unloadSound();
 	void play();
@@ -48,8 +47,6 @@ public:
 	unsigned long getDurationMS();
 
 	ofSoundBuffer & getCurrentBuffer();
-	static ofPtr<ofBaseSoundStream> getSoundStream();
-	static void setSoundStream(ofPtr<ofBaseSoundStream> stream);
 
 	static void setMaxSoundsTotal(int max);
 	static void setMaxSoundsPerPlayer(int max);
@@ -58,14 +55,12 @@ public:
 	ofEvent<ofSoundBuffer> newBufferE;
 
 private:
-	void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
-	void updatePositions(int bufferSize);
-	static ofPtr<ofBaseSoundStream> stream;
-	static ofSoundMixer mixer;
-	static bool initialized;
-	static int samplerate;
-	static int bufferSize;
-	static int channels;
+	void audioOutBuffersChanged( int nFrames, int nChannels, int sampleRate );
+	void audioOut(ofSoundBuffer& outputBuffer);
+	void updatePositions(int numFrames);
+	
+	int playerSampleRate, playerNumFrames, playerNumChannels;
+	
 	static int maxSoundsTotal;
 	static int maxSoundsPerPlayer;
 	int maxSounds;
@@ -82,7 +77,7 @@ private:
 	vector<float> relativeSpeed;
 	vector<unsigned int> positions;
 	vector<float> volumesLeft;
-	vector<float> volumesRight;
+	vector<float> volumesRight;	
 };
 
 #endif /* OFBASICSOUNDPLAYER_H_ */

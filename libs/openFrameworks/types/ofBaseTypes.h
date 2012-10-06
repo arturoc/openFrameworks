@@ -15,6 +15,7 @@
 #include "ofConstants.h"
 #include "ofColor.h"
 #include "ofMesh.h"
+#include "ofSoundBuffer.h"
 #include "ofPixels.h"
 
 template<typename T>
@@ -130,35 +131,57 @@ class ofBaseSoundInput{
 	public:
         virtual ~ofBaseSoundInput() {};
     
-		virtual void audioIn( float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount ){
-			audioIn(input, bufferSize, nChannels);
+		/// called before audioOut() is called for the first time by a new client
+		virtual void audioInBuffersChanged( int nFrames, int nChannels, int sampleRate ){
+			ofLogWarning("ofBaseSoundInput") << "audioInBuffersChanged not implemented, buffer sizes may be mismatched";
+		}
+		
+		/// called when some new audio is available, inputBuffer contains the audio.
+		virtual void audioIn( ofSoundBuffer& inputBuffer ){
+			int deviceId=0;
+			audioIn( &inputBuffer[0], inputBuffer.getNumFrames(), inputBuffer.getNumChannels(), deviceId, inputBuffer.getTickCount() );
 		}
 
-		virtual void audioIn( float * input, int bufferSize, int nChannels ){  
-			audioReceived(input, bufferSize, nChannels);
+		virtual void audioIn( float * input, int nFrames, int nChannels, int deviceID, long unsigned long tickCount ){
+			audioIn(input, nFrames, nChannels);
 		}
 
-		virtual void audioReceived( float * input, int bufferSize, int nChannels ){}
+		virtual void audioIn( float * input, int nFrames, int nChannels ){  
+			audioReceived(input, nFrames, nChannels);
+		}
+
+		virtual void audioReceived( float * input, int nFrames, int nChannels ){}
 };
 
 //----------------------------------------------------------
-// ofBaseHasSoundStream
+// ofBaseSoundOutput
 //----------------------------------------------------------
 class ofBaseSoundOutput{
 
 	public:
         virtual ~ofBaseSoundOutput() {};
+	
+		/// called before audioOut() is called for the first time by a new client
+		virtual void audioOutBuffersChanged( int nFrames, int nChannels, int sampleRate ){
+			ofLogWarning("ofBaseSoundOutput") << "audioOutBuffersChanged not implemented, buffer sizes may be mismatched";
+		}
+	
+		/// when called, subclasses should fill outputBuffer with the requested amount of audio, in the requested format.
+		virtual void audioOut( ofSoundBuffer& outputBuffer ){
+			int deviceId=0;
+			audioOut( &outputBuffer[0], outputBuffer.getNumFrames(), outputBuffer.getNumChannels(), deviceId, outputBuffer.getTickCount() );
+		}
     
-		virtual void audioOut( float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount  ){
-			audioOut(output, bufferSize, nChannels);
+		virtual void audioOut( float * output, int nFrames, int nChannels, int deviceID, long unsigned long tickCount  ){
+			audioOut(output, nFrames, nChannels);
 		}
 
-		virtual void audioOut( float * output, int bufferSize, int nChannels ){
-			audioRequested(output, bufferSize, nChannels);
+		virtual void audioOut( float * output, int nFrames, int nChannels ){
+			audioRequested(output, nFrames, nChannels);
 		}
 
 		//legacy
-		virtual void audioRequested( float * output, int bufferSize, int nChannels ){
+		virtual void audioRequested( float * output, int nFrames, int nChannels ){
 		}
 };
 
