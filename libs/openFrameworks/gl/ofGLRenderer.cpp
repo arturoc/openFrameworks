@@ -9,15 +9,107 @@
 #include "ofImage.h"
 #include "ofFbo.h"
 
+
+#if defined(TARGET_LINUX)
+# define GET_PROC_ADDRESS(name)  glXGetProcAddressARB((const GLubyte *) #name)
+#elif defined(TARGET_OSX) && !defined(TARGET_OPENGLES)
+# define GET_PROC_ADDRESS(name)  /*nothing*/
+#elif defined(_WIN32)
+# define GET_PROC_ADDRESS(name)  wglGetProcAddress(#name)
+#endif
+
+#ifdef TARGET_OSX
+#define LOAD_PROC(type, name)  /*nothing*/
+#else
+#define LOAD_PROC(type, name) \
+  name = (type) GET_PROC_ADDRESS(name); \
+  if (!name) { \
+    ofLogError() << "failed to GetProcAddress for " << #name; \
+  }
+#endif
+
+#ifndef GLAPIENTRY
+# ifdef _WIN32
+#  define GLAPIENTRYP __stdcall *
+# else
+#  define GLAPIENTRYP *
+# endif
+#endif
+
+#ifndef GL_NV_path_rendering
+/* Tokens */
+#define GL_PATH_STROKE_WIDTH_NV                             0x9075
+#define GL_PATH_JOIN_STYLE_NV                               0x9079
+#define GL_ROUND_NV                                         0x90A4
+#define GL_TRIANGULAR_NV                                    0x90A5
+#define GL_BEVEL_NV                                         0x90A6
+#define GL_MITER_REVERT_NV                                  0x90A7
+#define GL_MITER_TRUNCATE_NV                                0x90A8
+#define GL_PATH_FORMAT_SVG_NV                               0x9070
+#define GL_PATH_FORMAT_PS_NV                                0x9071
+#define GL_CLOSE_PATH_NV                                    0x00
+#define GL_MOVE_TO_NV                                       0x02
+#define GL_LINE_TO_NV                                       0x04
+#define GL_COUNT_UP_NV                                      0x9088
+#define GL_CONVEX_HULL_NV                                   0x908B
+#define GL_BOUNDING_BOX_NV                                  0x908D
+/* Command and query function types */
+typedef GLint (GLAPIENTRYP PFNGLGENPATHSNVPROC) (GLsizei range);
+typedef void (GLAPIENTRYP PFNGLDELETEPATHSNVPROC) (GLuint path, GLsizei range);
+typedef void (GLAPIENTRYP PFNGLPATHCOMMANDSNVPROC) (GLuint path, GLsizei numCommands, const GLubyte *commands, GLsizei numCoords, GLenum coordType, const GLvoid *coords);
+typedef void (GLAPIENTRYP PFNGLPATHSTRINGNVPROC) (GLuint path, GLenum format, GLsizei length, const GLvoid *pathString);
+typedef void (GLAPIENTRYP PFNGLPATHPARAMETERINVPROC) (GLuint path, GLenum pname, GLint value);
+typedef void (GLAPIENTRYP PFNGLPATHPARAMETERFNVPROC) (GLuint path, GLenum pname, GLfloat value);
+typedef void (GLAPIENTRYP PFNGLSTENCILFILLPATHNVPROC) (GLuint path, GLenum fillMode, GLuint mask);
+typedef void (GLAPIENTRYP PFNGLSTENCILSTROKEPATHNVPROC) (GLuint path, GLint reference, GLuint mask);
+typedef void (GLAPIENTRYP PFNGLCOVERFILLPATHNVPROC) (GLuint path, GLenum coverMode);
+typedef void (GLAPIENTRYP PFNGLCOVERSTROKEPATHNVPROC) (GLuint path, GLenum coverMode);
+#endif
+
+#ifndef __APPLE__
+PFNGLGENPATHSNVPROC glGenPathsNV = NULL;
+PFNGLDELETEPATHSNVPROC glDeletePathsNV = NULL;
+PFNGLPATHCOMMANDSNVPROC glPathCommandsNV = NULL;
+PFNGLPATHSTRINGNVPROC glPathStringNV = NULL;
+PFNGLPATHPARAMETERINVPROC glPathParameteriNV = NULL;
+PFNGLPATHPARAMETERFNVPROC glPathParameterfNV = NULL;
+PFNGLCOVERFILLPATHNVPROC glCoverFillPathNV = NULL;
+PFNGLCOVERSTROKEPATHNVPROC glCoverStrokePathNV = NULL;
+PFNGLSTENCILFILLPATHNVPROC glStencilFillPathNV = NULL;
+PFNGLSTENCILSTROKEPATHNVPROC glStencilStrokePathNV = NULL;
+#endif
+
+
 //----------------------------------------------------------
 ofGLRenderer::ofGLRenderer(bool useShapeColor){
 	bBackgroundAuto = true;
+	bSmoothHinted = false;
+	rectMode = OF_RECTMODE_CORNER;
+	bFilled = OF_FILLED;
+	coordHandedness = OF_LEFT_HANDED;
 
 	linePoints.resize(2);
 	rectPoints.resize(4);
 	triPoints.resize(3);
 
 	currentFbo = NULL;
+
+	if(rendersPathPrimitives()){
+		LOAD_PROC(PFNGLGENPATHSNVPROC, glGenPathsNV);
+		LOAD_PROC(PFNGLDELETEPATHSNVPROC, glDeletePathsNV);
+        LOAD_PROC(PFNGLPATHCOMMANDSNVPROC, glPathCommandsNV);
+        LOAD_PROC(PFNGLPATHPARAMETERINVPROC, glPathParameteriNV);
+        LOAD_PROC(PFNGLPATHPARAMETERFNVPROC, glPathParameterfNV);
+        LOAD_PROC(PFNGLSTENCILFILLPATHNVPROC, glStencilFillPathNV);
+        LOAD_PROC(PFNGLSTENCILSTROKEPATHNVPROC, glStencilStrokePathNV);
+        LOAD_PROC(PFNGLCOVERFILLPATHNVPROC, glCoverFillPathNV);
+        LOAD_PROC(PFNGLCOVERSTROKEPATHNVPROC, glCoverStrokePathNV);
+	}
+}
+
+//----------------------------------------------------------
+bool ofGLRenderer::rendersPathPrimitives(){
+	return glewGetExtension("GL_NV_path_rendering");
 }
 
 //----------------------------------------------------------
@@ -152,32 +244,195 @@ void ofGLRenderer::draw(ofPolyline & poly){
 	}
 }
 
+GLubyte ofPathCommandToNV(ofSubPath::Command command){
+	switch(command.type){
+	case ofSubPath::Command::lineTo:
+		return GL_LINE_TO_NV;
+	case ofSubPath::Command::curveTo:
+		return 'C';
+	case ofSubPath::Command::bezierTo:
+		return 'C';
+	case ofSubPath::Command::quadBezierTo:
+		return 'C';
+	/*arc,
+    arcNegative,*/
+	default: return GL_LINE_TO_NV;
+	}
+}
+
+u_int ofPathNumCoords(ofSubPath::Command command){
+	switch(command.type){
+	case ofSubPath::Command::lineTo:
+		return 1;
+	case ofSubPath::Command::curveTo:
+		return 3;
+	case ofSubPath::Command::bezierTo:
+		return 3;
+	case ofSubPath::Command::quadBezierTo:
+		return 3;
+	/*arc,
+    arcNegative,*/
+	default: return 1;
+	}
+}
+
 //----------------------------------------------------------
 void ofGLRenderer::draw(ofPath & shape){
-	ofColor prevColor;
-	if(shape.getUseShapeColor()){
-		prevColor = ofGetStyle().color;
-	}
-	if(shape.isFilled()){
-		ofMesh & mesh = shape.getTessellation();
-		if(shape.getUseShapeColor()){
-			setColor( shape.getFillColor() * ofGetStyle().color,shape.getFillColor().a/255. * ofGetStyle().color.a);
+	if(shape.getMode()==ofPath::PATHS && rendersPathPrimitives()){
+		curvePoints.clear();
+
+		glEnable(GL_STENCIL_TEST);
+		if (shape.getWindingMode()==OF_POLY_WINDING_ODD) {
+			glStencilFunc(GL_NOTEQUAL, 0, 0x1);
+		} else {
+			glStencilFunc(GL_NOTEQUAL, 0, 0x1F);
 		}
-		draw(mesh);
-	}
-	if(shape.hasOutline()){
-		float lineWidth = ofGetStyle().lineWidth;
-		if(shape.getUseShapeColor()){
-			setColor( shape.getStrokeColor() * ofGetStyle().color, shape.getStrokeColor().a/255. * ofGetStyle().color.a);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
+
+		ofColor prevColor;
+		if(!shape.isFilled() || shape.getUseShapeColor()){
+			prevColor = ofGetStyle().color;
 		}
-		setLineWidth( shape.getStrokeWidth() );
-		vector<ofPolyline> & outlines = shape.getOutline();
-		for(int i=0; i<(int)outlines.size(); i++)
-			draw(outlines[i]);
-		setLineWidth(lineWidth);
-	}
-	if(shape.getUseShapeColor()){
-		setColor(prevColor);
+	    for(int i=0;i<(int)shape.getSubPaths().size();i++){
+	    	ofSubPath & subpath = shape.getSubPaths()[i];
+	    	int numCommands = subpath.getCommands().size()+1+(subpath.isClosed()?1:0);
+			if(numCommands<2) continue;
+
+			if(subpath.getHWID()==0 || subpath.hasChanged()){
+				if(subpath.getHWID()==0){
+					subpath.setHWID(glGenPathsNV(1));
+				}
+
+				GLubyte pathCommands[numCommands];
+				int numCoords=1;
+				pathCommands[0]=GL_MOVE_TO_NV;
+				ofSubPath::Command::Type prevType = ofSubPath::Command::lineTo;
+				for(int j=0;j<(int)subpath.getCommands().size();j++){
+					pathCommands[j+1]=ofPathCommandToNV(subpath.getCommands()[j]);
+					numCoords += ofPathNumCoords(subpath.getCommands()[j]);
+
+					if(subpath.getCommands()[j].type!=ofSubPath::Command::curveTo && prevType==ofSubPath::Command::curveTo){
+						numCoords-=3;
+					}
+					prevType = subpath.getCommands()[j].type;
+				}
+				if(subpath.isClosed()){
+					pathCommands[subpath.getCommands().size()+1] = GL_CLOSE_PATH_NV;
+				}
+
+				GLfloat pathCoords[numCoords][2];
+				int l = 1;
+				pathCoords[0][0] = subpath.getCommands()[0].to.x;
+				pathCoords[0][1] = subpath.getCommands()[0].to.y;
+				for(int j=0;j<(int)subpath.getCommands().size();j++){
+					if(subpath.getCommands()[i].type!=ofSubPath::Command::curveTo){
+						curvePoints.clear();
+						if(ofPathNumCoords(subpath.getCommands()[j])==3){
+							pathCoords[l][0] = subpath.getCommands()[j].cp1.x;
+							pathCoords[l][1] = subpath.getCommands()[j].cp1.y;
+							l++;
+							pathCoords[l][0] = subpath.getCommands()[j].cp2.x;
+							pathCoords[l][1] = subpath.getCommands()[j].cp2.y;
+							l++;
+						}
+						pathCoords[l][0] = subpath.getCommands()[j].to.x;
+						pathCoords[l][1] = subpath.getCommands()[j].to.y;
+						l++;
+					}else{
+						curvePoints.push_back(subpath.getCommands()[j].to);
+
+						//code adapted from ofxVectorGraphics to convert catmull rom to bezier
+						if(curvePoints.size()==4){
+							ofPoint p1=curvePoints[0];
+							ofPoint p2=curvePoints[1];
+							ofPoint p3=curvePoints[2];
+							ofPoint p4=curvePoints[3];
+
+							//SUPER WEIRD MAGIC CONSTANT = 1/6 (this works 100% can someone explain it?)
+							ofPoint cp1 = p2 + ( p3 - p1 ) * (1.0/6);
+							ofPoint cp2 = p3 + ( p2 - p4 ) * (1.0/6);
+
+							pathCoords[l][0] = cp1.x;
+							pathCoords[l][1] = cp1.y;
+							l++;
+
+							pathCoords[l][0] = cp2.x;
+							pathCoords[l][1] = cp2.y;
+							l++;
+
+							pathCoords[l][0] = p3.x;
+							pathCoords[l][1] = p3.y;
+							l++;
+							curvePoints.pop_front();
+						}
+					}
+				}
+
+				glPathCommandsNV(subpath.getHWID(), numCommands, pathCommands, numCoords*2, GL_FLOAT, pathCoords);
+			}
+		    glPathParameteriNV(subpath.getHWID(), GL_PATH_JOIN_STYLE_NV, GL_BEVEL_NV);
+		    glPathParameterfNV(subpath.getHWID(), GL_PATH_STROKE_WIDTH_NV, shape.getStrokeWidth());
+
+			glStencilFillPathNV(subpath.getHWID(), GL_COUNT_UP_NV, 0x1F);
+			ofColor fillColor;
+			if(shape.isFilled() && shape.getUseShapeColor()){
+				fillColor = shape.getFillColor();
+			}else if(shape.isFilled()){
+				fillColor = ofGetStyle().color;
+			}else{
+				fillColor.set(0,0,0,0);
+			}
+			glColor4ubv(&fillColor.r);
+			glCoverFillPathNV(subpath.getHWID(), GL_CONVEX_HULL_NV);
+
+
+			glStencilStrokePathNV(subpath.getHWID(), 0x1, ~0);
+			ofColor strokeColor;
+			if(shape.getUseShapeColor() && shape.hasOutline()){
+				strokeColor = shape.getStrokeColor();
+			}else if(shape.hasOutline()){
+				strokeColor = ofGetStyle().color;
+			}else{
+				strokeColor.set(0,0,0,0);
+			}
+			glColor4ubv(&strokeColor.r);
+
+			glCoverStrokePathNV(subpath.getHWID(), GL_CONVEX_HULL_NV);
+
+		    //glDeletePathsNV(pathObj,numCommands);
+	    }
+
+		glDisable(GL_STENCIL_TEST);
+
+		if(!shape.isFilled() || shape.getUseShapeColor()){
+			setColor(prevColor);
+		}
+	}else{
+		ofColor prevColor;
+		if(shape.getUseShapeColor()){
+			prevColor = ofGetStyle().color;
+		}
+		if(shape.isFilled()){
+			ofMesh & mesh = shape.getTessellation();
+			if(shape.getUseShapeColor()){
+				setColor( shape.getFillColor() * ofGetStyle().color,shape.getFillColor().a/255. * ofGetStyle().color.a);
+			}
+			draw(mesh);
+		}
+		if(shape.hasOutline()){
+			float lineWidth = ofGetStyle().lineWidth;
+			if(shape.getUseShapeColor()){
+				setColor( shape.getStrokeColor() * ofGetStyle().color, shape.getStrokeColor().a/255. * ofGetStyle().color.a);
+			}
+			setLineWidth( shape.getStrokeWidth() );
+			vector<ofPolyline> & outlines = shape.getOutline();
+			for(int i=0; i<(int)outlines.size(); i++)
+				draw(outlines[i]);
+			setLineWidth(lineWidth);
+		}
+		if(shape.getUseShapeColor()){
+			setColor(prevColor);
+		}
 	}
 }
 

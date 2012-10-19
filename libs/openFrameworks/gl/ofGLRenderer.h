@@ -28,9 +28,7 @@ public:
 	void draw(ofFloatImage & image, float x, float y, float z, float w, float h, float sx, float sy, float sw, float sh);
 	void draw(ofShortImage & image, float x, float y, float z, float w, float h, float sx, float sy, float sw, float sh);
 
-	bool rendersPathPrimitives(){
-		return false;
-	}
+	bool rendersPathPrimitives();
 
 
 
@@ -138,5 +136,6 @@ private:
 	ofRectMode rectMode;
 
 	ofFbo * currentFbo;
+	deque<ofPoint> curvePoints;
 
 };

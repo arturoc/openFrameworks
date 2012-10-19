@@ -8,6 +8,7 @@ ofTessellator ofPath::tessellator;
 ofSubPath::ofSubPath(){
 	bClosed = false;
 	bHasChanged = true;
+	hwID = 0;
 }
 
 //----------------------------------------------------------
@@ -27,7 +28,15 @@ void ofSubPath::addCommand(const ofSubPath::Command & command){
 }
 
 //----------------------------------------------------------
+bool ofSubPath::hasChanged(){
+	bool changed = bHasChanged;
+	bHasChanged=false;
+	return changed;
+}
+
+//----------------------------------------------------------
 void ofSubPath::close(){
+	bHasChanged = true;
 	bClosed = true;
 }
 
@@ -39,6 +48,17 @@ bool ofSubPath::isClosed(){
 //----------------------------------------------------------
 int ofSubPath::size(){
 	return commands.size();
+}
+
+
+//----------------------------------------------------------
+void ofSubPath::setHWID(unsigned int id){
+	hwID = id;
+}
+
+//----------------------------------------------------------
+unsigned int ofSubPath::getHWID(){
+	return hwID;
 }
 
 //----------------------------------------------------------
@@ -435,7 +455,7 @@ void ofPath::draw(float x, float y){
 
 //----------------------------------------------------------
 void ofPath::draw(){
-	if(ofGetCurrentRenderer()->rendersPathPrimitives()){
+	if(mode == ofPath::PATHS && ofGetCurrentRenderer()->rendersPathPrimitives()){
 		ofGetCurrentRenderer()->draw(*this);
 	}else{
 		tessellate();
@@ -486,6 +506,11 @@ void ofPath::flagShapeChanged(){
 //----------------------------------------------------------
 void ofPath::setMode(Mode _mode){
 	mode = _mode;
+}
+
+//----------------------------------------------------------
+ofPath::Mode ofPath::getMode(){
+	return mode;
 }
 
 //----------------------------------------------------------

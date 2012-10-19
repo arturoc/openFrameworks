@@ -91,6 +91,7 @@ public:
 	};
 
 	void setMode(Mode mode);
+	Mode getMode();
 
 	void setCurveResolution(int curveResolution);
 	int getCurveResolution();
@@ -154,6 +155,8 @@ public:
 	void close();
 	bool isClosed();
 	int size();
+	void setHWID(unsigned int id);
+	unsigned int getHWID();
 
 	struct Command{
 		enum Type{
@@ -184,5 +187,6 @@ private:
 	vector<Command> commands;
 	bool			bClosed;
 	bool			bHasChanged;
+	unsigned int   hwID;
 };
 
