@@ -241,9 +241,9 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 		glutInitDisplayString( displayString.c_str() );
 	}else{
 		if(bDoubleBuffered){  
-			glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
+			glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA | GLUT_STENCIL);
 		}else{
-			glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH | GLUT_ALPHA );
+			glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH | GLUT_ALPHA | GLUT_STENCIL );
 		}
 	}
 
@@ -270,7 +270,7 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 		if( displayString != ""){
 			glutInitDisplayString( displayString.c_str() );
 		}else{
-			glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
+			glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA | GLUT_STENCIL );
 		}
 
     	// w x h, 32bit pixel depth, 60Hz refresh rate
@@ -287,6 +287,11 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 	}
 	windowW = glutGet(GLUT_WINDOW_WIDTH);
 	windowH = glutGet(GLUT_WINDOW_HEIGHT);
+	glClearStencil(0);
+
+	glEnable(GL_STENCIL_TEST);
+	glStencilFunc(GL_NOTEQUAL, 0, 0x1F);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 }
 
 //------------------------------------------------------------

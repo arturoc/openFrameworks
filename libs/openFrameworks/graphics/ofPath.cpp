@@ -48,6 +48,7 @@ ofPath::ofPath(){
 	bNeedsTessellation = false;
 	bHasChanged = false;
 	bUseShapeColor = true;
+	hwID = 0;
 	clear();
 }
 

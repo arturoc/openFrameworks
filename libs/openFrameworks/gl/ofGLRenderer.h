@@ -138,4 +138,7 @@ private:
 	ofFbo * currentFbo;
 	deque<ofPoint> curvePoints;
 
+	bool bRendersPathPrimitives;
+	vector<GLubyte> pathCommands;
+	vector<GLfloat> pathCoords;
 };
