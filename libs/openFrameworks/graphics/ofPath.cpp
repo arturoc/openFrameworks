@@ -48,6 +48,7 @@ ofPath::ofPath(){
 	bNeedsTessellation = false;
 	bHasChanged = false;
 	bUseShapeColor = true;
+	bNeedsPolylinesGeneration = false;
 	hwID = 0;
 	clear();
 }
@@ -56,14 +57,13 @@ ofPath::ofPath(){
 void ofPath::clear(){
 	if(mode==COMMANDS){
 		commands.clear();
-		bHasChanged = true;
 	}else{
 		// for performance, instead of clearing the whole vector
 		// let one polyline and clear it: avoids instantiation
 		polylines.resize(1);
 		polylines[0].clear();
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -78,11 +78,10 @@ void ofPath::newSubPath(){
 void ofPath::lineTo(const ofPoint & p){
 	if(mode==COMMANDS){
 		addCommand(Command(Command::lineTo,p));
-		bHasChanged = true;
 	}else{
 		lastPolyline().lineTo(p);
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -99,12 +98,11 @@ void ofPath::lineTo(float x, float y){
 void ofPath::moveTo(const ofPoint & p){
 	if(mode==COMMANDS){
 		addCommand(Command(Command::moveTo,p));
-		bHasChanged = true;
 	}else{
 		if(lastPolyline().size()>0) newSubPath();
 		lastPolyline().addVertex(p);
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -116,11 +114,10 @@ void ofPath::moveTo(float x, float y, float z){
 void ofPath::curveTo(const ofPoint & p){
 	if(mode==COMMANDS){
 		addCommand(Command(Command::curveTo,p));
-		bHasChanged = true;
 	}else{
 		lastPolyline().curveTo(p);
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -137,11 +134,10 @@ void ofPath::curveTo(float x, float y){
 void ofPath::bezierTo(const ofPoint & cp1, const ofPoint & cp2, const ofPoint & p){
 	if(mode==COMMANDS){
 		addCommand(Command(Command::bezierTo,p,cp1,cp2));
-		bHasChanged = true;
 	}else{
 		lastPolyline().bezierTo(cp1,cp2,p);
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -158,11 +154,10 @@ void ofPath::bezierTo(float cx1, float cy1, float cz1, float cx2, float cy2, flo
 void ofPath::quadBezierTo(const ofPoint & cp1, const ofPoint & cp2, const ofPoint & p){
 	if(mode==COMMANDS){
 		addCommand(Command(Command::quadBezierTo,p,cp1,cp2));
-		bHasChanged = true;
 	}else{
 		lastPolyline().quadBezierTo(cp1,cp2,p);
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -188,11 +183,10 @@ void ofPath::arc(const ofPoint & centre, float radiusX, float radiusY, float ang
 void ofPath::arc(const ofPoint & centre, float radiusX, float radiusY, float angleBegin, float angleEnd){
 	if(mode==COMMANDS){
 		addCommand(Command(Command::arc,centre,radiusX,radiusY,angleBegin,angleEnd));
-		bHasChanged = true;
 	}else{
 		lastPolyline().arc(centre,radiusX,radiusY,angleBegin,angleEnd,arcResolution);
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -209,11 +203,10 @@ void ofPath::arc(float x, float y, float z, float radiusX, float radiusY, float 
 void ofPath::arcNegative(const ofPoint & centre, float radiusX, float radiusY, float angleBegin, float angleEnd){
 	if(mode==COMMANDS){
 		addCommand(Command(Command::arcNegative,centre,radiusX,radiusY,angleBegin,angleEnd));
-		bHasChanged = true;
 	}else{
 		lastPolyline().arcNegative(centre,radiusX,radiusY,angleBegin,angleEnd,arcResolution);
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -230,11 +223,10 @@ void ofPath::arcNegative(float x, float y, float z, float radiusX, float radiusY
 void ofPath::close(){
 	if(mode==COMMANDS){
 		addCommand(Command(Command::close));
-		bHasChanged = true;
 	}else{
 		lastPolyline().setClosed(true);
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 	//newPath();
 }
 
@@ -313,7 +305,7 @@ float ofPath::getStrokeWidth() const{
 //----------------------------------------------------------
 void ofPath::generatePolylinesFromCommands(){
 	if(mode==POLYLINES || commands.empty()) return;
-	if(bHasChanged || curveResolution!=prevCurveRes){
+	if(bNeedsPolylinesGeneration || curveResolution!=prevCurveRes){
 		prevCurveRes = curveResolution;
 
 		polylines.clear();
@@ -350,7 +342,7 @@ void ofPath::generatePolylinesFromCommands(){
 			}
 		}
 
-		bHasChanged = false;
+		bNeedsPolylinesGeneration = false;
 		bNeedsTessellation = true;
 		cachedTessellationValid=false;
 	}
@@ -402,7 +394,6 @@ void ofPath::draw(){
 	}else{
 		tessellate();
 
-
 		ofColor prevColor;
 		if(bUseShapeColor){
 			prevColor = ofGetStyle().color;
@@ -440,15 +431,20 @@ void ofPath::draw(){
 void ofPath::flagShapeChanged(){
 	if(mode==COMMANDS){
 		bHasChanged = true;
+		bNeedsPolylinesGeneration = true;
 	}else{
 		bNeedsTessellation = true;
 	}
 }
 
 bool ofPath::hasChanged(){
-	bool changed = bHasChanged;
-	bHasChanged = false;
-	return changed;
+	if(mode==COMMANDS){
+		bool changed = bHasChanged;
+		bHasChanged = false;
+		return changed;
+	}else{
+		return bNeedsTessellation;
+	}
 }
 
 //----------------------------------------------------------
@@ -542,15 +538,14 @@ void ofPath::translate(const ofPoint & p){
 				commands[j].cp2 += p;
 			}
 		}
-		bHasChanged = true;
 	}else{
 		for(int i=0;i<(int)polylines.size();i++){
 			for(int j=0;j<(int)polylines[i].size();j++){
 				polylines[i][j] += p;
 			}
 		}
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 //----------------------------------------------------------
@@ -567,15 +562,14 @@ void ofPath::rotate(float az, const ofVec3f& axis ){
 				commands[j].angleEnd += az;
 			}
 		}
-		bHasChanged = true;
 	}else{
 		for(int i=0;i<(int)polylines.size();i++){
 			for(int j=0;j<(int)polylines[i].size();j++){
 				polylines[i][j].rotate(az,axis);
 			}
 		}
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 
@@ -596,7 +590,6 @@ void ofPath::scale(float x, float y){
 				commands[j].radiusY *= y;
 			}
 		}
-		bHasChanged = true;
 	}else{
 		for(int i=0;i<(int)polylines.size();i++){
 			for(int j=0;j<(int)polylines[i].size();j++){
@@ -604,8 +597,8 @@ void ofPath::scale(float x, float y){
 				polylines[i][j].y*=y;
 			}
 		}
-		bNeedsTessellation = true;
 	}
+	flagShapeChanged();
 }
 
 void ofPath::setHWID(unsigned int id){

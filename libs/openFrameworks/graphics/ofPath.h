@@ -176,6 +176,7 @@ private:
 	int					curveResolution;
 	int					arcResolution;
 	bool 				bNeedsTessellation;
+	bool				bNeedsPolylinesGeneration;
 
 	Mode				mode;
 	unsigned int   		hwID;
