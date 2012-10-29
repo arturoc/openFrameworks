@@ -446,8 +446,9 @@ void ofGLRenderer::draw(ofPath & shape){
 			}
 			setLineWidth( shape.getStrokeWidth() );
 			vector<ofPolyline> & outlines = shape.getOutline();
-			for(int i=0; i<(int)outlines.size(); i++)
+			for(int i=0; i<(int)outlines.size(); i++){
 				draw(outlines[i]);
+			}
 			setLineWidth(lineWidth);
 		}
 		if(shape.getUseShapeColor()){
@@ -785,11 +786,11 @@ void ofGLRenderer::setupScreenOrtho(float width, float height, ofOrientation ori
 //----------------------------------------------------------
 //Resets openGL parameters back to OF defaults
 void ofGLRenderer::setupGraphicDefaults(){
-
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glClearStencil(0);
 }
 
 //----------------------------------------------------------

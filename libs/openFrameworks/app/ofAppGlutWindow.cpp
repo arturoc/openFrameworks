@@ -287,11 +287,6 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 	}
 	windowW = glutGet(GLUT_WINDOW_WIDTH);
 	windowH = glutGet(GLUT_WINDOW_HEIGHT);
-	glClearStencil(0);
-
-	glEnable(GL_STENCIL_TEST);
-	glStencilFunc(GL_NOTEQUAL, 0, 0x1F);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 }
 
 //------------------------------------------------------------
