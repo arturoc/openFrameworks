@@ -30,8 +30,9 @@ class ofPASoundStream : public ofBaseSoundStream{
 		int getNumInputChannels();
 		int getNumOutputChannels();
 		int getSampleRate();
-		int getBufferSize();
-		int getNumBuffers() { return nBuffers; };
+		int getNumBuffers();
+		int getNumFramesPerBuffer();
+		int getDeviceID();
 	
 		
 	private:

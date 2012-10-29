@@ -237,12 +237,16 @@ int ofPASoundStream::getSampleRate(){
 	return sampleRate;
 }
 
-int ofPASoundStream::getBufferSize(){
+int ofPASoundStream::getNumBuffers(){
+	return nBuffers;
+}
+
+int ofPASoundStream::getNumFramesPerBuffer(){
 	return bufferSize;
 }
 
-int ofPASoundStream::getNumBuffers(){
-	return nBuffers;
+int ofPASoundStream::getDeviceID(){
+	return deviceID;
 }
 
 #endif
