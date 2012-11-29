@@ -35,39 +35,6 @@ endif
 include makefileCommon/config.make
 
 
-################################ FLAGS #########################################
-# define the location of the core path
-#TODO: make sure all of the right checks are here.
-ifndef PLATFORM_CORE_EXCLUSIONS
-    $(error PLATFORM_CORE_EXCLUSIONS not defined)
-endif
-
-ifndef OF_LIBS_OPENFRAMEWORKS_PATH
-    $(error OF_LIBS_OPENFRAMEWORKS_PATH not defined)
-endif
-
-
-################################################################################
-# CORE SOURCE FILES
-################################################################################
-
-# search the directories in the source folders for all .cpp files
-# filter out all excluded files / folders that were defined above
-# grep -v "/\.[^\.]" will exclude all .hidden folders and files
-OF_CORE_SOURCE_FILES=$(filter-out $(CORE_EXCLUSIONS),$(shell find $(OF_CORE_SOURCE_PATHS) -name "*.cpp" | grep -v "/\.[^\.]"))
-
-
-################################################################################
-# DEBUG INFO
-################################################################################
-ifdef MAKEFILE_DEBUG
-    $(info =============================configure.core.flags.make========================)
-
-    $(info ---OF_CORE_SOURCE_FILES---)
-    $(foreach v, $(OF_CORE_SOURCE_FILES),$(info $(v)))
-endif
-
-
 
 # compile core openFrameworks library
 # check for platform specific compile rules

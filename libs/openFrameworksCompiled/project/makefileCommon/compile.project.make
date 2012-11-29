@@ -164,6 +164,13 @@ Debug: $(TARGET) after
 all:
 	$(MAKE) Debug
 	$(MAKE) Release
+	
+# This rule adds a dependency for projects to the OF library 
+# so if any OF file gets modified the OF library will be compiled
+# before compiling the project
+
+$(TARGET_LIBS): $(OF_CORE_SOURCE_FILES)
+	$(MAKE) -C $(OF_ROOT)/libs/openFrameworksCompiled/project/ $(TARGET_NAME)
 
 #This rule does the compilation
 #$(OBJS): $(SOURCES)
