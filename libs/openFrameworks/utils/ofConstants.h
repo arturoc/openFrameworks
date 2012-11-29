@@ -159,7 +159,7 @@ enum ofTargetPlatform{
 		#include "EGL/egl.h"
 		#include "EGL/eglext.h"
     #else // normal linux
-        #include <glxew.h>
+        //#include <glxew.h>
         #include <GL/glew.h>
         #include <GL/gl.h>
         #include <GL/glx.h>
@@ -204,12 +204,6 @@ enum ofTargetPlatform{
 	#define TARGET_LITTLE_ENDIAN
 #endif
 
-#ifdef TARGET_OPENGLES
-//	#include "glu.h"
-	//typedef GLushort ofIndexType ;
-#else
-	//typedef GLuint ofIndexType;
-#endif
 
 #include "tesselator.h"
 typedef TESSindex ofIndexType;
