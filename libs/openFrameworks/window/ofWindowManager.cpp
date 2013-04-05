@@ -216,22 +216,8 @@ void ofWindowManager::initializeGLFW() {
 
 void ofWindowManager::setupOpenGL(int w, int h, int screenMode) {
 	initializeGLFW();
-	/*
-		glfwWindow*Hint(GLFW_OPENGL_VERSION_MAJOR, 2);
-		glfwWindow*Hint(GLFW_OPENGL_VERSION_MINOR, 0);
-		glfwWindow*Hint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindow*Hint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	*/
 
 	//glfwWindowHint(GLFW_DEPTH_BITS, 32);
-
-	ofWindowMode windowMode = OF_WINDOW;
-	if(screenMode == OF_GAME_MODE)
-		windowMode = OF_GAME_MODE;
-
-	mainWindow = createWindow(w, h, windowMode);
-	activeWindow = mainWindow;
 
 #ifdef USE_PROGRAMMABLE_GL
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
@@ -240,6 +226,13 @@ void ofWindowManager::setupOpenGL(int w, int h, int screenMode) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
+
+	ofWindowMode windowMode = OF_WINDOW;
+	if(screenMode == OF_GAME_MODE)
+		windowMode = OF_GAME_MODE;
+
+	mainWindow = createWindow(w, h, windowMode);
+	activeWindow = mainWindow;
 
 	glfwMakeContextCurrent(mainWindow->getGlfwWindow());
 
