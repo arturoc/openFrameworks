@@ -4,6 +4,8 @@
 #include "ofPoint.h"
 #include "ofEventUtils.h"
 
+class ofWindow;
+
 //-------------------------- mouse/key query
 bool		ofGetMousePressed(int button=-1); //by default any button
 bool		ofGetKeyPressed(int key=-1); //by default any key
@@ -14,15 +16,19 @@ int			ofGetMouseY();
 int			ofGetPreviousMouseX();
 int			ofGetPreviousMouseY();
 
+void		ofSetMouseValues(int currentX, int currentY, int prevX, int prevY);
+
+
 void		ofSetEscapeQuitsApp(bool bQuitOnEsc);
 
 void		exitApp(); 
 
 //-----------------------------------------------
-class ofDragInfo{
-	public:
-		vector <string> files;
-		ofPoint position;
+class ofDragInfo {
+public:
+	vector <string> files;
+	ofPoint position;
+	ofWindow* window;
 };
 
 
@@ -30,15 +36,22 @@ class ofDragInfo{
 // event arguments, this are used in oF to pass
 // the data when notifying events
 
-class ofEventArgs{};
+class ofEventArgs {};
+
+class ofWindowEventArgs: public ofEventArgs {
+public:
+	ofWindow* window;
+};
 
 class ofEntryEventArgs : public ofEventArgs {
 public:
 	int state;
 };
 
-class ofKeyEventArgs : public ofEventArgs {
-  public:
+
+
+class ofKeyEventArgs : public ofWindowEventArgs {
+public:
 	enum Type{
 		Pressed,
 		Released,
@@ -46,7 +59,7 @@ class ofKeyEventArgs : public ofEventArgs {
 	int key;
 };
 
-class ofMouseEventArgs : public ofEventArgs, public ofVec2f {
+class ofMouseEventArgs : public ofWindowEventArgs, public ofVec2f {
   public:
 	enum Type{
 		Pressed,
@@ -55,6 +68,12 @@ class ofMouseEventArgs : public ofEventArgs, public ofVec2f {
 		Dragged
 	} type;
 	int button;
+};
+
+class ofScrollEventArgs: public ofWindowEventArgs {
+public:
+	float deltaX;
+	float deltaY;
 };
 
 class ofTouchEventArgs : public ofEventArgs, public ofVec2f {
@@ -85,10 +104,16 @@ class ofAudioEventArgs : public ofEventArgs {
 	int nChannels;
 };
 
-class ofResizeEventArgs : public ofEventArgs {
+class ofResizeEventArgs : public ofWindowEventArgs {
   public:
 	int width;
 	int height;
+};
+
+class ofMoveEventArgs : public ofWindowEventArgs {
+public:
+	int x;
+	int y;
 };
 
 class ofMessage : public ofEventArgs{
@@ -98,6 +123,7 @@ class ofMessage : public ofEventArgs{
 		}
 		string message;
 };
+		
 
 class ofCoreEvents {
   public:
@@ -105,7 +131,7 @@ class ofCoreEvents {
 	ofEvent<ofEventArgs> 		update;
 	ofEvent<ofEventArgs> 		draw;
 	ofEvent<ofEventArgs> 		exit;
-	
+
 	ofEvent<ofEntryEventArgs>	windowEntered;
 	ofEvent<ofResizeEventArgs> 	windowResized;
 
@@ -116,6 +142,7 @@ class ofCoreEvents {
 	ofEvent<ofMouseEventArgs> 	mouseDragged;
 	ofEvent<ofMouseEventArgs> 	mousePressed;
 	ofEvent<ofMouseEventArgs> 	mouseReleased;
+	ofEvent<ofScrollEventArgs> 	scrolled;
 
 	ofEvent<ofAudioEventArgs> 	audioReceived;
 	ofEvent<ofAudioEventArgs> 	audioRequested;
@@ -243,8 +270,37 @@ void ofUnregisterGetMessages(ListenerClass * listener){
 template<class ListenerClass>
 void ofUnregisterDragEvents(ListenerClass * listener){
 	ofRemoveListener(ofEvents().fileDragEvent, listener, &ListenerClass::dragEvent);
-}	
+}
 
+class ofWindowEvents {
+public:
+	ofEvent<ofWindowEventArgs> 	setup;
+	ofEvent<ofWindowEventArgs> 	update;
+	ofEvent<ofWindowEventArgs> 	draw;
+	ofEvent<ofResizeEventArgs> 	windowResized;
+	ofEvent<ofMoveEventArgs> 	windowMoved;
+	ofEvent<ofWindowEventArgs> 	windowClosed;
+
+	ofEvent<ofKeyEventArgs> 	keyPressed;
+	ofEvent<ofKeyEventArgs> 	keyReleased;
+
+	ofEvent<ofMouseEventArgs> 	mouseMoved;
+	ofEvent<ofMouseEventArgs> 	mouseDragged;
+	ofEvent<ofMouseEventArgs> 	mousePressed;
+	ofEvent<ofMouseEventArgs> 	mouseReleased;
+	ofEvent<ofScrollEventArgs> 	scrolled;
+
+	ofEvent<ofTouchEventArgs>	touchDown;
+	ofEvent<ofTouchEventArgs>	touchUp;
+	ofEvent<ofTouchEventArgs>	touchMoved;
+	ofEvent<ofTouchEventArgs>	touchDoubleTap;
+	ofEvent<ofTouchEventArgs>	touchCancelled;
+
+	ofEvent<ofMessage>			messageEvent;
+	ofEvent<ofDragInfo>			fileDragEvent;
+};
+
+#endif
 
 //  event notification only for internal OF use
 void ofNotifySetup();
@@ -260,6 +316,7 @@ void ofNotifyMouseReleased(int x, int y, int button);
 void ofNotifyMouseDragged(int x, int y, int button);
 void ofNotifyMouseMoved(int x, int y);
 void ofNotifyMouseEvent(const ofMouseEventArgs & mouseEvent);
+void ofNotifyScrolled(float dx, float dy);
 
 void ofNotifyExit();
 void ofNotifyWindowResized(int width, int height);
