@@ -20,47 +20,47 @@ void ofWindowManager::glfwErrorCallback(int type, const char * err) {
 }
 
 void ofWindowManager::glfwWindowSizeCallback(GLFWwindow * glfwWin, int w, int h) {
-	ofGetWindowManager()->glfwWindowSize(glfwWin, w, h);
+	ofWindowManager::getWindowManager()->glfwWindowSize(glfwWin, w, h);
 }
 
 void ofWindowManager::glfwWindowCloseCallback(GLFWwindow * glfwWin) {
-	ofGetWindowManager()->glfwWindowClose(glfwWin);
+	ofWindowManager::getWindowManager()->glfwWindowClose(glfwWin);
 }
 
 void ofWindowManager::glfwWindowRefreshCallback(GLFWwindow * glfwWin) {
-	ofGetWindowManager()->glfwWindowRefresh(glfwWin);
+	ofWindowManager::getWindowManager()->glfwWindowRefresh(glfwWin);
 }
 
 void ofWindowManager::glfwWindowFocusCallback(GLFWwindow * glfwWin, int action) {
-	ofGetWindowManager()->glfwWindowFocus(glfwWin, action);
+	ofWindowManager::getWindowManager()->glfwWindowFocus(glfwWin, action);
 }
 
 void ofWindowManager::glfwWindowIconifyCallback(GLFWwindow * glfwWin, int action) {
-	ofGetWindowManager()->glfwWindowIconify(glfwWin, action);
+	ofWindowManager::getWindowManager()->glfwWindowIconify(glfwWin, action);
 }
 
 void ofWindowManager::glfwMouseButtonCallback(GLFWwindow * glfwWin, int button, int action) {
-	ofGetWindowManager()->glfwMouseButton(glfwWin, button, action);
+	ofWindowManager::getWindowManager()->glfwMouseButton(glfwWin, button, action);
 }
 
-void ofWindowManager::glfwMousePosCallback(GLFWwindow * glfwWin, int x, int y) {
-	ofGetWindowManager()->glfwMousePos(glfwWin, x, y);
+void ofWindowManager::glfwMousePosCallback(GLFWwindow * glfwWin, double x, double y) {
+	ofWindowManager::getWindowManager()->glfwMousePos(glfwWin, x, y);
 }
 
 void ofWindowManager::glfwCursorEnterCallback(GLFWwindow * glfwWin, int action) {
-	ofGetWindowManager()->glfwCursorEnter(glfwWin, action);
+	ofWindowManager::getWindowManager()->glfwCursorEnter(glfwWin, action);
 }
 
 void ofWindowManager::glfwScrollCallback(GLFWwindow * glfwWin, double deltaX, double deltaY) {
-	ofGetWindowManager()->glfwScroll(glfwWin, deltaX, deltaY);
+	ofWindowManager::getWindowManager()->glfwScroll(glfwWin, deltaX, deltaY);
 }
 
 void ofWindowManager::glfwKeyCallback(GLFWwindow * glfwWin, int key, int action) {
-	ofGetWindowManager()->glfwKey(glfwWin, key, action);
+	ofWindowManager::getWindowManager()->glfwKey(glfwWin, key, action);
 }
 
 void ofWindowManager::glfwCharCallback(GLFWwindow * glfwWin, unsigned int character) {
-	ofGetWindowManager()->glfwChar(glfwWin, character);
+	ofWindowManager::getWindowManager()->glfwChar(glfwWin, character);
 }
 
 
@@ -69,13 +69,13 @@ void ofWindowManager::glfwCharCallback(GLFWwindow * glfwWin, unsigned int charac
 
 
 
-ofPtr<ofWindowManager> ofGetWindowManager() {
+ofPtr<ofWindowManager> ofWindowManager::getWindowManager() {
 	static ofPtr<ofWindowManager> windowManager(new ofWindowManager());
 	return windowManager;
 }
 
 ofPtr<ofWindow> ofCreateWindow(int x, int y, int width, int height) {
-	return ofGetWindowManager()->createWindow(x, y, width, height);
+	return ofWindowManager::getWindowManager()->createWindow(x, y, width, height);
 }
 
 ofPtr<ofWindow> ofCreateWindow(int width, int height) {
@@ -83,11 +83,15 @@ ofPtr<ofWindow> ofCreateWindow(int width, int height) {
 }
 
 ofPtr<ofWindow> ofGetMainWindow() {
-	return ofGetWindowManager()->getMainWindow();
+	return ofWindowManager::getWindowManager()->getMainWindow();
 }
 
 ofPtr<ofWindow> ofGetLastCreatedWindow() {
-	return ofGetWindowManager()->getLastCreatedWindow();
+	return ofWindowManager::getWindowManager()->getLastCreatedWindow();
+}
+
+ofPtr<ofWindow> ofGetCurrentWindow(){
+	return ofWindowManager::getWindowManager()->getCurrentWindow();
 }
 
 void error_callback(int error, const char* description)
@@ -98,12 +102,11 @@ void error_callback(int error, const char* description)
 /********** ofWindowManager DEFINITIONS ******************************************/
 
 static float timeNow, timeThen, fps;
-static int nFramesForFPS;
 static int nFrameCount;
 static bool bFrameRateSet;
-static int millisForFrame;
-static int prevMillis;
-static int diffMillis;
+static unsigned long long millisForFrame;
+static unsigned long long prevMillis;
+static unsigned long long diffMillis;
 static float frameRate;
 static double lastFrameTime;
 
@@ -148,7 +151,6 @@ ofPtr<ofWindow> ofWindowManager::createWindow(int x, int y, int width, int heigh
 		glfwSetCharCallback(win->getGlfwWindow(),&glfwCharCallback);
 	}
 
-	win->setup();
 	return win;
 }
 
@@ -192,6 +194,10 @@ ofPtr<ofWindow> ofWindowManager::getWindowById(int id) {
 	return mainWindow;
 }
 
+ofPtr<ofWindow> ofWindowManager::getCurrentWindow(){
+	return activeWindow;
+}
+
 
 ofPtr<ofWindow> ofWindowManager::getWindowByGlfw(GLFWwindow * win) {
 	ofWindowList::iterator it = windows.begin();
@@ -205,17 +211,13 @@ ofPtr<ofWindow> ofWindowManager::getWindowByGlfw(GLFWwindow * win) {
 	return mainWindow;
 }
 
-void ofWindowManager::initializeGLFW() {
+void ofWindowManager::setupOpenGL(int w, int h, int screenMode) {
 	if(!glfwInit()) {
 		ofLogError("Failed to initialize GLFW");
 		ofExit(0);
 	}
 
 	glfwSetErrorCallback(error_callback);
-}
-
-void ofWindowManager::setupOpenGL(int w, int h, int screenMode) {
-	initializeGLFW();
 
 	//glfwWindowHint(GLFW_DEPTH_BITS, 32);
 
@@ -223,7 +225,7 @@ void ofWindowManager::setupOpenGL(int w, int h, int screenMode) {
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
@@ -253,7 +255,6 @@ void ofWindowManager::initializeWindow() {
 
 void ofWindowManager::runAppViaInfiniteLoop(ofBaseApp * appPtr) {
 
-	appPtr->setup();
 	mainWindow->addListener(appPtr);
 
 	//run the main loop
@@ -301,10 +302,23 @@ void ofWindowManager::update() {
 	timeThen = timeNow;
 	nFrameCount++;
 	// --------------
+
+	for(int i=0;i<windows.size();i++){
+		activeWindow = windows[i];
+		ofSetMouseValues(activeWindow->mouseX, activeWindow->mouseY, activeWindow->previousMouseX, activeWindow->previousMouseY);
+		windows[i]->update();
+	}
+
 	ofNotifyUpdate();
 }
 
 void ofWindowManager::draw() {
+	for(int i=0;i<windows.size();i++){
+		activeWindow = windows[i];
+		ofSetMouseValues(activeWindow->mouseX, activeWindow->mouseY, activeWindow->previousMouseX, activeWindow->previousMouseY);
+		windows[i]->draw();
+	}
+
 	ofNotifyDraw();
 }
 
@@ -340,23 +354,26 @@ float ofWindowManager::getFrameRate() {
 	return frameRate;
 }
 
-void ofWindowManager::setActiveWindow(ofPtr<ofWindow> win) {
-	activeWindow = win;
-	ofSetMouseValues(activeWindow->mouseX, activeWindow->mouseY, activeWindow->previousMouseX, activeWindow->previousMouseY);
-	activeWindow->enableContext();
-}
-
 ofPoint ofWindowManager::getWindowPosition() {
 	return activeWindow->getWindowPosition();
 }
+
 ofPoint ofWindowManager::getWindowSize() {
 	return activeWindow->getWindowSize();
 }
 
-//this is used by ofGetWidth and now determines the window width based on orientation
+void ofWindowManager::setOrientation(ofOrientation orientation){
+	activeWindow->setOrientation(orientation);
+}
+
+ofOrientation ofWindowManager::getOrientation(){
+	return activeWindow->getOrientation();
+}
+
 int ofWindowManager::getWidth() {
 	return activeWindow->getWidth();
 }
+
 int ofWindowManager::getHeight() {
 	return activeWindow->getHeight();
 }
@@ -365,21 +382,26 @@ int ofWindowManager::getHeight() {
 void ofWindowManager::glfwWindowFocus(GLFWwindow * glfwWin, int action) {
 	//ofWindow * win = getWindowByGlfw(glfwWin);
 }
+
 void ofWindowManager::glfwWindowSize(GLFWwindow * glfwWin, int w, int h) {
 	ofPtr<ofWindow> win = getWindowByGlfw(glfwWin);
 	win->windowResized(w, h);
 }
+
 int ofWindowManager::glfwWindowClose(GLFWwindow * glfwWin) {
 	ofPtr<ofWindow> win = getWindowByGlfw(glfwWin);
 	removeWindow(win);
 	return 1;
 }
+
 void ofWindowManager::glfwWindowRefresh(GLFWwindow * glfwWin) {
 	//ofWindow * win = getWindowByGlfw(glfwWin);
 }
+
 void ofWindowManager::glfwWindowIconify(GLFWwindow * glfwWin, int action) {
 	//ofWindow * win = getWindowByGlfw(glfwWin);
 }
+
 void ofWindowManager::glfwMouseButton(GLFWwindow * glfwWin, int button, int action) {
 	ofPtr<ofWindow> win = getWindowByGlfw(glfwWin);
 	if(action == GLFW_PRESS) {
@@ -388,13 +410,16 @@ void ofWindowManager::glfwMouseButton(GLFWwindow * glfwWin, int button, int acti
 		win->mouseReleased(button);
 	}
 }
+
 void ofWindowManager::glfwMousePos(GLFWwindow * glfwWin, int mouseX, int mouseY) {
 	ofPtr<ofWindow> win = getWindowByGlfw(glfwWin);
 	win->mouseMoved(mouseX, mouseY);
 }
+
 void ofWindowManager::glfwCursorEnter(GLFWwindow * glfwWin, int action) {
 	//ofWindow * win = getWindowByGlfw(glfwWin);
 }
+
 void ofWindowManager::glfwScroll(GLFWwindow * glfwWin, float deltaX, float deltaY) {
 	ofPtr<ofWindow> win = getWindowByGlfw(glfwWin);
 	win->scrolled(-deltaX, -deltaY);
@@ -536,6 +561,10 @@ void ofWindowManager::glfwChar(GLFWwindow * glfwWin, int key) {
 
 int ofWindowManager::getFrameNum() {
 	return nFrameCount;
+}
+
+double  ofWindowManager::getLastFrameTime(){
+	return lastFrameTime;
 }
 
 void ofWindowManager::setFullscreen(bool fullscreen) {

@@ -21,6 +21,7 @@ public:
     static const string TYPE;
 	const string & getType(){ return TYPE; }
     
+	void setup();
     void startRender();
     void finishRender();
 
@@ -178,6 +179,9 @@ private:
 	ofRectMode rectMode;
 	
 	ofShader * currentShader;
+
+	ofShader defaultShaderTexColor, defaultShaderTexNoColor, defaultShaderTex2DColor, defaultShaderTex2DNoColor,
+				defaultShaderNoTexColor, defaultShaderNoTexNoColor, bitmapStringShader;
 
 	bool verticesEnabled, colorsEnabled, texCoordsEnabled, normalsEnabled;
 	bool usingCustomShader, settingDefaultShader;

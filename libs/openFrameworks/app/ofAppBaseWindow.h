@@ -12,44 +12,44 @@ public:
 	ofAppBaseWindow(){};
 	virtual ~ofAppBaseWindow(){};
 
-	virtual void setupOpenGL(int w, int h, int screenMode) {}
-	virtual void initializeWindow() {}
-	virtual void runAppViaInfiniteLoop(ofBaseApp * appPtr) {}
+	virtual void setupOpenGL(int w, int h, int screenMode)=0;
+	virtual void initializeWindow()=0;
+	virtual void runAppViaInfiniteLoop(ofBaseApp * appPtr)=0;
 
-	virtual void hideCursor() {}
-	virtual void showCursor() {}
+	virtual void hideCursor()=0;
+	virtual void showCursor()=0;
 
-	virtual void	setWindowPosition(int x, int y) {}
-	virtual void	setWindowShape(int w, int h) {}
+	virtual void	setWindowPosition(int x, int y)=0;
+	virtual void	setWindowShape(int w, int h)=0;
 
-	virtual int		getFrameNum() { return 0; }
-	virtual	float	getFrameRate() {return 0; }
-	virtual double  getLastFrameTime(){ return 0.0; }
+	virtual int		getFrameNum()=0;
+	virtual	float	getFrameRate()=0;
+	virtual double  getLastFrameTime()=0;
 
-	virtual ofPoint	getWindowPosition() {return ofPoint(); }
-	virtual ofPoint	getWindowSize(){return ofPoint(); }
-	virtual ofPoint	getScreenSize(){return ofPoint(); }
+	virtual ofPoint	getWindowPosition()=0;
+	virtual ofPoint	getWindowSize()=0;
+	virtual ofPoint	getScreenSize()=0;
 
-	virtual void			setOrientation(ofOrientation orientation){ }
-	virtual ofOrientation	getOrientation(){ return OF_ORIENTATION_DEFAULT; }
-	virtual bool	doesHWOrientation(){return false;}
+	virtual void			setOrientation(ofOrientation orientation)=0;
+	virtual ofOrientation	getOrientation()=0;
+	virtual bool	doesHWOrientation()=0;
 
 	//this is used by ofGetWidth and now determines the window width based on orientation
-	virtual int		getWidth(){ return 0; }
-	virtual int		getHeight(){ return 0; }
+	virtual int		getWidth()=0;
+	virtual int		getHeight()=0;
 
-	virtual void	setFrameRate(float targetRate){}
-	virtual void	setWindowTitle(string title){}
+	virtual void	setFrameRate(float targetRate)=0;
+	virtual void	setWindowTitle(string title)=0;
 
-	virtual int		getWindowMode() {return 0;}
+	virtual int		getWindowMode()=0;
 
-	virtual void	setFullscreen(bool fullscreen){}
-	virtual void	toggleFullscreen(){}
+	virtual void	setFullscreen(bool fullscreen)=0;
+	virtual void	toggleFullscreen()=0;
 
-	virtual void	enableSetupScreen(){}
-	virtual void	disableSetupScreen(){}
+	virtual void	enableSetupScreen()=0;
+	virtual void	disableSetupScreen()=0;
 	
-	virtual void	setVerticalSync(bool enabled){};
+	virtual void	setVerticalSync(bool enabled)=0;
 
 };
 

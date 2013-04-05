@@ -8,7 +8,7 @@ typedef vector <ofWindowPtr> ofWindowList;
 
 class ofWindowManager : public ofAppBaseWindow {
 	public:
-		ofWindowManager();
+		static ofPtr<ofWindowManager> getWindowManager();
 		~ofWindowManager();
 
 		ofPtr<ofWindow> createWindow(int w = 800, int h = 600, ofWindowMode windowMode = OF_WINDOW);
@@ -26,11 +26,34 @@ class ofWindowManager : public ofAppBaseWindow {
 		ofPtr<ofWindow> getLastCreatedWindow();
 		ofPtr<ofWindow> getMainWindow();
 		ofPtr<ofWindow> getWindowById(int id);
+		ofPtr<ofWindow> getCurrentWindow();
+
+
+		//TODO:
+		void hideCursor(){};
+		void showCursor(){};
+
+		void setWindowPosition(int, int){};
+		void setWindowShape(int, int){};
+
+		ofPoint getScreenSize(){};
+
+		void setOrientation(ofOrientation);
+		ofOrientation getOrientation();
+		bool doesHWOrientation(){return false;};
+
+		void setWindowTitle(std::string title){};
+		int getWindowMode(){};
+		void enableSetupScreen(){};
+		void disableSetupScreen(){};
+		void setVerticalSync(bool){};
+		// end TODO
+
 
 		void setFrameRate(float targetRate);
 		float getFrameRate();
 		int getFrameNum();
-		void setActiveWindow(ofPtr<ofWindow> win);
+		double  getLastFrameTime();
 
 		ofPoint getWindowPosition();
 		ofPoint getWindowSize();
@@ -42,8 +65,8 @@ class ofWindowManager : public ofAppBaseWindow {
 		void setFullscreen(bool fullscreen);
 
 	private:
+		ofWindowManager();
 		ofPtr<ofWindow> getWindowByGlfw(GLFWwindow* win);
-		void initializeGLFW();
 		void addWindow(ofPtr<ofWindow> win);
 		void removeWindow(ofPtr<ofWindow> win);
 		void exit(ofEventArgs& e);
@@ -68,7 +91,7 @@ class ofWindowManager : public ofAppBaseWindow {
 		static void glfwWindowFocusCallback(GLFWwindow * glfwWin, int action);
 		static void glfwWindowIconifyCallback(GLFWwindow * glfwWin, int action);
 		static void glfwMouseButtonCallback(GLFWwindow * glfwWin, int button, int action);
-		static void glfwMousePosCallback(GLFWwindow * glfwWin, int x, int y);
+		static void glfwMousePosCallback(GLFWwindow * glfwWin, double x, double y);
 		static void glfwCursorEnterCallback(GLFWwindow * glfwWin, int action);
 		static void glfwScrollCallback(GLFWwindow * glfwWin, double deltaX, double deltaY);
 		static void glfwKeyCallback(GLFWwindow * glfwWin, int key, int action);
@@ -81,8 +104,9 @@ class ofWindowManager : public ofAppBaseWindow {
 
 
 /* OF C-STYLE FUNCTIONS */
-ofPtr<ofWindowManager> ofGetWindowManager();
 ofPtr<ofWindow> ofCreateWindow(int x, int y, int width, int height);
-ofPtr<ofWindow> ofCreateWindow(int width = 800, int height = 600);
+ofPtr<ofWindow> ofCreateWindow(int width, int height);
 ofPtr<ofWindow> ofGetMainWindow();
 ofPtr<ofWindow> ofGetLastCreatedWindow();
+ofPtr<ofWindow> ofGetCurrentWindow();
+

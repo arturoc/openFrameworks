@@ -207,13 +207,11 @@ class ofWindowToOfBaseApp : public ofWindowListener {
 		ofBaseApp * baseApp;
 };
 
-typedef std::vector <ofWindowListener *> ofWindowListenerList;
-
 /*****************
 / WINDOW
 *******************/
 
-class ofWindow : public ofAppBaseWindow, public std::enable_shared_from_this<ofWindow> {
+class ofWindow : public std::enable_shared_from_this<ofWindow> {
 	public:
 		ofWindow();
 		~ofWindow();
@@ -229,14 +227,15 @@ class ofWindow : public ofAppBaseWindow, public std::enable_shared_from_this<ofW
 
 		void setup();
 
-		void update(ofEventArgs & e);
 		void update();
-		void draw(ofEventArgs & e);
 		void draw();
 
 		ofPoint getWindowPosition();
 		void setWindowPosition(int x, int y);
 		void setWindowPosition(ofPoint pos);
+
+		void setOrientation(ofOrientation);
+		ofOrientation getOrientation();
 
 		ofPoint getWindowSize();
 		void setWindowShape(int x, int y);
@@ -262,6 +261,8 @@ class ofWindow : public ofAppBaseWindow, public std::enable_shared_from_this<ofW
 		string getTitle();
 
 		void close();
+
+		int getID();
 
 		ofWindowEvents events;
 
@@ -295,11 +296,11 @@ class ofWindow : public ofAppBaseWindow, public std::enable_shared_from_this<ofW
 		
 		void updateMouse(int x, int y);
 
-		ofWindowListenerList listeners;
 		ofRectangle previousShape;
 		bool isFocused;
 		string title;
 		GLFWwindow* window;
+		ofPtr<ofProgrammableGLRenderer> renderer;
 
 		bool isInitialized;
 		ofWindowMode windowMode;
@@ -310,6 +311,7 @@ class ofWindow : public ofAppBaseWindow, public std::enable_shared_from_this<ofW
 		int y;
 
 		bool keyState[OF_MAX_NUM_KEYS];
+		ofOrientation orientation;
 
 		friend class ofWindowManager;
 };

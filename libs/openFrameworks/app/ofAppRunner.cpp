@@ -43,12 +43,6 @@ static ofPtr<ofAppBaseWindow> 		window;
 	#include "ofAppAndroidWindow.h"
 #elif defined(TARGET_LINUX_ARM)
 	#include "ofAppEGLWindow.h"
-#else
-#ifdef USE_PROGRAMMABLE_GL
-	#include "ofAppGLFWWindow.h"
-#else
-	#include "ofAppGlutWindow.h"
-#endif
 #endif
 
 // this is hacky only to provide bw compatibility, a shared_ptr should always be initialized using a shared_ptr
@@ -139,8 +133,6 @@ void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, int screenMod
     if(ofGetCurrentRenderer() == NULL) {
 
 #ifdef USE_PROGRAMMABLE_GL
-    	glGetError();
-    	ofShader::initDefaultShaders();
         ofPtr<ofProgrammableGLRenderer>programmableGLRenderer(new ofProgrammableGLRenderer("","",false));
     	ofSetCurrentRenderer(ofPtr<ofProgrammableGLRenderer>(programmableGLRenderer));
 #else
@@ -163,7 +155,7 @@ void ofSetupOpenGL(int w, int h, int screenMode){
 	#elif defined(TARGET_LINUX_ARM)
 		window = ofPtr<ofAppBaseWindow>(new ofAppEGLWindow());
 	#else
-		window = ofGetWindowManager();
+		window = ofWindowManager::getWindowManager();
 	#endif
 
 	ofSetupOpenGL(window,w,h,screenMode);
