@@ -5,7 +5,7 @@ void testApp::setup(){
 	
 	ofSetBackgroundColor(255, 100, 100);
 	ofGetMainWindow()->setWindowShape(600, 600);
-	ofWindow* secondaryWindow = ofCreateWindow(650, 0, ofRandom(400, 800), ofRandom(100, 800));
+	ofWindowPtr secondaryWindow = ofCreateWindow(650, 0, ofRandom(400, 800), ofRandom(100, 800));
 	secondaryWindow->addListener(new windowRenderer);
 
 	textPos.set(200, 300);

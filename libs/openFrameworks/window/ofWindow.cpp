@@ -50,7 +50,7 @@ void ofWindow::initializeWindow(ofWindowMode wm) {
 
 	/*Find out if we can share the context */
 	GLFWwindow* win = NULL;
-	ofWindow* mainWindow = ofGetMainWindow();
+	ofPtr<ofWindow> mainWindow = ofGetMainWindow();
 	if(mainWindow != NULL)
 		win = mainWindow->getGlfwWindow();
 	/*
@@ -117,7 +117,7 @@ void ofWindow::update(ofEventArgs & e) {
 	update();
 }
 void ofWindow::update() {
-	ofGetWindowManager()->setActiveWindow(this);
+	ofGetWindowManager()->setActiveWindow(shared_from_this());
 #ifdef OF_USING_POCO
 	ofWindowEventArgs e;
 	e.window = this;
@@ -135,12 +135,12 @@ void ofWindow::draw(ofEventArgs & e) {
 	draw();
 }
 void ofWindow::draw() {
-	ofGetWindowManager()->setActiveWindow(this);
+	ofGetWindowManager()->setActiveWindow(shared_from_this());
 	float * bgPtr = ofBgColorPtr();
-	ofViewport(0, 0, width, height, false);     // used to be glViewport( 0, 0, width, height );
+	ofViewport();     // used to be glViewport( 0, 0, width, height );
 	ofClear(bgPtr[0] * 255, bgPtr[1] * 255, bgPtr[2] * 255, bgPtr[3] * 255);
 	//ofGetCurrentRenderer()->setupScreenPerspective(800, 600);
-	ofSetupScreenPerspective(width, height, OF_ORIENTATION_DEFAULT);
+	ofSetupScreenPerspective(width, height);
 
 #ifdef OF_USING_POCO
 	ofWindowEventArgs e;
@@ -471,7 +471,7 @@ string ofWindow::getTitle() {
 }
 
 void ofWindow::close() {
-	ofGetWindowManager()->deleteWindow(this);
+	ofGetWindowManager()->deleteWindow(shared_from_this());
 }
 
 bool ofWindow::isClosed() {

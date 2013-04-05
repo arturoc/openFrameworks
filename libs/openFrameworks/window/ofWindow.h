@@ -2,6 +2,7 @@
 
 #include <ofBaseApp.h>
 #include "ofAppBaseWindow.h"
+#include "ofTypes.h"
 #include <GL/glfw3.h>
 #include <map>
 
@@ -212,7 +213,7 @@ typedef std::vector <ofWindowListener *> ofWindowListenerList;
 / WINDOW
 *******************/
 
-class ofWindow : public ofAppBaseWindow {
+class ofWindow : public ofAppBaseWindow, public std::enable_shared_from_this<ofWindow> {
 	public:
 		ofWindow();
 		~ofWindow();

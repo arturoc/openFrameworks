@@ -11,9 +11,9 @@ class ofWindowManager : public ofAppBaseWindow {
 		ofWindowManager();
 		~ofWindowManager();
 
-		ofWindow * createWindow(int w = 800, int h = 600, ofWindowMode windowMode = OF_WINDOW);
-		ofWindow * createWindow(int x, int y, int width, int height, ofWindowMode windowMode = OF_WINDOW);
-		void deleteWindow(ofWindow * win);
+		ofPtr<ofWindow> createWindow(int w = 800, int h = 600, ofWindowMode windowMode = OF_WINDOW);
+		ofPtr<ofWindow> createWindow(int x, int y, int width, int height, ofWindowMode windowMode = OF_WINDOW);
+		void deleteWindow(ofPtr<ofWindow> win);
 		void deleteWindow(int id);
 
 		void initializeWindow();
@@ -23,14 +23,14 @@ class ofWindowManager : public ofAppBaseWindow {
 		void update();
 		void draw();
 
-		ofWindow * getLastCreatedWindow();
-		ofWindow * getMainWindow();
-		ofWindow * getWindowById(int id);
+		ofPtr<ofWindow> getLastCreatedWindow();
+		ofPtr<ofWindow> getMainWindow();
+		ofPtr<ofWindow> getWindowById(int id);
 
 		void setFrameRate(float targetRate);
 		float getFrameRate();
 		int getFrameNum();
-		void setActiveWindow(ofWindow * win);
+		void setActiveWindow(ofPtr<ofWindow> win);
 
 		ofPoint getWindowPosition();
 		ofPoint getWindowSize();
@@ -41,35 +41,48 @@ class ofWindowManager : public ofAppBaseWindow {
 		void toggleFullscreen();
 		void setFullscreen(bool fullscreen);
 
-		//would like to have these functions private. but don't know how...
-		void glfwWindowFocus(GLFWwindow* glfwWin, int action);
-		void glfwWindowSize(GLFWwindow* glfwWin, int w, int h);
-		int glfwWindowClose(GLFWwindow* glfwWin);
-		void glfwWindowRefresh(GLFWwindow* glfwWin);
-		void glfwWindowIconify(GLFWwindow* glfwWin, int action);
-		void glfwMouseButton(GLFWwindow* glfwWin, int button, int action);
-		void glfwMousePos(GLFWwindow* glfwWin, int mouseX, int mouseY);
-		void glfwCursorEnter(GLFWwindow* glfwWin, int action);
-		void glfwScroll(GLFWwindow* glfwWin, float deltaX, float deltaY);
-		void glfwKey(GLFWwindow* glfwWin, int key, int action);
-		void glfwChar(GLFWwindow* glfwWin, int key);
-
 	private:
-		ofWindow * getWindowByGlfw(GLFWwindow* win);
+		ofPtr<ofWindow> getWindowByGlfw(GLFWwindow* win);
 		void initializeGLFW();
-		void addWindow(ofWindow * win);
-		void removeWindow(ofWindow * win);
+		void addWindow(ofPtr<ofWindow> win);
+		void removeWindow(ofPtr<ofWindow> win);
 		void exit(ofEventArgs& e);
 
+		//would like to have these functions private. but don't know how...
+		void glfwWindowFocus(GLFWwindow * glfwWin, int action);
+		void glfwWindowSize(GLFWwindow * glfwWin, int w, int h);
+		int glfwWindowClose(GLFWwindow * glfwWin);
+		void glfwWindowRefresh(GLFWwindow * glfwWin);
+		void glfwWindowIconify(GLFWwindow * glfwWin, int action);
+		void glfwMouseButton(GLFWwindow * glfwWin, int button, int action);
+		void glfwMousePos(GLFWwindow * glfwWin, int mouseX, int mouseY);
+		void glfwCursorEnter(GLFWwindow * glfwWin, int action);
+		void glfwScroll(GLFWwindow * glfwWin, float deltaX, float deltaY);
+		void glfwKey(GLFWwindow * glfwWin, int key, int action);
+		void glfwChar(GLFWwindow * glfwWin, int key);
+
+		static void glfwErrorCallback(int type, const char * err);
+		static void glfwWindowSizeCallback(GLFWwindow * glfwWin, int w, int h);
+		static void glfwWindowCloseCallback(GLFWwindow * glfwWin);
+		static void glfwWindowRefreshCallback(GLFWwindow * glfwWin);
+		static void glfwWindowFocusCallback(GLFWwindow * glfwWin, int action);
+		static void glfwWindowIconifyCallback(GLFWwindow * glfwWin, int action);
+		static void glfwMouseButtonCallback(GLFWwindow * glfwWin, int button, int action);
+		static void glfwMousePosCallback(GLFWwindow * glfwWin, int x, int y);
+		static void glfwCursorEnterCallback(GLFWwindow * glfwWin, int action);
+		static void glfwScrollCallback(GLFWwindow * glfwWin, double deltaX, double deltaY);
+		static void glfwKeyCallback(GLFWwindow * glfwWin, int key, int action);
+		static void glfwCharCallback(GLFWwindow * glfwWin, unsigned int character);
+
 		ofWindowList windows;
-		ofWindow * mainWindow;
-		ofWindow * activeWindow;
+		ofPtr<ofWindow> mainWindow;
+		ofPtr<ofWindow> activeWindow;
 };
 
 
 /* OF C-STYLE FUNCTIONS */
-ofWindowManager * ofGetWindowManager();
-ofWindow * ofCreateWindow(int x, int y, int width, int height);
-ofWindow * ofCreateWindow(int width = 800, int height = 600);
-ofWindow * ofGetMainWindow();
-ofWindow * ofGetLastCreatedWindow();
+ofPtr<ofWindowManager> ofGetWindowManager();
+ofPtr<ofWindow> ofCreateWindow(int x, int y, int width, int height);
+ofPtr<ofWindow> ofCreateWindow(int width = 800, int height = 600);
+ofPtr<ofWindow> ofGetMainWindow();
+ofPtr<ofWindow> ofGetLastCreatedWindow();

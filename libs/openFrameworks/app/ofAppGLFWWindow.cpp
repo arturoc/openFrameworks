@@ -172,9 +172,8 @@ void ofAppGLFWWindow::setupOpenGL(int w, int h, int screenMode){
 }
 
 //--------------------------------------------
-int ofAppGLFWWindow::exit_cb(GLFWwindow* windowP_){
+void ofAppGLFWWindow::exit_cb(GLFWwindow* windowP_){
 	OF_EXIT_APP(0);
-	return 0;
 }
 
 //--------------------------------------------

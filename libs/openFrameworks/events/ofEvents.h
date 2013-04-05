@@ -300,8 +300,6 @@ public:
 	ofEvent<ofDragInfo>			fileDragEvent;
 };
 
-#endif
-
 //  event notification only for internal OF use
 void ofNotifySetup();
 void ofNotifyUpdate();

@@ -16,6 +16,7 @@
 #include "ofGLRenderer.h"
 #include "ofProgrammableGLRenderer.h"
 #include "ofTrueTypeFont.h"
+#include "ofWindowManager.h"
 
 
 // TODO: closing seems wonky. 
@@ -162,11 +163,7 @@ void ofSetupOpenGL(int w, int h, int screenMode){
 	#elif defined(TARGET_LINUX_ARM)
 		window = ofPtr<ofAppBaseWindow>(new ofAppEGLWindow());
 	#else
-#ifdef USE_PROGRAMMABLE_GL
-		window = ofPtr<ofAppBaseWindow>(new ofAppGLFWWindow());
-#else
-		window = ofPtr<ofAppBaseWindow>(new ofAppGlutWindow());
-#endif
+		window = ofGetWindowManager();
 	#endif
 
 	ofSetupOpenGL(window,w,h,screenMode);
