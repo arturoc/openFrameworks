@@ -264,34 +264,43 @@ bool ofWindow::isKeyPressed(int key) {
 void ofWindow::windowFocused() {
 	isFocused = true;
 }
+
 void ofWindow::windowUnfocused() {
 	isFocused = false;
 }
+
 void ofWindow::windowClosed() {
+	glfwDestroyWindow(window);
 	window = NULL;
 
 	ofWindowEventArgs e;
 	e.window = this;
 	ofNotifyEvent(events.windowClosed, e);
 }
+
 ofPoint ofWindow::getWindowPosition() {
 	if(window != NULL) {
 		glfwGetWindowPos(window, &x, &y);
 	}
 	return ofPoint(x, y);
 }
+
 ofPoint ofWindow::getWindowSize() {
 	return ofPoint(width, height);
 }
+
 int ofWindow::getWidth() {
 	return width;
 }
+
 int ofWindow::getHeight() {
 	return height;
 }
+
 int ofWindow::getX() {
 	return getWindowPosition().x;
 }
+
 int ofWindow::getY() {
 	return getWindowPosition().y;
 }
@@ -379,6 +388,7 @@ void ofWindow::windowResized(int w, int h) {
 	ofNotifyEvent(events.windowResized, e);
 	draw();
 }
+
 void ofWindow::windowMoved(int _x, int _y) {
 	if(x == _x && y == _y) {
 		return;
@@ -393,12 +403,14 @@ void ofWindow::windowMoved(int _x, int _y) {
 	e.y = y;
 	ofNotifyEvent(events.windowMoved, e);
 }
+
 void ofWindow::setTitle(string t) {
 	if(isInitialized) {
 		glfwSetWindowTitle(window, t.c_str());
 	}
 	title = t;
 }
+
 string ofWindow::getTitle() {
 	return title;
 }
@@ -406,10 +418,6 @@ string ofWindow::getTitle() {
 void ofWindow::setVerticalSync(bool vSync){
 	if(vSync) glfwSwapInterval( 1 );
 	else  glfwSwapInterval( 0 );
-}
-
-void ofWindow::close() {
-	ofWindowManager::getWindowManager()->deleteWindow(shared_from_this());
 }
 
 int ofWindow::getID(){

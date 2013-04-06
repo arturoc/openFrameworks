@@ -59,12 +59,12 @@ void ofExitCallback();
 #if defined(TARGET_LINUX) || defined(TARGET_OSX)
 	#include <signal.h>
 	
-	static bool bExitCalled = false;
 	void sighandler(int sig) {
+		static bool bExitCalled = false;
 		ofLogVerbose("ofAppRunner") << "sighandler : Signal handled " << sig;
 		if(!bExitCalled) {
 			bExitCalled = true;
-			exitApp();
+			std::exit(0);
 		}
 	}
 #endif

@@ -220,15 +220,6 @@ enum ofTargetPlatform{
 typedef TESSindex ofIndexType;
 
 
-#ifndef __MWERKS__
-#include <cstdlib>
-#define OF_EXIT_APP(val)		std::exit(val);
-#else
-#define OF_EXIT_APP(val)		std::exit(val);
-#endif
-
-
-
 
 //------------------------------------------------ capture
 // check if any video capture system is already defined from the compiler

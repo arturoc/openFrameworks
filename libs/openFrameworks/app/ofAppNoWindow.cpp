@@ -139,12 +139,12 @@ void ofAppNoWindow::runAppViaInfiniteLoop(ofBaseApp * appPtr){
 			int key = getch();
 			if ( key == 27 )
 			{
-				OF_EXIT_APP(0);
+				std::exit(0);
 			}
 			else if ( key == /* ctrl-c */ 3 )
 			{
 				ofLogNotice()<<	"Ctrl-C pressed\n";
-				OF_EXIT_APP(0);
+				std::exit(0);
 			}
 			else
 			{
@@ -211,7 +211,7 @@ void ofAppNoWindow::exitApp(){
 	reset_terminal_mode();
 #endif
 
-	OF_EXIT_APP(0);
+	std::exit(0);
 }
 
 //------------------------------------------------------------

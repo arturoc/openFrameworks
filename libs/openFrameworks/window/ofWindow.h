@@ -9,7 +9,7 @@
 #define OF_MAX_NUM_KEYS 512
 
 
-class ofWindow : public std::enable_shared_from_this<ofWindow> {
+class ofWindow  {
 	public:
 		ofWindow();
 		~ofWindow();
@@ -60,8 +60,6 @@ class ofWindow : public std::enable_shared_from_this<ofWindow> {
 
 		void setTitle(string title);
 		string getTitle();
-
-		void close();
 
 		int getID();
 

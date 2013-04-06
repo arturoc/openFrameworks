@@ -4,7 +4,6 @@
 #include "ofBaseTypes.h"
 
 typedef ofPtr <ofWindow> ofWindowPtr;
-typedef vector <ofWindowPtr> ofWindowList;
 
 class ofWindowManager : public ofAppBaseWindow {
 	public:
@@ -98,6 +97,7 @@ class ofWindowManager : public ofAppBaseWindow {
 		static void glfwKeyCallback(GLFWwindow * glfwWin, int key, int action);
 		static void glfwCharCallback(GLFWwindow * glfwWin, unsigned int character);
 
+		typedef vector <ofWindowPtr> ofWindowList;
 		ofWindowList windows;
 		ofPtr<ofWindow> mainWindow;
 		ofPtr<ofWindow> activeWindow;
