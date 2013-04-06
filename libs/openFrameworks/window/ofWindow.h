@@ -13,6 +13,9 @@ class ofWindow  {
 	public:
 		~ofWindow();
 
+		static ofPtr<ofWindow> createWindow(int w, int h, ofWindowMode windowMode = OF_WINDOW);
+		static ofPtr<ofWindow> createWindow(int x, int y, int width, int height, ofWindowMode windowMode = OF_WINDOW);
+
 		void enableContext();
 		void initializeWindow(ofWindowMode mode = OF_WINDOW);
 
@@ -111,6 +114,21 @@ class ofWindow  {
 
 		bool keyState[OF_MAX_NUM_KEYS];
 		ofOrientation orientation;
+
+
+		static void glfwErrorCallback(int type, const char * err);
+		static void glfwWindowSizeCallback(GLFWwindow * glfwWin, int w, int h);
+		static void glfwWindowCloseCallback(GLFWwindow * glfwWin);
+		static void glfwWindowRefreshCallback(GLFWwindow * glfwWin);
+		static void glfwWindowFocusCallback(GLFWwindow * glfwWin, int action);
+		static void glfwWindowIconifyCallback(GLFWwindow * glfwWin, int action);
+		static void glfwMouseButtonCallback(GLFWwindow * glfwWin, int button, int action);
+		static void glfwMousePosCallback(GLFWwindow * glfwWin, double x, double y);
+		static void glfwCursorEnterCallback(GLFWwindow * glfwWin, int action);
+		static void glfwScrollCallback(GLFWwindow * glfwWin, double deltaX, double deltaY);
+		static void glfwKeyCallback(GLFWwindow * glfwWin, int key, int action);
+		static void glfwCharCallback(GLFWwindow * glfwWin, unsigned int character);
+
 
 		friend class ofWindowManager;
 };

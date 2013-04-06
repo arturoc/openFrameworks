@@ -10,10 +10,6 @@ class ofWindowManager : public ofAppBaseWindow {
 		static ofPtr<ofWindowManager> getWindowManager();
 		~ofWindowManager();
 
-		ofPtr<ofWindow> createWindow(int w = 800, int h = 600, ofWindowMode windowMode = OF_WINDOW);
-		ofPtr<ofWindow> createWindow(int x, int y, int width, int height, ofWindowMode windowMode = OF_WINDOW);
-		void deleteWindow(ofPtr<ofWindow> win);
-		void deleteWindow(int id);
 
 		void initializeWindow();
 		void setupOpenGL(int w, int h, int screenMode);
@@ -64,43 +60,21 @@ class ofWindowManager : public ofAppBaseWindow {
 		void toggleFullscreen();
 		void setFullscreen(bool fullscreen);
 
+
+
 	private:
 		ofWindowManager();
-		ofPtr<ofWindow> getWindowByGlfw(GLFWwindow* win);
 		void addWindow(ofPtr<ofWindow> win);
-		void removeWindow(ofPtr<ofWindow> win);
+		void removeWindow(int id);
 		void exit(ofEventArgs& e);
 
-		//would like to have these functions private. but don't know how...
-		void glfwWindowFocus(GLFWwindow * glfwWin, int action);
-		void glfwWindowSize(GLFWwindow * glfwWin, int w, int h);
-		int glfwWindowClose(GLFWwindow * glfwWin);
-		void glfwWindowRefresh(GLFWwindow * glfwWin);
-		void glfwWindowIconify(GLFWwindow * glfwWin, int action);
-		void glfwMouseButton(GLFWwindow * glfwWin, int button, int action);
-		void glfwMousePos(GLFWwindow * glfwWin, int mouseX, int mouseY);
-		void glfwCursorEnter(GLFWwindow * glfwWin, int action);
-		void glfwScroll(GLFWwindow * glfwWin, float deltaX, float deltaY);
-		void glfwKey(GLFWwindow * glfwWin, int key, int action);
-		void glfwChar(GLFWwindow * glfwWin, int key);
-
-		static void glfwErrorCallback(int type, const char * err);
-		static void glfwWindowSizeCallback(GLFWwindow * glfwWin, int w, int h);
-		static void glfwWindowCloseCallback(GLFWwindow * glfwWin);
-		static void glfwWindowRefreshCallback(GLFWwindow * glfwWin);
-		static void glfwWindowFocusCallback(GLFWwindow * glfwWin, int action);
-		static void glfwWindowIconifyCallback(GLFWwindow * glfwWin, int action);
-		static void glfwMouseButtonCallback(GLFWwindow * glfwWin, int button, int action);
-		static void glfwMousePosCallback(GLFWwindow * glfwWin, double x, double y);
-		static void glfwCursorEnterCallback(GLFWwindow * glfwWin, int action);
-		static void glfwScrollCallback(GLFWwindow * glfwWin, double deltaX, double deltaY);
-		static void glfwKeyCallback(GLFWwindow * glfwWin, int key, int action);
-		static void glfwCharCallback(GLFWwindow * glfwWin, unsigned int character);
 
 		typedef vector <ofWindowPtr> ofWindowList;
 		ofWindowList windows;
 		ofPtr<ofWindow> mainWindow;
 		ofPtr<ofWindow> activeWindow;
+
+		friend class ofWindow;
 };
 
 

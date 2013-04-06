@@ -20,6 +20,11 @@
 #include "glfw3native.h"
 #endif
 
+static ofWindow * toOf(GLFWwindow * glfwWin){
+	return ((ofWindow*)glfwGetWindowUserPointer(glfwWin));
+}
+
+
 /********** ofWindowDefinitions *****************/
 int ofWindow::lastWindowID = 0;
 ofWindow::ofWindow() : mouseX(0),
@@ -41,6 +46,33 @@ ofWindow::ofWindow() : mouseX(0),
 }
 
 ofWindow::~ofWindow() {
+}
+
+ofPtr<ofWindow> ofWindow::createWindow(int w, int h, ofWindowMode windowMode){
+	return createWindow(0,0,w,h,windowMode);
+}
+
+ofPtr<ofWindow> ofWindow::createWindow(int x, int y, int width, int height, ofWindowMode windowMode){
+	ofPtr<ofWindow> win(new ofWindow());
+
+	win->setWindowPositionAndShape(x, y, width, height);
+	ofWindowManager::getWindowManager()->addWindow(win);
+	win->initializeWindow(windowMode);
+	if(win->getGlfwWindow() != NULL) {
+		glfwSetWindowSizeCallback(win->getGlfwWindow(), &glfwWindowSizeCallback);
+		glfwSetWindowCloseCallback(win->getGlfwWindow(),&glfwWindowCloseCallback);
+		glfwSetWindowRefreshCallback(win->getGlfwWindow(),&glfwWindowRefreshCallback);
+		glfwSetWindowFocusCallback(win->getGlfwWindow(),&glfwWindowFocusCallback);
+		glfwSetWindowIconifyCallback(win->getGlfwWindow(),&glfwWindowIconifyCallback);
+		glfwSetMouseButtonCallback(win->getGlfwWindow(),&glfwMouseButtonCallback);
+		glfwSetCursorPosCallback(win->getGlfwWindow(),&glfwMousePosCallback);
+		glfwSetCursorEnterCallback(win->getGlfwWindow(),&glfwCursorEnterCallback);
+		glfwSetScrollCallback(win->getGlfwWindow(),&glfwScrollCallback);
+		glfwSetKeyCallback(win->getGlfwWindow(),&glfwKeyCallback);
+		glfwSetCharCallback(win->getGlfwWindow(),&glfwCharCallback);
+	}
+
+	return win;
 }
 
 void ofWindow::initializeWindow(ofWindowMode wm) {
@@ -65,13 +97,12 @@ void ofWindow::initializeWindow(ofWindowMode wm) {
 	*/
 
 	window = glfwCreateWindow(width, height, title.c_str(), NULL, win);
-	if(window == NULL)
+	if(window == NULL){
 		ofLogError("Could not initialize window");
+		return;
+	}
 
-	/*
-	int major = glfwGetWindowParam(window, GLFW_OPENGL_VERSION_MAJOR);
-	int minor = glfwGetWindowParam(window, GLFW_OPENGL_VERSION_MINOR);
-	*/
+	glfwSetWindowUserPointer(window,this);
 
 	glfwSetInputMode( window, GLFW_STICKY_KEYS, GL_TRUE );
 
@@ -270,12 +301,13 @@ void ofWindow::windowUnfocused() {
 }
 
 void ofWindow::windowClosed() {
-	glfwDestroyWindow(window);
-	window = NULL;
-
 	ofWindowEventArgs e;
 	e.window = this;
 	ofNotifyEvent(events.windowClosed, e);
+	ofWindowManager::getWindowManager()->removeWindow(id);
+
+	glfwDestroyWindow(window);
+	window = NULL;
 }
 
 ofPoint ofWindow::getWindowPosition() {
@@ -493,3 +525,183 @@ void ofWindow::toggleFullscreen() {
 	else if(windowMode == OF_FULLSCREEN)
 		setFullscreen(false);
 }
+
+
+////GLFW CALLBACKS
+
+
+void ofWindow::glfwErrorCallback(int type, const char * err) {
+	ofLog(OF_LOG_ERROR, err);
+}
+
+void ofWindow::glfwWindowSizeCallback(GLFWwindow * glfwWin, int w, int h) {
+	toOf(glfwWin)->windowResized(w, h);
+}
+
+void ofWindow::glfwWindowCloseCallback(GLFWwindow * glfwWin) {
+	toOf(glfwWin)->windowClosed();
+}
+
+void ofWindow::glfwWindowRefreshCallback(GLFWwindow * glfwWin) {
+	//toOf(glfwWin)->glfwWindowRefresh(glfwWin);
+}
+
+void ofWindow::glfwWindowFocusCallback(GLFWwindow * glfwWin, int action) {
+	//toOf(glfwWin)->glfwWindowFocus(glfwWin, action);
+}
+
+void ofWindow::glfwWindowIconifyCallback(GLFWwindow * glfwWin, int action) {
+	//toOf(glfwWin)->glfwWindowIconify(glfwWin, action);
+}
+
+void ofWindow::glfwMouseButtonCallback(GLFWwindow * glfwWin, int button, int action) {
+	if(action == GLFW_PRESS) {
+		toOf(glfwWin)->mousePressed(button);
+	} else {
+		toOf(glfwWin)->mouseReleased(button);
+	}
+}
+
+void ofWindow::glfwMousePosCallback(GLFWwindow * glfwWin, double x, double y) {
+	toOf(glfwWin)->mouseMoved(x, y);
+}
+
+void ofWindow::glfwCursorEnterCallback(GLFWwindow * glfwWin, int action) {
+	//toOf(glfwWin)->glfwCursorEnter(glfwWin, action);
+}
+
+void ofWindow::glfwScrollCallback(GLFWwindow * glfwWin, double deltaX, double deltaY) {
+	toOf(glfwWin)->scrolled(-deltaX, -deltaY);
+}
+
+void ofWindow::glfwKeyCallback(GLFWwindow * glfwWin, int key, int action) {
+	//TODO: I'm sure there is some way to do this more efficient than a case statement (Philip)
+	switch(key) {
+	case GLFW_KEY_ENTER:
+		key = OF_KEY_RETURN;
+		break;
+
+	case GLFW_KEY_ESC:
+		key = OF_KEY_ESC;
+		break;
+
+	case GLFW_KEY_LEFT_CONTROL:
+	case GLFW_KEY_RIGHT_CONTROL:
+		key = OF_KEY_CTRL;
+		break;
+
+	case GLFW_KEY_RIGHT_ALT:
+	case GLFW_KEY_LEFT_ALT:
+		key = OF_KEY_ALT;
+		break;
+
+	case GLFW_KEY_RIGHT_SHIFT:
+	case GLFW_KEY_LEFT_SHIFT:
+		key = OF_KEY_SHIFT;
+		break;
+
+	case GLFW_KEY_BACKSPACE:
+		key = OF_KEY_BACKSPACE;
+		break;
+
+	case GLFW_KEY_DELETE:
+		key = OF_KEY_DEL;
+		break;
+
+	case GLFW_KEY_F1:
+		key = OF_KEY_F1;
+		break;
+
+	case GLFW_KEY_F2:
+		key = OF_KEY_F2;
+		break;
+
+	case GLFW_KEY_F3:
+		key = OF_KEY_F3;
+		break;
+
+	case GLFW_KEY_F4:
+		key = OF_KEY_F4;
+		break;
+
+	case GLFW_KEY_F5:
+		key = OF_KEY_F5;
+		break;
+
+	case GLFW_KEY_F6:
+		key = OF_KEY_F6;
+		break;
+
+	case GLFW_KEY_F7:
+		key = OF_KEY_F7;
+		break;
+
+	case GLFW_KEY_F8:
+		key = OF_KEY_F8;
+		break;
+
+	case GLFW_KEY_F9:
+		key = OF_KEY_F9;
+		break;
+
+	case GLFW_KEY_F10:
+		key = OF_KEY_F10;
+		break;
+
+	case GLFW_KEY_F11:
+		key = OF_KEY_F11;
+		break;
+
+	case GLFW_KEY_F12:
+		key = OF_KEY_F12;
+		break;
+
+	case GLFW_KEY_LEFT:
+		key = OF_KEY_LEFT;
+		break;
+
+	case GLFW_KEY_RIGHT:
+		key = OF_KEY_RIGHT;
+		break;
+
+	case GLFW_KEY_DOWN:
+		key = OF_KEY_DOWN;
+		break;
+
+	case GLFW_KEY_UP:
+		key = OF_KEY_UP;
+		break;
+
+	case GLFW_KEY_PAGEUP:
+		key = OF_KEY_PAGE_UP;
+		break;
+
+	case GLFW_KEY_PAGEDOWN:
+		key = OF_KEY_PAGE_DOWN;
+		break;
+
+	case GLFW_KEY_HOME:
+		key = OF_KEY_HOME;
+		break;
+
+	case GLFW_KEY_END:
+		key = OF_KEY_END;
+		break;
+
+	case GLFW_KEY_INSERT:
+		key = OF_KEY_INSERT;
+		break;
+	}
+
+	if(action == GLFW_RELEASE) {
+		toOf(glfwWin)->keyReleased(key);
+	} else {
+		toOf(glfwWin)->keyPressed(key);
+	}
+}
+
+void ofWindow::glfwCharCallback(GLFWwindow * glfwWin, unsigned int character) {
+	//toOf(glfwWin)->glfwChar(glfwWin, character);
+}
+
+
