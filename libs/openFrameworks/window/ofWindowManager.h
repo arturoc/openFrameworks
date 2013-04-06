@@ -28,27 +28,28 @@ class ofWindowManager : public ofAppBaseWindow {
 		ofPtr<ofWindow> getWindowById(int id);
 		ofPtr<ofWindow> getCurrentWindow();
 
-
-		//TODO:
-		void hideCursor(){};
-		void showCursor(){};
-
-		void setWindowPosition(int, int){};
-		void setWindowShape(int, int){};
-
-		ofPoint getScreenSize(){};
-
 		void setOrientation(ofOrientation);
 		ofOrientation getOrientation();
 		bool doesHWOrientation(){return false;};
+
+		void hideCursor();
+		void showCursor();
+
+		void setWindowPosition(int x, int y);
+		void setWindowShape(int w, int h);
+
+		//TODO:
+
+
+		ofPoint getScreenSize(){};
 
 		void setWindowTitle(std::string title){};
 		int getWindowMode(){};
 		void enableSetupScreen(){};
 		void disableSetupScreen(){};
-		void setVerticalSync(bool){};
 		// end TODO
 
+		void setVerticalSync(bool vSync);
 
 		void setFrameRate(float targetRate);
 		float getFrameRate();

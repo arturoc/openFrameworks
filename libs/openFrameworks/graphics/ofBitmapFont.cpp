@@ -322,37 +322,19 @@ static const unsigned char* bmpChar_8x13_Map[] = {	bmpChar_8x13_000,bmpChar_8x13
 
 
 
-#include "ofTexture.h"
+bool ofBitmapFont::bBitmapPixelsPrepared = false;
+ofPixels ofBitmapFont::myLetterPixels;
+float ofBitmapFont::widthTex = 8.0f/256.0f;
+float ofBitmapFont::heightTex = 14.0f/256.0f;
 
-static bool				bBitmapTexturePrepared = false;
-static ofTexture		bitmappedFontTexture;
-
-#ifdef TARGET_OPENGLES
-//---------------------------------------------------------------------
-// tig: does this actually do anything?
-void ofUpdateBitmapCharacterTexture(){
-	bBitmapTexturePrepared = false;
-}
-#endif
-
-static ofPixels myLetterPixels;
-static float widthTex = 8.0f/256.0f;
-static float heightTex = 14.0f/256.0f;
-static ofVboMesh charMesh;
-static int vC = 0;
 
 //---------------------------------------------------------------------
-static void prepareBitmapTexture(){
+void ofBitmapFont::setup(){
 
-			
-	
-	if (!bBitmapTexturePrepared){
+	if (!bBitmapPixelsPrepared){
 		myLetterPixels.allocate(16*16, 16*16, 4); // letter size:8x14pixels, texture size:16x8letters, gl_rgba: 4bytes/1pixel
 
-
-		bitmappedFontTexture.allocate(16*16, 16*16, GL_RGBA, false);
-		
-		bBitmapTexturePrepared = true;
+		bBitmapPixelsPrepared = true;
 		
 		for (int i = 0; i < 256; i++) {
 			
@@ -375,21 +357,21 @@ static void prepareBitmapTexture(){
 			}
 		}
 		
-		bitmappedFontTexture.loadData(myLetterPixels);
-		bitmappedFontTexture.setTextureMinMagFilter(GL_LINEAR,GL_NEAREST);
-
-		charMesh.setMode(OF_PRIMITIVE_TRIANGLES);
-		
 	}
 
+	bitmappedFontTexture.allocate(16*16, 16*16, GL_RGBA, false);
+
+	bitmappedFontTexture.loadData(myLetterPixels);
+	bitmappedFontTexture.setTextureMinMagFilter(GL_LINEAR,GL_NEAREST);
+
+	charMesh.setMode(OF_PRIMITIVE_TRIANGLES);
+	vC = 0;
 }
+
 		
 //---------------------------------------------------------------------
-void  ofDrawBitmapCharacter(int character, int x , int y){
+void  ofBitmapFont::drawCharacter(int character, int x , int y){
 
-	if(!bBitmapTexturePrepared){
-		prepareBitmapTexture();
-	}
 		
 	if (character < 128) {		
 		//TODO: look into a better fix. 
@@ -429,19 +411,15 @@ void  ofDrawBitmapCharacter(int character, int x , int y){
 }
 
 //---------------------------------------------------------------------
-void ofDrawBitmapCharacterStart(int stringLength){
+void ofBitmapFont::begin(int stringLength){
 	charMesh.getVertices().resize(6 * stringLength);
 	charMesh.getTexCoords().resize(6 * stringLength);
 
-	if(!bBitmapTexturePrepared){
-		prepareBitmapTexture();
-	}
-	
 	vC = 0;
 }
 
 //---------------------------------------------------------------------
-void ofDrawBitmapCharacterEnd(){
+void ofBitmapFont::end(){
 	if( vC > 0 ){
 		charMesh.getVertices().resize(vC);
 		charMesh.getTexCoords().resize(vC);

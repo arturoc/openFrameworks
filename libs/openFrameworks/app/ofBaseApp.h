@@ -35,6 +35,52 @@ class ofBaseApp : public ofBaseSoundInput, public ofBaseSoundOutput{
 	
 		virtual void windowEntry ( int state ) { }
 		
+
+		// window parameter methods
+		virtual void setup(ofWindowEventArgs & f){
+			setup();
+		}
+		virtual void update(ofWindowEventArgs & f){
+			update();
+		}
+		virtual void draw(ofWindowEventArgs & f){
+			draw();
+		}
+
+		//KEY
+		virtual void keyReleased(ofKeyEventArgs & e){
+			keyReleased(e.key);
+		}
+		virtual void keyPressed(ofKeyEventArgs & e){
+			keyPressed(e.key);
+		}
+
+		//WINDOW
+		virtual void windowMoved(ofMoveEventArgs & e){}
+		virtual void windowResized(ofResizeEventArgs & e){
+			windowResized(e.width, e.height);
+		}
+		virtual void windowClosed(ofWindowEventArgs & e){}
+
+		//MOUSE
+		virtual void mouseMoved(ofMouseEventArgs & e){
+			mouseMoved(e.x, e.y);
+		}
+		virtual void mouseDragged(ofMouseEventArgs & e){
+			mouseDragged(e.x, e.y, e.button);
+		}
+		virtual void mousePressed(ofMouseEventArgs & e){
+			mousePressed(e.x, e.y, e.button);
+		}
+		virtual void mouseReleased(ofMouseEventArgs & e){
+			mouseReleased(e.x, e.y, e.button);
+		}
+
+		virtual void scrolled(ofScrollEventArgs & e){
+			scrolled(e.deltaX, e.deltaY);
+		}
+
+
 		int mouseX, mouseY;			// for processing heads
 };
 

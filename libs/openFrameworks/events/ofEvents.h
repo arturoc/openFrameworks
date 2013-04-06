@@ -40,7 +40,7 @@ class ofEventArgs {};
 
 class ofWindowEventArgs: public ofEventArgs {
 public:
-	ofWindow* window;
+	ofWindow * window;
 };
 
 class ofEntryEventArgs : public ofEventArgs {

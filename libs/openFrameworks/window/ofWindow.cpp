@@ -82,28 +82,24 @@ void ofWindow::initializeWindow(ofWindowMode wm) {
 
 }
 
-void ofWindow::addListener(ofWindowListener * listener) {
-	enableContext();
-	listener->setup();
-
-	ofAddListener(events.update, listener, &ofWindowListener::update);
-	ofAddListener(events.draw, listener, &ofWindowListener::draw);
-
-	ofAddListener(events.mouseMoved, listener, &ofWindowListener::mouseMoved);
-	ofAddListener(events.mousePressed, listener, &ofWindowListener::mousePressed);
-	ofAddListener(events.mouseDragged, listener, &ofWindowListener::mouseDragged);
-	ofAddListener(events.mouseReleased, listener, &ofWindowListener::mouseReleased);
-
-	ofAddListener(events.keyPressed, listener, &ofWindowListener::keyPressed);
-	ofAddListener(events.keyReleased, listener, &ofWindowListener::keyReleased);
-
-	ofAddListener(events.windowResized, listener, &ofWindowListener::windowResized);
-	ofAddListener(events.windowMoved, listener, &ofWindowListener::windowMoved);
-	ofAddListener(events.windowClosed, listener, &ofWindowListener::windowClosed);
-}
-
 void ofWindow::addListener(ofBaseApp * app) {
-	addListener(new ofWindowToOfBaseApp(app));
+	enableContext();
+	app->setup();
+
+	ofAddListener(events.update, app, &ofBaseApp::update);
+	ofAddListener(events.draw, app, &ofBaseApp::draw);
+
+	ofAddListener(events.mouseMoved, app, &ofBaseApp::mouseMoved);
+	ofAddListener(events.mousePressed, app, &ofBaseApp::mousePressed);
+	ofAddListener(events.mouseDragged, app, &ofBaseApp::mouseDragged);
+	ofAddListener(events.mouseReleased, app, &ofBaseApp::mouseReleased);
+
+	ofAddListener(events.keyPressed, app, &ofBaseApp::keyPressed);
+	ofAddListener(events.keyReleased, app, &ofBaseApp::keyReleased);
+
+	ofAddListener(events.windowResized, app, &ofBaseApp::windowResized);
+	ofAddListener(events.windowMoved, app, &ofBaseApp::windowMoved);
+	ofAddListener(events.windowClosed, app, &ofBaseApp::windowClosed);
 }
 
 GLFWwindow* ofWindow::getGlfwWindow() {
@@ -351,11 +347,21 @@ void ofWindow::setWidth(int w) {
 	width = w;
 	glfwSetWindowSize(window, w, height);
 }
+
 void ofWindow::setHeight(int h) {
 	previousShape.height = height;
 	height = h;
 	glfwSetWindowSize(window, width, h);
 }
+
+void ofWindow::hideCursor(){
+	glfwSetInputMode(window, GLFW_CURSOR_MODE, GLFW_CURSOR_HIDDEN);
+}
+
+void ofWindow::showCursor(){
+	glfwSetInputMode(window, GLFW_CURSOR_MODE, GLFW_CURSOR_NORMAL);
+}
+
 void ofWindow::windowResized(int w, int h) {
 	if(width == w && height == h) {
 		return;
@@ -397,6 +403,11 @@ string ofWindow::getTitle() {
 	return title;
 }
 
+void ofWindow::setVerticalSync(bool vSync){
+	if(vSync) glfwSwapInterval( 1 );
+	else  glfwSwapInterval( 0 );
+}
+
 void ofWindow::close() {
 	ofWindowManager::getWindowManager()->deleteWindow(shared_from_this());
 }
@@ -408,6 +419,7 @@ int ofWindow::getID(){
 bool ofWindow::isClosed() {
 	return window == NULL;
 }
+
 void ofWindow::updateMouse(int x, int y) {
 	previousMouseX = mouseX;
 	previousMouseY = mouseY;

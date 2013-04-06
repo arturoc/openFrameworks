@@ -5,6 +5,7 @@
 #include "ofShader.h"
 #include "ofGraphics.h"
 #include "ofMatrixStack.h"
+#include "ofBitmapFont.h"
 
 
 #include <stack>
@@ -188,4 +189,6 @@ private:
 	int currentTextureTarget;
 
 	bool wrongUseLoggedOnce;
+
+	ofBitmapFont bitmapFont;
 };

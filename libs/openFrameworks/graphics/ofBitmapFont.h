@@ -1,6 +1,9 @@
 #pragma once
 
 #include "ofConstants.h"
+#include "ofPixels.h"
+#include "ofVboMesh.h"
+#include "ofTexture.h"
 
 
 /*
@@ -12,8 +15,21 @@
  
  */
 
-void ofDrawBitmapCharacterStart(int stringLength);
-void ofDrawBitmapCharacter(int character, int x , int y );
-void ofDrawBitmapCharacterEnd();
+class ofBitmapFont{
+public:
+	void setup();
+	void begin(int stringLength);
+	void drawCharacter(int character, int x , int y );
+	void end();
+
+private:
+	static bool bBitmapPixelsPrepared;
+	static ofPixels myLetterPixels;
+	static float widthTex;
+	static float heightTex;
+	int vC;
+	ofVboMesh charMesh;
+	ofTexture bitmappedFontTexture;
+};
 
 

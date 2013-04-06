@@ -370,6 +370,26 @@ ofOrientation ofWindowManager::getOrientation(){
 	return activeWindow->getOrientation();
 }
 
+void ofWindowManager::hideCursor(){
+	activeWindow->hideCursor();
+};
+
+void ofWindowManager::showCursor(){
+	activeWindow->showCursor();
+};
+
+void ofWindowManager::setWindowPosition(int x, int y){
+	activeWindow->setWindowPosition(x,y);
+}
+
+void ofWindowManager::setWindowShape(int w, int h){
+	activeWindow->setWindowShape(w,h);
+}
+
+void ofWindowManager::setVerticalSync(bool vSync){
+	activeWindow->setVerticalSync(vSync);
+}
+
 int ofWindowManager::getWidth() {
 	return activeWindow->getWidth();
 }

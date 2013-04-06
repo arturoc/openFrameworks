@@ -5,6 +5,7 @@
 #include <stack>
 #include "ofGraphics.h"
 #include "ofMatrixStack.h"
+#include "ofBitmapFont.h"
 
 class ofShapeTessellation;
 class ofMesh;
@@ -15,6 +16,8 @@ class ofGLRenderer: public ofBaseGLRenderer{
 public:
 	ofGLRenderer(bool useShapeColor=true);
 	~ofGLRenderer(){}
+
+	void setup();
 
     static const string TYPE;
     const string & getType(){ return TYPE; }
@@ -159,5 +162,6 @@ private:
 	ofRectMode rectMode;
 
 	ofMatrixStack matrixStack;
+	ofBitmapFont bitmapFont;
 
 };

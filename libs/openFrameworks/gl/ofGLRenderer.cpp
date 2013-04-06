@@ -5,7 +5,6 @@
 #include "ofAppRunner.h"
 #include "ofMesh.h"
 #include "of3dPrimitives.h"
-#include "ofBitmapFont.h"
 #include "ofGLUtils.h"
 #include "ofImage.h"
 #include "ofFbo.h"
@@ -23,6 +22,11 @@ ofGLRenderer::ofGLRenderer(bool useShapeColor)
 	fillFlag = OF_FILLED;
 	bSmoothHinted = false;
 	rectMode = OF_RECTMODE_CORNER;
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::setup(){
+	bitmapFont.setup();
 }
 
 //----------------------------------------------------------
@@ -1003,7 +1007,7 @@ void ofGLRenderer::drawString(string textString, float x, float y, float z, ofDr
 
 	// (c) enable texture once before we start drawing each char (no point turning it on and off constantly)
 	//We do this because its way faster
-	ofDrawBitmapCharacterStart(textString.size());
+	bitmapFont.begin(textString.size());
 
 	for(int c = 0; c < len; c++){
 		if(textString[c] == '\n'){
@@ -1020,13 +1024,13 @@ void ofGLRenderer::drawString(string textString, float x, float y, float z, ofDr
 			// < 32 = control characters - don't draw
 			// solves a bug with control characters
 			// getting drawn when they ought to not be
-			ofDrawBitmapCharacter(textString[c], (int)sx, (int)sy);
+			bitmapFont.drawCharacter(textString[c], (int)sx, (int)sy);
 
 			sx += fontSize;
 		}
 	}
 	//We do this because its way faster
-	ofDrawBitmapCharacterEnd();
+	bitmapFont.end();
 
 
 	if (hasModelView)

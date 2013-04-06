@@ -283,6 +283,8 @@ class ofBaseRenderer{
 public:
 	virtual ~ofBaseRenderer(){}
 
+	virtual void setup(){};
+
 	virtual const string & getType()=0;
 
 	virtual void update()=0;

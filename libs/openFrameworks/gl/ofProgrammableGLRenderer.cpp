@@ -4,7 +4,6 @@
 #include "ofGraphics.h"
 #include "ofAppRunner.h"
 #include "ofMesh.h"
-#include "ofBitmapFont.h"
 #include "ofGLUtils.h"
 #include "ofImage.h"
 #include "ofFbo.h"
@@ -405,6 +404,8 @@ void ofProgrammableGLRenderer::setup(){
 
 	bitmapStringShader.bindDefaults();
 	bitmapStringShader.linkProgram();
+
+	bitmapFont.setup();
 }
 
 ofProgrammableGLRenderer::~ofProgrammableGLRenderer() {
@@ -1416,7 +1417,7 @@ void ofProgrammableGLRenderer::drawString(string textString, float x, float y, f
 
 	// (c) enable texture once before we start drawing each char (no point turning it on and off constantly)
 	//We do this because its way faster
-	ofDrawBitmapCharacterStart(textString.size());
+	bitmapFont.begin(textString.size());
 
 	for(int c = 0; c < len; c++){
 		if(textString[c] == '\n'){
@@ -1433,13 +1434,13 @@ void ofProgrammableGLRenderer::drawString(string textString, float x, float y, f
 			// < 32 = control characters - don't draw
 			// solves a bug with control characters
 			// getting drawn when they ought to not be
-			ofDrawBitmapCharacter(textString[c], (int)sx, (int)sy);
+			bitmapFont.drawCharacter(textString[c], (int)sx, (int)sy);
 
 			sx += fontSize;
 		}
 	}
 	//We do this because its way faster
-	ofDrawBitmapCharacterEnd();
+	bitmapFont.end();
 	bitmapStringShader.end();
 
 
