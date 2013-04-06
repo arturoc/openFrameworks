@@ -60,13 +60,6 @@ void ofSetEscapeQuitsApp(bool bQuitOnEsc){
 	bEscQuits = bQuitOnEsc;
 }
 
-void exitApp(){
-	ofLog(OF_LOG_VERBOSE,"OF app is being terminated!");
-	OF_EXIT_APP(0);
-}
-
-
-
 //------------------------------------------
 void ofNotifySetup(){
 	ofBaseApp * ofAppPtr = ofGetAppPtr();
@@ -114,7 +107,7 @@ void ofNotifyKeyPressed(int key){
 	ofNotifyEvent( ofEvents().keyPressed, keyEventArgs );
 	
 	if (key == OF_KEY_ESC && bEscQuits == true){				// "escape"
-		exitApp();
+		std::exit(0);
 	}
 }
 
