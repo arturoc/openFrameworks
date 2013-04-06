@@ -11,7 +11,6 @@
 
 class ofWindow  {
 	public:
-		ofWindow();
 		~ofWindow();
 
 		void enableContext();
@@ -71,6 +70,7 @@ class ofWindow  {
 		int previousMouseX, previousMouseY;
 
 	private:
+		ofWindow();
 		GLFWwindow* getGlfwWindow();
 
 		void destroy();
