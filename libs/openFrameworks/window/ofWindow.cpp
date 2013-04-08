@@ -27,6 +27,8 @@ static ofWindow * toOf(GLFWwindow * glfwWin){
 
 /********** ofWindowDefinitions *****************/
 int ofWindow::lastWindowID = 0;
+
+//--------------------------------------------------------------
 ofWindow::ofWindow() : mouseX(0),
 	mouseY(0),
 	previousMouseX(0),
@@ -48,9 +50,11 @@ ofWindow::ofWindow() : mouseX(0),
 	}
 }
 
+//--------------------------------------------------------------
 ofWindow::~ofWindow() {
 }
 
+//--------------------------------------------------------------
 ofPtr<ofWindow> ofWindow::createWindow(int x, int y, int width, int height){
 	ofPtr<ofWindow> win(new ofWindow());
 
@@ -75,6 +79,7 @@ ofPtr<ofWindow> ofWindow::createWindow(int x, int y, int width, int height){
 }
 
 
+//--------------------------------------------------------------
 ofPtr<ofWindow> ofWindow::createWindow(int w, int h, ofWindowMode windowMode, int monitor){
 	ofPtr<ofWindow> win(new ofWindow());
 
@@ -98,6 +103,7 @@ ofPtr<ofWindow> ofWindow::createWindow(int w, int h, ofWindowMode windowMode, in
 	return win;
 }
 
+//--------------------------------------------------------------
 void ofWindow::initializeWindow(ofWindowMode wm, int monitor) {
 	ofLogNotice("CREATING WINDOW AT " + ofToString(x) + "/" + ofToString(y) + " SIZE " + ofToString(width) + " x " + ofToString(height));
 
@@ -148,6 +154,7 @@ void ofWindow::initializeWindow(ofWindowMode wm, int monitor) {
 
 }
 
+//--------------------------------------------------------------
 void ofWindow::addListener(ofBaseApp * app) {
 	enableContext();
 	app->setup();
@@ -168,15 +175,18 @@ void ofWindow::addListener(ofBaseApp * app) {
 	ofAddListener(events.windowClosed, app, &ofBaseApp::windowClosed);
 }
 
+//--------------------------------------------------------------
 GLFWwindow* ofWindow::getGlfwWindow() {
 	return window;
 }
 
+//--------------------------------------------------------------
 void ofWindow::enableContext() {
 	glfwMakeContextCurrent(window);
 	ofSetCurrentRenderer(renderer);
 }
 
+//--------------------------------------------------------------
 void ofWindow::setup() {
 	glfwMakeContextCurrent(window);
 	renderer->setup();
@@ -192,6 +202,7 @@ void ofWindow::setup() {
 	ofNotifyEvent(events.setup, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::update() {
 	enableContext();
 	ofWindowEventArgs e;
@@ -199,6 +210,7 @@ void ofWindow::update() {
 	ofNotifyEvent(events.update, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::draw() {
 	enableContext();
 
@@ -221,6 +233,7 @@ void ofWindow::draw() {
 	glfwSwapBuffers(window);
 }
 
+//--------------------------------------------------------------
 void ofWindow::destroy() {
 	//getWindowPosition();
 	glfwDestroyWindow(window);
@@ -229,6 +242,7 @@ void ofWindow::destroy() {
 
 
 //USER INTERACTION EVENTS
+//--------------------------------------------------------------
 void ofWindow::mouseMoved(int mX, int mY) {
 	updateMouse(mX, mY);
 	ofNotifyMouseMoved(mouseX, mouseY);
@@ -240,10 +254,12 @@ void ofWindow::mouseMoved(int mX, int mY) {
 	ofNotifyEvent(events.mouseMoved, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::mousePressed(int button) {
 	mousePressed(mouseX, mouseY, button);
 }
 
+//--------------------------------------------------------------
 void ofWindow::mousePressed(int mX, int mY, int button) {
 	updateMouse(mX, mY);
 	ofNotifyMousePressed(mouseX, mouseY, button);
@@ -256,10 +272,12 @@ void ofWindow::mousePressed(int mX, int mY, int button) {
 	ofNotifyEvent(events.mousePressed, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::mouseReleased(int button) {
 	mouseReleased(mouseX, mouseY, button);
 }
 
+//--------------------------------------------------------------
 void ofWindow::mouseReleased(int mX, int mY, int button) {
 	updateMouse(mX, mY);
 	ofNotifyMouseReleased(mouseX, mouseY, button);
@@ -272,6 +290,7 @@ void ofWindow::mouseReleased(int mX, int mY, int button) {
 	ofNotifyEvent(events.mouseReleased, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::mouseDragged(int mX, int mY, int button) {
 	updateMouse(mX, mY);
 
@@ -285,6 +304,7 @@ void ofWindow::mouseDragged(int mX, int mY, int button) {
 	ofNotifyEvent(events.mouseDragged, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::scrolled(float deltaX, float deltaY) {
 #ifndef TARGET_OSX
 	deltaX *= -1;
@@ -298,6 +318,7 @@ void ofWindow::scrolled(float deltaX, float deltaY) {
 	ofNotifyEvent(events.scrolled, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::keyPressed(int key) {
 	if(key < OF_MAX_NUM_KEYS) {
 		keyState[key] = true;
@@ -310,6 +331,7 @@ void ofWindow::keyPressed(int key) {
 	ofNotifyEvent(events.keyPressed, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::keyReleased(int key) {
 	if(key < OF_MAX_NUM_KEYS) {
 		keyState[key] = false;
@@ -322,20 +344,24 @@ void ofWindow::keyReleased(int key) {
 	ofNotifyEvent(events.keyReleased, e);
 }
 
+//--------------------------------------------------------------
 bool ofWindow::isKeyPressed(int key) {
 	return keyState[key];
 }
 
 
 //WINDOW SPECIFIC EVENT
+//--------------------------------------------------------------
 void ofWindow::windowFocused() {
 	isFocused = true;
 }
 
+//--------------------------------------------------------------
 void ofWindow::windowUnfocused() {
 	isFocused = false;
 }
 
+//--------------------------------------------------------------
 void ofWindow::windowClosed() {
 	ofWindowEventArgs e;
 	e.window = this;
@@ -346,6 +372,7 @@ void ofWindow::windowClosed() {
 	window = NULL;
 }
 
+//--------------------------------------------------------------
 ofPoint ofWindow::getWindowPosition() {
 	if(window != NULL) {
 		glfwGetWindowPos(window, &x, &y);
@@ -353,35 +380,44 @@ ofPoint ofWindow::getWindowPosition() {
 	return ofPoint(x, y);
 }
 
+//--------------------------------------------------------------
 ofPoint ofWindow::getWindowSize() {
 	return ofPoint(width, height);
 }
 
+//--------------------------------------------------------------
 int ofWindow::getWidth() {
 	return width;
 }
 
+//--------------------------------------------------------------
 int ofWindow::getHeight() {
 	return height;
 }
 
+//--------------------------------------------------------------
 int ofWindow::getX() {
 	return getWindowPosition().x;
 }
 
+//--------------------------------------------------------------
 int ofWindow::getY() {
 	return getWindowPosition().y;
 }
 
+//--------------------------------------------------------------
 int ofWindow::setX(int _x) {
 	setWindowPosition(_x, y);
 	return _x; //TODO: this should return the actual window position
 }
+
+//--------------------------------------------------------------
 int ofWindow::setY(int _y) {
 	setWindowPosition(x, _y);
 	return _y; //TODO: this should return the actual window position
 }
 
+//--------------------------------------------------------------
 void ofWindow::setWindowPositionAndShape(int _x, int _y, int w, int h) {
 	if(!isInitialized) {
 		x = _x;
@@ -393,22 +429,28 @@ void ofWindow::setWindowPositionAndShape(int _x, int _y, int w, int h) {
 		setWindowShape(w, h);
 	}
 }
+
+//--------------------------------------------------------------
 void ofWindow::setWindowPosition(int x, int y) {
 	glfwSetWindowPos(window, x, y);
 }
 
+//--------------------------------------------------------------
 void ofWindow::setWindowPosition(ofPoint pos) {
 	setWindowPosition(pos.x, pos.y);
 }
 
+//--------------------------------------------------------------
 void ofWindow::setOrientation(ofOrientation _orientation){
 	orientation = _orientation;
 }
 
+//--------------------------------------------------------------
 ofOrientation ofWindow::getOrientation(){
 	return orientation;
 }
 
+//--------------------------------------------------------------
 void ofWindow::setWindowShape(int w, int h) {
 	previousShape.width = width;
 	previousShape.height = height;
@@ -418,26 +460,31 @@ void ofWindow::setWindowShape(int w, int h) {
 		glfwSetWindowSize(window, w, h);
 }
 
+//--------------------------------------------------------------
 void ofWindow::setWidth(int w) {
 	previousShape.width = width;
 	width = w;
 	glfwSetWindowSize(window, w, height);
 }
 
+//--------------------------------------------------------------
 void ofWindow::setHeight(int h) {
 	previousShape.height = height;
 	height = h;
 	glfwSetWindowSize(window, width, h);
 }
 
+//--------------------------------------------------------------
 void ofWindow::hideCursor(){
 	glfwSetInputMode(window, GLFW_CURSOR_MODE, GLFW_CURSOR_HIDDEN);
 }
 
+//--------------------------------------------------------------
 void ofWindow::showCursor(){
 	glfwSetInputMode(window, GLFW_CURSOR_MODE, GLFW_CURSOR_NORMAL);
 }
 
+//--------------------------------------------------------------
 void ofWindow::windowResized(int w, int h) {
 	if(width == w && height == h) {
 		return;
@@ -456,6 +503,7 @@ void ofWindow::windowResized(int w, int h) {
 	draw();
 }
 
+//--------------------------------------------------------------
 void ofWindow::windowMoved(int _x, int _y) {
 	if(x == _x && y == _y) {
 		return;
@@ -471,6 +519,7 @@ void ofWindow::windowMoved(int _x, int _y) {
 	ofNotifyEvent(events.windowMoved, e);
 }
 
+//--------------------------------------------------------------
 void ofWindow::setTitle(string t) {
 	if(isInitialized) {
 		glfwSetWindowTitle(window, t.c_str());
@@ -478,23 +527,28 @@ void ofWindow::setTitle(string t) {
 	title = t;
 }
 
+//--------------------------------------------------------------
 string ofWindow::getTitle() {
 	return title;
 }
 
+//--------------------------------------------------------------
 void ofWindow::setVerticalSync(bool vSync){
 	if(vSync) glfwSwapInterval( 1 );
 	else  glfwSwapInterval( 0 );
 }
 
+//--------------------------------------------------------------
 int ofWindow::getID(){
 	return id;
 }
 
+//--------------------------------------------------------------
 bool ofWindow::isClosed() {
 	return window == NULL;
 }
 
+//--------------------------------------------------------------
 void ofWindow::updateMouse(int x, int y) {
 	previousMouseX = mouseX;
 	previousMouseY = mouseY;
@@ -502,6 +556,7 @@ void ofWindow::updateMouse(int x, int y) {
 	mouseY = y;
 }
 
+//--------------------------------------------------------------
 bool ofWindow::isFullscreen() {
 	if(windowMode  == OF_FULLSCREEN)
 		return true;
@@ -510,6 +565,7 @@ bool ofWindow::isFullscreen() {
 	return false;
 }
 
+//--------------------------------------------------------------
 void ofWindow::setFullscreen(bool fullscreen) {
 	cout << "FULLSCREEN " << fullscreen <<endl;
 #ifdef TARGET_LINUX
@@ -551,9 +607,11 @@ void ofWindow::setFullscreen(bool fullscreen) {
 		windowMode = OF_WINDOW;
 }
 
+//--------------------------------------------------------------
 void ofWindow::setWindowPositionAndShape(ofRectangle rect) {
 }
 
+//--------------------------------------------------------------
 void ofWindow::toggleFullscreen() {
 	if(windowMode == OF_WINDOW)
 		setFullscreen(true);
@@ -565,30 +623,37 @@ void ofWindow::toggleFullscreen() {
 
 
 ////GLFW CALLBACKS
+//--------------------------------------------------------------
 void ofWindow::glfwErrorCallback(int type, const char * err) {
 	ofLog(OF_LOG_ERROR, err);
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwWindowSizeCallback(GLFWwindow * glfwWin, int w, int h) {
 	toOf(glfwWin)->windowResized(w, h);
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwWindowCloseCallback(GLFWwindow * glfwWin) {
 	toOf(glfwWin)->windowClosed();
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwWindowRefreshCallback(GLFWwindow * glfwWin) {
 	//toOf(glfwWin)->glfwWindowRefresh(glfwWin);
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwWindowFocusCallback(GLFWwindow * glfwWin, int action) {
 	//toOf(glfwWin)->glfwWindowFocus(glfwWin, action);
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwWindowIconifyCallback(GLFWwindow * glfwWin, int action) {
 	//toOf(glfwWin)->glfwWindowIconify(glfwWin, action);
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwMouseButtonCallback(GLFWwindow * glfwWin, int button, int action) {
 	if(action == GLFW_PRESS) {
 		toOf(glfwWin)->mousePressed(button);
@@ -597,18 +662,22 @@ void ofWindow::glfwMouseButtonCallback(GLFWwindow * glfwWin, int button, int act
 	}
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwMousePosCallback(GLFWwindow * glfwWin, double x, double y) {
 	toOf(glfwWin)->mouseMoved(x, y);
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwCursorEnterCallback(GLFWwindow * glfwWin, int action) {
 	//toOf(glfwWin)->glfwCursorEnter(glfwWin, action);
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwScrollCallback(GLFWwindow * glfwWin, double deltaX, double deltaY) {
 	toOf(glfwWin)->scrolled(-deltaX, -deltaY);
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwKeyCallback(GLFWwindow * glfwWin, int key, int action) {
 	//TODO: I'm sure there is some way to do this more efficient than a case statement (Philip)
 	switch(key) {
@@ -735,6 +804,7 @@ void ofWindow::glfwKeyCallback(GLFWwindow * glfwWin, int key, int action) {
 	}
 }
 
+//--------------------------------------------------------------
 void ofWindow::glfwCharCallback(GLFWwindow * glfwWin, unsigned int character) {
 	//toOf(glfwWin)->glfwChar(glfwWin, character);
 }
