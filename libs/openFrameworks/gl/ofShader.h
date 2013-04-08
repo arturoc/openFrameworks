@@ -127,7 +127,7 @@ public:
 
 	// these are used only for openGL ES2 or GL3/4 using the programmable GL renderer
 	enum defaultAttributes{
-		POSITION_ATTRIBUTE=1,
+		POSITION_ATTRIBUTE=0,
 		COLOR_ATTRIBUTE,
 		NORMAL_ATTRIBUTE,
 		TEXCOORD_ATTRIBUTE
