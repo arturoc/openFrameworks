@@ -12,7 +12,8 @@ class ofWindowManager : public ofAppBaseWindow {
 
 
 		void initializeWindow();
-		void setupOpenGL(int w, int h, int screenMode);
+		void setupOpenGL(int w, int h, ofWindowMode screenMode);
+		void setupOpenGL(int w, int h, ofWindowMode screenMode, int monitor);
 		void runAppViaInfiniteLoop(ofBaseApp * appPtr);
 
 		void update();

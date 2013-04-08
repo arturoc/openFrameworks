@@ -12,7 +12,8 @@ public:
 	ofAppBaseWindow(){};
 	virtual ~ofAppBaseWindow(){};
 
-	virtual void setupOpenGL(int w, int h, int screenMode)=0;
+	virtual void setupOpenGL(int w, int h, ofWindowMode screenMode)=0;
+	virtual void setupOpenGL(int w, int h, ofWindowMode screenMode, int monitor){};
 	virtual void initializeWindow()=0;
 	virtual void runAppViaInfiniteLoop(ofBaseApp * appPtr)=0;
 

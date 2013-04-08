@@ -13,11 +13,11 @@ class ofWindow  {
 	public:
 		~ofWindow();
 
-		static ofPtr<ofWindow> createWindow(int w, int h, ofWindowMode windowMode = OF_WINDOW);
-		static ofPtr<ofWindow> createWindow(int x, int y, int width, int height, ofWindowMode windowMode = OF_WINDOW);
+		static ofPtr<ofWindow> createWindow(int w, int h, ofWindowMode windowMode=OF_WINDOW, int monitor=0);
+		static ofPtr<ofWindow> createWindow(int x, int y, int width, int height);
 
 		void enableContext();
-		void initializeWindow(ofWindowMode mode = OF_WINDOW);
+		void initializeWindow(ofWindowMode mode = OF_WINDOW, int monitor=0);
 
 		void setWindowPositionAndShape(ofRectangle rect);
 		void setWindowPositionAndShape(int x, int y, int width, int height);

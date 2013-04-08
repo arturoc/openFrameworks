@@ -39,6 +39,9 @@ ofWindow::ofWindow() : mouseX(0),
 	lastWindowID++;
 	width = 800;
 	height = 600;
+	x = 0;
+	y = 0;
+	orientation = OF_ORIENTATION_DEFAULT;
 	window = NULL;
 	for(unsigned int i = 0; i < OF_MAX_NUM_KEYS; i++) {
 		keyState[i] = false;
@@ -48,16 +51,12 @@ ofWindow::ofWindow() : mouseX(0),
 ofWindow::~ofWindow() {
 }
 
-ofPtr<ofWindow> ofWindow::createWindow(int w, int h, ofWindowMode windowMode){
-	return createWindow(0,0,w,h,windowMode);
-}
-
-ofPtr<ofWindow> ofWindow::createWindow(int x, int y, int width, int height, ofWindowMode windowMode){
+ofPtr<ofWindow> ofWindow::createWindow(int x, int y, int width, int height){
 	ofPtr<ofWindow> win(new ofWindow());
 
 	win->setWindowPositionAndShape(x, y, width, height);
 	ofWindowManager::getWindowManager()->addWindow(win);
-	win->initializeWindow(windowMode);
+	win->initializeWindow(OF_WINDOW);
 	if(win->getGlfwWindow() != NULL) {
 		glfwSetWindowSizeCallback(win->getGlfwWindow(), &glfwWindowSizeCallback);
 		glfwSetWindowCloseCallback(win->getGlfwWindow(),&glfwWindowCloseCallback);
@@ -75,7 +74,31 @@ ofPtr<ofWindow> ofWindow::createWindow(int x, int y, int width, int height, ofWi
 	return win;
 }
 
-void ofWindow::initializeWindow(ofWindowMode wm) {
+
+ofPtr<ofWindow> ofWindow::createWindow(int w, int h, ofWindowMode windowMode, int monitor){
+	ofPtr<ofWindow> win(new ofWindow());
+
+	win->setWindowShape(w,h);
+	ofWindowManager::getWindowManager()->addWindow(win);
+	win->initializeWindow(windowMode,monitor);
+	if(win->getGlfwWindow() != NULL) {
+		glfwSetWindowSizeCallback(win->getGlfwWindow(), &glfwWindowSizeCallback);
+		glfwSetWindowCloseCallback(win->getGlfwWindow(),&glfwWindowCloseCallback);
+		glfwSetWindowRefreshCallback(win->getGlfwWindow(),&glfwWindowRefreshCallback);
+		glfwSetWindowFocusCallback(win->getGlfwWindow(),&glfwWindowFocusCallback);
+		glfwSetWindowIconifyCallback(win->getGlfwWindow(),&glfwWindowIconifyCallback);
+		glfwSetMouseButtonCallback(win->getGlfwWindow(),&glfwMouseButtonCallback);
+		glfwSetCursorPosCallback(win->getGlfwWindow(),&glfwMousePosCallback);
+		glfwSetCursorEnterCallback(win->getGlfwWindow(),&glfwCursorEnterCallback);
+		glfwSetScrollCallback(win->getGlfwWindow(),&glfwScrollCallback);
+		glfwSetKeyCallback(win->getGlfwWindow(),&glfwKeyCallback);
+		glfwSetCharCallback(win->getGlfwWindow(),&glfwCharCallback);
+	}
+
+	return win;
+}
+
+void ofWindow::initializeWindow(ofWindowMode wm, int monitor) {
 	ofLogNotice("CREATING WINDOW AT " + ofToString(x) + "/" + ofToString(y) + " SIZE " + ofToString(width) + " x " + ofToString(height));
 
 	windowMode = wm;
@@ -86,17 +109,30 @@ void ofWindow::initializeWindow(ofWindowMode wm) {
 	if(mainWindow != NULL){
 		win = mainWindow->getGlfwWindow();
 	}
-	/*
-	//TODO: This has to work again
-	int mode = GLFW_WINDOWED;
-	if(windowMode == OF_GAME_MODE)
-		mode = GLFW_FULLSCREEN;
 
-	glfwWindowHint(GLFW_POSITION_X, x);
-	glfwWindowHint(GLFW_POSITION_Y, y);
-	*/
-
-	window = glfwCreateWindow(width, height, title.c_str(), NULL, win);
+	int count;
+	GLFWmonitor** monitors = glfwGetMonitors(&count);
+	if(wm==OF_GAME_MODE){
+		if(count>monitor){
+			window = glfwCreateWindow(width, height, title.c_str(), monitors[monitor], win);
+		}else if(count>0){
+			ofLogWarning() << "can't find specified monitor for fullscreen, using default monitor";
+			window = glfwCreateWindow(width, height, title.c_str(), monitors[0], win);
+		}else{
+			ofLogError() << "can't find any monitor";
+			return;
+		}
+	}else{
+		window = glfwCreateWindow(width, height, title.c_str(), NULL, win);
+		if(monitor<count){
+			int monitorX,monitorY;
+			glfwGetMonitorPos(monitors[monitor],&monitorX,&monitorY);
+			setWindowPosition(monitorX,monitorY);
+		}
+		if(wm==OF_FULLSCREEN){
+			setFullscreen(true);
+		}
+	}
 	if(window == NULL){
 		ofLogError("Could not initialize window");
 		return;
@@ -107,7 +143,6 @@ void ofWindow::initializeWindow(ofWindowMode wm) {
 	glfwSetInputMode( window, GLFW_STICKY_KEYS, GL_TRUE );
 
 	isInitialized = true;
-	setWindowPositionAndShape(x, y, width, height);
 	renderer = ofPtr<ofProgrammableGLRenderer>(new ofProgrammableGLRenderer);
 
 
@@ -167,23 +202,21 @@ void ofWindow::update() {
 void ofWindow::draw() {
 	enableContext();
 
-	if(!ofGLIsFixedPipeline()){
-		ofGetProgrammableGLRenderer()->startRender();
+	if(renderer->getType()==ofProgrammableGLRenderer::TYPE){
+		renderer->startRender();
 	}
 
-	float * bgPtr = ofBgColorPtr();
-	ofViewport();     // used to be glViewport( 0, 0, width, height );
-	ofClear(bgPtr[0] * 255, bgPtr[1] * 255, bgPtr[2] * 255, bgPtr[3] * 255);
-	//ofGetCurrentRenderer()->setupScreenPerspective(800, 600);
-	ofSetupScreenPerspective(width, height);
+	renderer->viewport();     // used to be glViewport( 0, 0, width, height );
+	renderer->clear(renderer->getBgColor().r*255,renderer->getBgColor().g*255,renderer->getBgColor().b*255,renderer->getBgColor().a*255);
+	renderer->setupScreenPerspective(width, height);
 
 
 	ofWindowEventArgs e;
 	e.window = this;
 	ofNotifyEvent(events.draw, e);
 
-	if(!ofGLIsFixedPipeline()){
-		ofGetProgrammableGLRenderer()->finishRender();
+	if(renderer->getType()==ofProgrammableGLRenderer::TYPE){
+		renderer->finishRender();
 	}
 	glfwSwapBuffers(window);
 }
@@ -193,6 +226,8 @@ void ofWindow::destroy() {
 	glfwDestroyWindow(window);
 	window = NULL;
 }
+
+
 //USER INTERACTION EVENTS
 void ofWindow::mouseMoved(int mX, int mY) {
 	updateMouse(mX, mY);
@@ -236,6 +271,7 @@ void ofWindow::mouseReleased(int mX, int mY, int button) {
 	e.window = this;
 	ofNotifyEvent(events.mouseReleased, e);
 }
+
 void ofWindow::mouseDragged(int mX, int mY, int button) {
 	updateMouse(mX, mY);
 
@@ -358,8 +394,6 @@ void ofWindow::setWindowPositionAndShape(int _x, int _y, int w, int h) {
 	}
 }
 void ofWindow::setWindowPosition(int x, int y) {
-	//glfwSetWindowPos(window, x, y);
-	//ofLogWarning("SET WINDOW POSITION DOES CURRENTLY NOT WORK");
 	glfwSetWindowPos(window, x, y);
 }
 
@@ -380,7 +414,8 @@ void ofWindow::setWindowShape(int w, int h) {
 	previousShape.height = height;
 	width = w;
 	height = h;
-	glfwSetWindowSize(window, w, h);
+	if(window)
+		glfwSetWindowSize(window, w, h);
 }
 
 void ofWindow::setWidth(int w) {
@@ -527,9 +562,9 @@ void ofWindow::toggleFullscreen() {
 }
 
 
+
+
 ////GLFW CALLBACKS
-
-
 void ofWindow::glfwErrorCallback(int type, const char * err) {
 	ofLog(OF_LOG_ERROR, err);
 }

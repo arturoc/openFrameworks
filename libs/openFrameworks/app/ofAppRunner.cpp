@@ -50,7 +50,7 @@ static ofPtr<ofAppBaseWindow> 		window;
 // also since old versions created the window in the stack, if this function is called we create a shared_ptr that never deletes
 //--------------------------------------
 static void noopDeleter(ofAppBaseWindow*){}
-void ofSetupOpenGL(ofAppBaseWindow * windowPtr, int w, int h, int screenMode){
+void ofSetupOpenGL(ofAppBaseWindow * windowPtr, int w, int h, ofWindowMode screenMode){
 	ofSetupOpenGL(ofPtr<ofAppBaseWindow>(windowPtr,std::ptr_fun(noopDeleter)),w,h,screenMode);
 }
 
@@ -118,7 +118,7 @@ void ofRunApp(ofBaseApp * OFSA){
 }
 
 //--------------------------------------
-void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, int screenMode){
+void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, ofWindowMode screenMode){
 	window = windowPtr;
 	window->setupOpenGL(w, h, screenMode);
 #ifndef TARGET_OPENGLES
@@ -143,9 +143,35 @@ void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, int screenMod
 	ofSetupGraphicDefaults();
 }
 
+void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, ofWindowMode screenMode, int monitor){
+	window = windowPtr;
+	window->setupOpenGL(w, h, screenMode, monitor);
+#ifndef TARGET_OPENGLES
+	glewExperimental = GL_TRUE;
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		/* Problem: glewInit failed, something is seriously wrong. */
+		ofLog(OF_LOG_ERROR, "Error: %s\n", glewGetErrorString(err));
+	}
+#endif
+    if(ofGetCurrentRenderer() == NULL) {
+
+#ifdef USE_PROGRAMMABLE_GL
+        ofPtr<ofProgrammableGLRenderer>programmableGLRenderer(new ofProgrammableGLRenderer("","",false));
+    	ofSetCurrentRenderer(ofPtr<ofProgrammableGLRenderer>(programmableGLRenderer));
+#else
+        ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLRenderer(false)));
+#endif
+    }
+	//Default colors etc are now in ofGraphics - ofSetupGraphicDefaults
+	ofSetupGraphicDefaults();
+}
+
+
 
 //--------------------------------------
-void ofSetupOpenGL(int w, int h, int screenMode){
+void ofSetupOpenGL(int w, int h, ofWindowMode screenMode, int monitor){
 	#ifdef TARGET_NODISPLAY
 		window = ofPtr<ofAppBaseWindow>(new ofAppNoWindow());
 	#elif defined(TARGET_OF_IPHONE)
@@ -158,7 +184,7 @@ void ofSetupOpenGL(int w, int h, int screenMode){
 		window = ofWindowManager::getWindowManager();
 	#endif
 
-	ofSetupOpenGL(window,w,h,screenMode);
+	ofSetupOpenGL(window,w,h,screenMode,monitor);
 }
 
 //-----------------------	gets called when the app exits

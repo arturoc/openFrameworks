@@ -22,8 +22,8 @@ ofPtr<ofWindow> ofCreateWindow(int x, int y, int width, int height) {
 	return ofWindow::createWindow(x, y, width, height);
 }
 
-ofPtr<ofWindow> ofCreateWindow(int width, int height) {
-	return ofCreateWindow(0, 0, width, height);
+ofPtr<ofWindow> ofCreateWindow(int width, int height, int monitor=0) {
+	return ofWindow::createWindow(width, height,OF_WINDOW,monitor);
 }
 
 ofPtr<ofWindow> ofGetMainWindow() {
@@ -113,7 +113,11 @@ ofPtr<ofWindow> ofWindowManager::getCurrentWindow(){
 	return activeWindow;
 }
 
-void ofWindowManager::setupOpenGL(int w, int h, int screenMode) {
+void ofWindowManager::setupOpenGL(int w, int h, ofWindowMode screenMode) {
+	setupOpenGL(w,h,screenMode,0);
+}
+
+void ofWindowManager::setupOpenGL(int w, int h, ofWindowMode screenMode, int monitor) {
 	if(!glfwInit()) {
 		ofLogError("Failed to initialize GLFW");
 		ofExit(0);
@@ -131,11 +135,7 @@ void ofWindowManager::setupOpenGL(int w, int h, int screenMode) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-	ofWindowMode windowMode = OF_WINDOW;
-	if(screenMode == OF_GAME_MODE)
-		windowMode = OF_GAME_MODE;
-
-	mainWindow = ofWindow::createWindow(w, h, windowMode);
+	mainWindow = ofWindow::createWindow(w, h, screenMode, monitor);
 	activeWindow = mainWindow;
 
 	glfwMakeContextCurrent(mainWindow->getGlfwWindow());
@@ -147,6 +147,7 @@ void ofWindowManager::setupOpenGL(int w, int h, int screenMode) {
 
 	ofAddListener(ofEvents().exit, this, &ofWindowManager::exit);
 }
+
 
 void ofWindowManager::initializeWindow() {
 	//define all callbacks now, so there won't happen anything before OF is fully initialized
