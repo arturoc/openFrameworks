@@ -15,7 +15,7 @@ public:
 	ofAppGlutWindow();
 	~ofAppGlutWindow(){}
 
-	void setupOpenGL(int w, int h, int screenMode);
+	void setupOpenGL(int w, int h, ofWindowMode screenMode);
 	
 	void setDoubleBuffering(bool _bDoubleBuffered); 
 	
@@ -41,6 +41,9 @@ public:
 	
 	void			setOrientation(ofOrientation orientation);
 	ofOrientation	getOrientation();
+	bool doesHWOrientation(){
+		return false;
+	}
 	
 	int			getWidth();
 	int			getHeight();	

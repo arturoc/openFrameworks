@@ -232,7 +232,7 @@ void ofAppGlutWindow::setDoubleBuffering(bool _bDoubleBuffered){
 
 
 //------------------------------------------------------------
-void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
+void ofAppGlutWindow::setupOpenGL(int w, int h, ofWindowMode screenMode){
 
 	int argc = 1;
 	char *argv = (char*)"openframeworks";
