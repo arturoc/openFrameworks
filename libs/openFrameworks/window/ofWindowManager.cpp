@@ -153,12 +153,13 @@ void ofWindowManager::initializeWindow() {
 	//define all callbacks now, so there won't happen anything before OF is fully initialized
 	//glfwSetErrorCallback(&glfwErrorCallback);
 
-	mainWindow->setup();
+	//
 }
 
 void ofWindowManager::runAppViaInfiniteLoop(ofBaseApp * appPtr) {
 
 	mainWindow->addListener(appPtr);
+	mainWindow->setup();
 
 	//run the main loop
 	while(true) {

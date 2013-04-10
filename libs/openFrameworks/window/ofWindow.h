@@ -69,7 +69,7 @@ class ofWindow  {
 
 		static int lastWindowID;
 
-		int mouseX, mouseY;
+		int mouseX, mouseY, lastMouseButton;
 		int previousMouseX, previousMouseY;
 
 	private:
@@ -79,11 +79,11 @@ class ofWindow  {
 		void destroy();
 
 		void mouseMoved(int mouseX, int mouseY);
-		void mouseDragged(int mouseX, int mouseY, int button);
 		void mousePressed(int button);
 		void mousePressed(int mouseX, int mouseY, int button);
 		void mouseReleased(int button);
 		void mouseReleased(int mouseX, int mouseY, int button);
+		bool isMousePressed();
 
 		void keyPressed(int key);
 		void keyReleased(int key);

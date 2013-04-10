@@ -13,8 +13,6 @@
 #include "ofProgrammableGLRenderer.h"
 #include "ofAppRunner.h"
 
-//Philip - Now, I don't know if this is the proper way to expose the native glfw funcitons, but it seems to work.-..
-
 #ifdef TARGET_LINUX
 #define GLFW_EXPOSE_NATIVE_X11_GLX 1
 #include "glfw3native.h"
@@ -37,6 +35,7 @@ ofWindow::ofWindow() : mouseX(0),
 	title("ofTestApp"),
 	isInitialized(false),
 	windowMode(OF_WINDOW) {
+	lastMouseButton = -1;
 	id = lastWindowID;
 	lastWindowID++;
 	width = 800;
@@ -157,8 +156,8 @@ void ofWindow::initializeWindow(ofWindowMode wm, int monitor) {
 //--------------------------------------------------------------
 void ofWindow::addListener(ofBaseApp * app) {
 	enableContext();
-	app->setup();
 
+	ofAddListener(events.setup, app, &ofBaseApp::setup);
 	ofAddListener(events.update, app, &ofBaseApp::update);
 	ofAddListener(events.draw, app, &ofBaseApp::draw);
 
@@ -173,6 +172,7 @@ void ofWindow::addListener(ofBaseApp * app) {
 	ofAddListener(events.windowResized, app, &ofBaseApp::windowResized);
 	ofAddListener(events.windowMoved, app, &ofBaseApp::windowMoved);
 	ofAddListener(events.windowClosed, app, &ofBaseApp::windowClosed);
+
 }
 
 //--------------------------------------------------------------
@@ -194,8 +194,6 @@ void ofWindow::setup() {
 	ofSetCurrentRenderer(renderer);
 	ofSetStyle(ofStyle());
     ofSetOrientation(OF_ORIENTATION_DEFAULT,true);
-	glClearColor(.55, .55, .55, 0.0);
-	glClear(GL_COLOR_BUFFER_BIT);
 
 	ofWindowEventArgs e;
 	e.window = this;
@@ -245,17 +243,30 @@ void ofWindow::destroy() {
 //--------------------------------------------------------------
 void ofWindow::mouseMoved(int mX, int mY) {
 	updateMouse(mX, mY);
-	ofNotifyMouseMoved(mouseX, mouseY);
+	if(!isMousePressed()){
+		ofNotifyMouseMoved(mouseX, mouseY);
 
-	ofMouseEventArgs e;
-	e.x = mX;
-	e.y = mY;
-	e.window = this;
-	ofNotifyEvent(events.mouseMoved, e);
+		ofMouseEventArgs e;
+		e.x = mX;
+		e.y = mY;
+		e.window = this;
+		ofNotifyEvent(events.mouseMoved, e);
+	}else{
+		ofNotifyMouseDragged(mouseX, mouseY, lastMouseButton);
+
+		ofMouseEventArgs e;
+		e.x = mouseX;
+		e.y = mouseY;
+		e.button = lastMouseButton;
+		e.window = this;
+		ofNotifyEvent(events.mouseDragged, e);
+	}
 }
+
 
 //--------------------------------------------------------------
 void ofWindow::mousePressed(int button) {
+	lastMouseButton = button;
 	mousePressed(mouseX, mouseY, button);
 }
 
@@ -274,6 +285,7 @@ void ofWindow::mousePressed(int mX, int mY, int button) {
 
 //--------------------------------------------------------------
 void ofWindow::mouseReleased(int button) {
+	lastMouseButton = -1;
 	mouseReleased(mouseX, mouseY, button);
 }
 
@@ -291,17 +303,8 @@ void ofWindow::mouseReleased(int mX, int mY, int button) {
 }
 
 //--------------------------------------------------------------
-void ofWindow::mouseDragged(int mX, int mY, int button) {
-	updateMouse(mX, mY);
-
-	ofNotifyMouseDragged(mouseX, mouseY, button);
-
-	ofMouseEventArgs e;
-	e.x = mouseX;
-	e.y = mouseY;
-	e.button = button;
-	e.window = this;
-	ofNotifyEvent(events.mouseDragged, e);
+bool ofWindow::isMousePressed(){
+	return lastMouseButton!=-1;
 }
 
 //--------------------------------------------------------------
@@ -567,7 +570,6 @@ bool ofWindow::isFullscreen() {
 
 //--------------------------------------------------------------
 void ofWindow::setFullscreen(bool fullscreen) {
-	cout << "FULLSCREEN " << fullscreen <<endl;
 #ifdef TARGET_LINUX
 #include <X11/Xatom.h>
 
