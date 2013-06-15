@@ -692,8 +692,7 @@ void ofFbo::readToPixels(ofPixels & pixels, int attachmentPoint){
 	getTextureReference(attachmentPoint).readToPixels(pixels);
 #else
 	bind();
-	int format,type;
-	ofGetGlFormatAndType(settings.internalformat,format,type);
+	int format = ofGetGLFormatFromInternal(settings.internalformat);
 	glReadPixels(0,0,settings.width, settings.height, format, GL_UNSIGNED_BYTE, pixels.getPixels());
 	unbind();
 #endif
@@ -705,8 +704,7 @@ void ofFbo::readToPixels(ofShortPixels & pixels, int attachmentPoint){
 	getTextureReference(attachmentPoint).readToPixels(pixels);
 #else
 	bind();
-	int format,type;
-	ofGetGlFormatAndType(settings.internalformat,format,type);
+	int format = ofGetGLFormatFromInternal(settings.internalformat);
 	glReadPixels(0,0,settings.width, settings.height, format, GL_UNSIGNED_SHORT, pixels.getPixels());
 	unbind();
 #endif
@@ -718,8 +716,7 @@ void ofFbo::readToPixels(ofFloatPixels & pixels, int attachmentPoint){
 	getTextureReference(attachmentPoint).readToPixels(pixels);
 #else
 	bind();
-	int format,type;
-	ofGetGlFormatAndType(settings.internalformat,format,type);
+	int format = ofGetGLFormatFromInternal(settings.internalformat);
 	glReadPixels(0,0,settings.width, settings.height, format, GL_FLOAT, pixels.getPixels());
 	unbind();
 #endif
