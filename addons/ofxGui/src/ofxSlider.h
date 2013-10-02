@@ -14,10 +14,15 @@ public:
 	ofxSlider* setup(ofParameter<Type> _val, float width = defaultWidth, float height = defaultHeight);
 	ofxSlider* setup(string sliderName, Type _val, Type _min, Type _max, float width = defaultWidth, float height = defaultHeight);
 	
+	void setFineStep(const Type & step);
+
 	virtual bool mouseMoved(ofMouseEventArgs & args);
 	virtual bool mousePressed(ofMouseEventArgs & args);
 	virtual bool mouseDragged(ofMouseEventArgs & args);
 	virtual bool mouseReleased(ofMouseEventArgs & args);
+
+	bool keyPressed(ofKeyEventArgs & key);
+	bool keyReleased(ofKeyEventArgs & key);
 
 	void setUpdateOnReleaseOnly(bool bUpdateOnReleaseOnly);
 
@@ -52,6 +57,8 @@ protected:
 	void valueChanged(Type & value);
 	ofPath bg, bar;
 	ofVboMesh textMesh;
+	bool mouseOver;
+	Type step;
 };
 
 typedef ofxSlider<float> ofxFloatSlider;

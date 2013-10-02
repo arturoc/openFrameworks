@@ -1,4 +1,5 @@
 #include "ofxSliderGroup.h"
+#include "ofxSlider.h"
 
 template<class VecType>
 ofxVecSlider_<VecType>::ofxVecSlider_(ofParameter<VecType> value, float width, float height){
@@ -78,6 +79,13 @@ ofxVecSlider_<VecType>::operator const VecType & (){
 template<class VecType>
 const VecType * ofxVecSlider_<VecType>::operator->(){
 	return &value.get();
+}
+
+template<class VecType>
+void ofxVecSlider_<VecType>::setFineStep(const VecType & step){
+    for (int i=0; i<VecType::DIM; i++) {
+    	((ofxSlider<float>*)collection[i])->setFineStep(step[i]);
+    }
 }
 
 template class ofxVecSlider_<ofVec2f>;
@@ -164,6 +172,14 @@ ofColor_<ColorType> ofxColorSlider_<ColorType>::operator=(const ofColor_<ColorTy
 template<class ColorType>
 ofxColorSlider_<ColorType>::operator const ofColor_<ColorType> & (){
 	return value;
+}
+
+template<class ColorType>
+void ofxColorSlider_<ColorType>::setFineStep(const ofColor_<ColorType> & step){
+	((ofxSlider<ColorType>*)collection[0])->setFineStep(step.r);
+	((ofxSlider<ColorType>*)collection[1])->setFineStep(step.g);
+	((ofxSlider<ColorType>*)collection[2])->setFineStep(step.b);
+	((ofxSlider<ColorType>*)collection[3])->setFineStep(step.a);
 }
 
 template class ofxColorSlider_<unsigned char>;

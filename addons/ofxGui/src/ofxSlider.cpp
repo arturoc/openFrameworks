@@ -5,6 +5,8 @@ template<typename Type>
 ofxSlider<Type>::ofxSlider(){
 	bUpdateOnReleaseOnly = false;
 	bGuiActive = false;
+	mouseOver = false;
+	step = 1;
 }
 
 template<typename Type>
@@ -14,6 +16,8 @@ ofxSlider<Type>::~ofxSlider(){
 
 template<typename Type>
 ofxSlider<Type>::ofxSlider(ofParameter<Type> _val, float width, float height){
+	mouseOver = false;
+	step = 1;
 	setup(_val,width,height);
 }
 
@@ -29,6 +33,7 @@ ofxSlider<Type>* ofxSlider<Type>::setup(ofParameter<Type> _val, float width, flo
 
 	value.addListener(this,&ofxSlider::valueChanged);
 	ofRegisterMouseEvents(this,OF_EVENT_ORDER_BEFORE_APP);
+	ofRegisterKeyEvents(this,OF_EVENT_ORDER_BEFORE_APP);
 	generateDraw();
 	return this;
 }
@@ -39,11 +44,19 @@ ofxSlider<Type>* ofxSlider<Type>::setup(string sliderName, Type _val, Type _min,
 	return setup(value,width,height);
 }
 
+
+template<typename Type>
+void ofxSlider<Type>::setFineStep(const Type & _step){
+	step = _step;
+}
+
 template<typename Type>
 bool ofxSlider<Type>::mouseMoved(ofMouseEventArgs & args){
 	if(isGuiDrawing() && b.inside(ofPoint(args.x,args.y))){
+		mouseOver = true;
 		return true;
 	}else{
+		mouseOver = false;
 		return false;
 	}
 }
@@ -63,8 +76,10 @@ bool ofxSlider<Type>::mousePressed(ofMouseEventArgs & args){
 template<typename Type>
 bool ofxSlider<Type>::mouseDragged(ofMouseEventArgs & args){
 	if(setValue(args.x, args.y, false)){
+		mouseOver = true;
 		return true;
 	}else{
+		mouseOver = false;
 		return false;
 	}
 }
@@ -82,6 +97,24 @@ bool ofxSlider<Type>::mouseReleased(ofMouseEventArgs & args){
 	}else{
 		return false;
 	}
+}
+
+template<typename Type>
+bool ofxSlider<Type>::keyPressed(ofKeyEventArgs & key){
+	if(!mouseOver) return false;
+	if(key.key==OF_KEY_LEFT){
+		value = ofClamp(value - step, value.getMin(), value.getMax());
+		return true;
+	}else if(key.key==OF_KEY_RIGHT){
+		value = ofClamp(value + step, value.getMin(), value.getMax());
+		return true;
+	}
+	return false;
+}
+
+template<typename Type>
+bool ofxSlider<Type>::keyReleased(ofKeyEventArgs & key){
+	return false;
 }
 
 template<typename Type>

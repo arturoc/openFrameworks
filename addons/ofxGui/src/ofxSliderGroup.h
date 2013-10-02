@@ -19,6 +19,8 @@ public:
     VecType operator=(const VecType & v);
 	operator const VecType & ();
 	const VecType * operator->();
+
+	void setFineStep(const VecType & step);
 protected:
     void changeSlider(const void * parameter, float & value);
     void changeValue(VecType & value);
@@ -47,6 +49,8 @@ public:
 
 	ofColor_<ColorType> operator=(const ofColor_<ColorType> & v);
 	operator const ofColor_<ColorType> & ();
+
+	void setFineStep(const ofColor_<ColorType> & step);
 protected:
     void changeSlider(const void * parameter, ColorType & value);
     void changeValue(ofColor_<ColorType> & value);
