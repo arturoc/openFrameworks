@@ -84,7 +84,7 @@ class ofQuickTimePlayer : public ofBaseVideoPlayer{
 		bool 				bIsFrameNew;			// if we are new
 		float				speed;		
 		
-		MovieDrawingCompleteUPP myDrawCompleteProc;
+		void*				myDrawCompleteProc;
 		MovieController  	thePlayer;
 		GWorldPtr 			offscreenGWorld;
 		Movie 			 	moviePtr;

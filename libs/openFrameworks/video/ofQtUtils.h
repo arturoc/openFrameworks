@@ -4,21 +4,6 @@
 
 #if defined (TARGET_WIN32) || defined (TARGET_OSX)
 
-
-
-#ifdef TARGET_OSX
-	#include <QuickTime/QuickTime.h>
-	#include <CoreServices/CoreServices.h>
-	#include <ApplicationServices/ApplicationServices.h>
-#else
-	#include <QTML.h>
-	#include <FixMath.h>
-	#include <QuickTimeComponents.h>
-	#include <TextUtils.h>
-	#include <MediaHandlers.h>
-	//#include <MoviesFormat.h>
-#endif
-
 #ifndef MAC_OS_X_VERSION_10_7
 
 //p2cstr depreciation fix - thanks pickard!
@@ -33,6 +18,37 @@ typedef struct{
 	unsigned char b;
 } pix24;
 
+typedef unsigned char Boolean;
+typedef signed short SInt16;
+typedef SInt16 OSErr;
+typedef long ComponentResult;
+struct GrafPort;
+typedef struct GrafPort                 GrafPort;
+typedef GrafPort *                      GrafPtr;
+typedef GrafPtr                         WindowPtr;
+typedef WindowPtr                       DialogPtr;
+struct EventRecord;
+typedef struct EventRecord              EventRecord;
+struct ComponentInstanceRecord;
+typedef struct ComponentInstanceRecord  ComponentInstanceRecord;
+typedef ComponentInstanceRecord *       ComponentInstance;
+typedef ComponentInstance               MediaHandler;
+typedef ComponentInstance               MovieController;
+typedef long Fixed;
+struct MediaRecord;
+typedef struct MediaRecord MediaRecord;
+typedef MediaRecord * Media;
+struct MovieRecord;
+typedef struct MovieRecord MovieRecord;
+typedef MovieRecord * Movie;
+struct CGrafPort;
+typedef struct CGrafPort                CGrafPort;
+typedef CGrafPort *                     CGrafPtr;
+typedef CGrafPtr                        GWorldPtr;
+typedef ComponentInstance               SeqGrabComponent;
+typedef ComponentInstance               SGChannel;
+struct Rect;
+typedef struct Rect                     Rect;
 
 
 //----------------------------------------

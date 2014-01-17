@@ -8,6 +8,8 @@
 	#include "ofBaseTypes.h"
 	#include "ofPixels.h"
 
+
+
 // todo:
 // 		QT - callback, via SGSetDataProc - couldn't get this to work yet
 // 		image decompress options ala mung...
@@ -61,10 +63,10 @@ class ofQuickTimeGrabber : public ofBaseVideoGrabber{
 		GWorldPtr				videogworld;
 		SeqGrabComponent		gSeqGrabber;
 		SGChannel				gVideoChannel;
-		Rect					videoRect;
+		
 		bool					bSgInited;
 		string					deviceName;
-		SGGrabCompleteBottleUPP	myGrabCompleteProc;
+		void*					myGrabCompleteProc;
 		
 		bool					qtInitSeqGrabber();
 		bool					qtCloseSeqGrabber();

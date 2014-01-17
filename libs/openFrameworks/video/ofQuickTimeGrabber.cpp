@@ -4,6 +4,19 @@
 
 #if !defined(TARGET_LINUX) && !defined(MAC_OS_X_VERSION_10_7)
 
+#ifdef TARGET_OSX
+	#include <QuickTime/QuickTime.h>
+	#include <CoreServices/CoreServices.h>
+	#include <ApplicationServices/ApplicationServices.h>
+#else
+	#include <QTML.h>
+	#include <FixMath.h>
+	#include <QuickTimeComponents.h>
+	#include <TextUtils.h>
+	#include <MediaHandlers.h>
+	//#include <MoviesFormat.h>
+#endif
+
 //---------------------------------
 #ifdef OF_VIDEO_CAPTURE_QUICKTIME
 //---------------------------------
@@ -121,7 +134,7 @@ bool ofQuickTimeGrabber::initGrabber(int w, int h){
 		//---------------------------------- 2 - set the dimensions
 		//width 		= w;
 		//height 		= h;
-
+		Rect videoRect;
 		MacSetRect(&videoRect, 0, 0, w, h);
 
 		//---------------------------------- 3 - buffer allocation
@@ -188,7 +201,7 @@ bool ofQuickTimeGrabber::initGrabber(int w, int h){
 			vb.procCount = 9; 
 			err = SGGetVideoBottlenecks(gVideoChannel, &vb); 
 			if (!err) { 			
-				myGrabCompleteProc = NewSGGrabCompleteBottleUPP(frameIsGrabbedProc);
+				myGrabCompleteProc = (SGGrabCompleteBottleUPP)NewSGGrabCompleteBottleUPP(frameIsGrabbedProc);
 				vb.grabCompleteProc = myGrabCompleteProc;
 			
 				/* add our GrabFrameComplete function */ 
@@ -486,6 +499,9 @@ void ofQuickTimeGrabber::videoSettings(void){
 			SGSettingsDialog(gSeqGrabber, gVideoChannel, 0, nil, seqGrabSettingsPreviewOnly, NULL, 0);
 		#endif
 
+			
+		Rect videoRect;
+		MacSetRect(&videoRect, 0, 0, w, h);
 		SGSetChannelBounds(gVideoChannel, &videoRect);
 		SGPause (gSeqGrabber, false);
 
@@ -566,6 +582,9 @@ bool ofQuickTimeGrabber::loadSettings(){
       if (err != noErr){
          ofLogError("ofQuickTimeGrabber") << "loadSettings(): couldn't set pause: ComponentResult " << err;
       }
+	  
+      Rect videoRect;
+	  MacSetRect(&videoRect, 0, 0, w, h);
       SGSetChannelBounds(gVideoChannel, &videoRect);
       SGPause (gSeqGrabber, false);
 

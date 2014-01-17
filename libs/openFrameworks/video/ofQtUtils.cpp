@@ -5,6 +5,19 @@
 #include "ofGraphics.h"
 static bool bQuicktimeInitialized = false;
 
+#ifdef TARGET_OSX
+	#include <QuickTime/QuickTime.h>
+	#include <CoreServices/CoreServices.h>
+	#include <ApplicationServices/ApplicationServices.h>
+#else
+	#include <QTML.h>
+	#include <FixMath.h>
+	#include <QuickTimeComponents.h>
+	#include <TextUtils.h>
+	#include <MediaHandlers.h>
+	//#include <MoviesFormat.h>
+#endif
+
 //----------------------------------------
 void initializeQuicktime(){
 	if (bQuicktimeInitialized == false){

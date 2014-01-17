@@ -4,6 +4,20 @@
 #ifndef TARGET_LINUX
 #ifdef  OF_VIDEO_PLAYER_QUICKTIME
 
+
+#ifdef TARGET_OSX
+	#include <QuickTime/QuickTime.h>
+	#include <CoreServices/CoreServices.h>
+	#include <ApplicationServices/ApplicationServices.h>
+#else
+	#include <QTML.h>
+	#include <FixMath.h>
+	#include <QuickTimeComponents.h>
+	#include <TextUtils.h>
+	#include <MediaHandlers.h>
+	//#include <MoviesFormat.h>
+#endif
+
 bool  	createMovieFromPath(char * path, Movie &movie);
 bool 	createMovieFromPath(char * path, Movie &movie){
 
@@ -337,7 +351,7 @@ bool ofQuickTimePlayer::loadMovie(string name){
 
 		//----------------- callback method
 	    myDrawCompleteProc = NewMovieDrawingCompleteUPP (DrawCompleteProc);
-		SetMovieDrawingCompleteProc (moviePtr, movieDrawingCallWhenChanged,  myDrawCompleteProc, (long)this);
+		SetMovieDrawingCompleteProc (moviePtr, movieDrawingCallWhenChanged,  (MovieDrawingCompleteUPP)myDrawCompleteProc, (long)this);
 
 		// ------------- get the total # of frames:
 		nFrames				= 0;
