@@ -64,8 +64,7 @@ void ofxEmscriptenVideoPlayer::update(){
 			}
 		}
 		if(texture.texData.textureID!=html5video_player_texture_id(id)){
-			texture.texData.textureID = html5video_player_texture_id(id);
-			texture.texData.bUseExternalTextureID = true;
+			texture.setUseExternalTextureID(html5video_player_texture_id(id));
 			texture.texData.bFlipTexture = false;
 			switch(getPixelFormat()){
 			case OF_PIXELS_RGBA:

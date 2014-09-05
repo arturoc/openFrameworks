@@ -63,8 +63,7 @@ void ofxEmscriptenVideoGrabber::update(){
 		texture.texData.tex_w = texture.texData.width;
 		texture.texData.tex_h = texture.texData.height;
 		if(texture.texData.textureID!=html5video_grabber_texture_id(id)){
-			texture.texData.textureID = html5video_grabber_texture_id(id);
-			texture.texData.bUseExternalTextureID = true;
+			texture.setUseExternalTextureID(html5video_player_texture_id(id));
 			texture.texData.bFlipTexture = false;
 			switch(getPixelFormat()){
 			case OF_PIXELS_RGBA:
