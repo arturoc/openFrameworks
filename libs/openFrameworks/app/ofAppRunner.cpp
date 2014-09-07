@@ -230,7 +230,7 @@ void ofSetupOpenGL(shared_ptr<ofAppBaseGLWindow> windowPtr, int w, int h, ofWind
 #endif
     if(!ofGetCurrentRenderer()) {
 	#ifdef TARGET_PROGRAMMABLE_GL
-	    ofPtr<ofBaseRenderer> renderer(new ofGLProgrammableRenderer(false));
+	    shared_ptr<ofBaseRenderer> renderer(new ofGLProgrammableRenderer(false));
 	#else
 	    shared_ptr<ofBaseRenderer> renderer(new ofGLRenderer(false));
 	#endif
