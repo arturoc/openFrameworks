@@ -2,14 +2,17 @@
 /* WARNING: Generated automatically from opensslconf.h.in by Configure. */
 
 /* OpenSSL was configured with the following options: */
-#ifndef OPENSSL_SYSNAME_MACOSX
-# define OPENSSL_SYSNAME_MACOSX
-#endif
 #ifndef OPENSSL_DOING_MAKEDEPEND
 
 
+#ifndef OPENSSL_NO_COMP
+# define OPENSSL_NO_COMP
+#endif
 #ifndef OPENSSL_NO_EC_NISTP_64_GCC_128
 # define OPENSSL_NO_EC_NISTP_64_GCC_128
+#endif
+#ifndef OPENSSL_NO_ENGINE
+# define OPENSSL_NO_ENGINE
 #endif
 #ifndef OPENSSL_NO_GMP
 # define OPENSSL_NO_GMP
@@ -32,6 +35,12 @@
 #ifndef OPENSSL_NO_SCTP
 # define OPENSSL_NO_SCTP
 #endif
+#ifndef OPENSSL_NO_SSL2
+# define OPENSSL_NO_SSL2
+#endif
+#ifndef OPENSSL_NO_SSL3
+# define OPENSSL_NO_SSL3
+#endif
 #ifndef OPENSSL_NO_STORE
 # define OPENSSL_NO_STORE
 #endif
@@ -44,8 +53,8 @@
 #ifndef OPENSSL_THREADS
 # define OPENSSL_THREADS
 #endif
-#ifndef OPENSSL_NO_ASM
-# define OPENSSL_NO_ASM
+#ifndef OPENSSL_NO_HW
+# define OPENSSL_NO_HW
 #endif
 #ifndef OPENSSL_NO_DYNAMIC_ENGINE
 # define OPENSSL_NO_DYNAMIC_ENGINE
@@ -56,8 +65,14 @@
    who haven't had the time to do the appropriate changes in their
    applications.  */
 #ifdef OPENSSL_ALGORITHM_DEFINES
+# if defined(OPENSSL_NO_COMP) && !defined(NO_COMP)
+#  define NO_COMP
+# endif
 # if defined(OPENSSL_NO_EC_NISTP_64_GCC_128) && !defined(NO_EC_NISTP_64_GCC_128)
 #  define NO_EC_NISTP_64_GCC_128
+# endif
+# if defined(OPENSSL_NO_ENGINE) && !defined(NO_ENGINE)
+#  define NO_ENGINE
 # endif
 # if defined(OPENSSL_NO_GMP) && !defined(NO_GMP)
 #  define NO_GMP
@@ -80,6 +95,12 @@
 # if defined(OPENSSL_NO_SCTP) && !defined(NO_SCTP)
 #  define NO_SCTP
 # endif
+# if defined(OPENSSL_NO_SSL2) && !defined(NO_SSL2)
+#  define NO_SSL2
+# endif
+# if defined(OPENSSL_NO_SSL3) && !defined(NO_SSL3)
+#  define NO_SSL3
+# endif
 # if defined(OPENSSL_NO_STORE) && !defined(NO_STORE)
 #  define NO_STORE
 # endif
@@ -88,10 +109,19 @@
 # endif
 #endif
 
+#define OPENSSL_CPUID_OBJ
+
 /* crypto/opensslconf.h.in */
 
 /* Generate 80386 code? */
 #undef I386_ONLY
+
+#if !(defined(VMS) || defined(__VMS)) /* VMS uses logical names instead */
+#if defined(HEADER_CRYPTLIB_H) && !defined(OPENSSLDIR)
+#define ENGINESDIR "/home/arturo/Desktop/openFrameworks/scripts/apothecary/build/openssl/build/android/armeabi-v7a/lib/engines"
+#define OPENSSLDIR "/home/arturo/Desktop/openFrameworks/scripts/apothecary/build/openssl/build/android/armeabi-v7a/ssl"
+#endif
+#endif
 
 #undef OPENSSL_UNISTD
 #define OPENSSL_UNISTD <unistd.h>
@@ -141,14 +171,14 @@
 
 #if defined(HEADER_BN_H) && !defined(CONFIG_HEADER_BN_H)
 #define CONFIG_HEADER_BN_H
-#undef BN_LLONG
+#define BN_LLONG
 
 /* Should we define BN_DIV2W here? */
 
 /* Only one for the following should be defined */
-#define SIXTY_FOUR_BIT_LONG
+#undef SIXTY_FOUR_BIT_LONG
 #undef SIXTY_FOUR_BIT
-#undef THIRTY_TWO_BIT
+#define THIRTY_TWO_BIT
 #endif
 
 #if defined(HEADER_RC4_LOCL_H) && !defined(CONFIG_HEADER_RC4_LOCL_H)
@@ -160,7 +190,7 @@
 
 #if defined(HEADER_BF_LOCL_H) && !defined(CONFIG_HEADER_BF_LOCL_H)
 #define CONFIG_HEADER_BF_LOCL_H
-#undef BF_PTR
+#define BF_PTR
 #endif /* HEADER_BF_LOCL_H */
 
 #if defined(HEADER_DES_LOCL_H) && !defined(CONFIG_HEADER_DES_LOCL_H)
