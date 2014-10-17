@@ -659,27 +659,27 @@ void ofMesh::clearIndices(){
 }
 
 //--------------------------------------------------------------
-void ofMesh::drawVertices(){
+void ofMesh::drawVertices() const{
 	draw(OF_MESH_POINTS);
 }
 
 //--------------------------------------------------------------
-void ofMesh::drawWireframe(){
+void ofMesh::drawWireframe() const{
 	draw(OF_MESH_WIREFRAME);
 }
 
 //--------------------------------------------------------------
-void ofMesh::drawFaces(){
+void ofMesh::drawFaces() const{
 	draw(OF_MESH_FILL);
 }
 
 //--------------------------------------------------------------
-void ofMesh::draw(){
+void ofMesh::draw() const{
 	draw(OF_MESH_FILL);
 }
 
 //--------------------------------------------------------------
-void ofMesh::draw(ofPolyRenderMode renderType){
+void ofMesh::draw(ofPolyRenderMode renderType) const{
 	if(getNumVertices()==0) return;
 	ofGetCurrentRenderer()->draw(*this,renderType,useColors,useTextures,useNormals);
 }
@@ -746,7 +746,7 @@ bool ofMesh::usingIndices() const{
 
 
 //--------------------------------------------------------------
-void ofMesh::append(ofMesh & mesh){
+void ofMesh::append(const ofMesh & mesh){
 	int prevNumVertices = vertices.size();
 	if(mesh.getNumVertices()){
 		vertices.insert(vertices.end(),mesh.getVertices().begin(),mesh.getVertices().end());
@@ -822,7 +822,7 @@ void ofMesh::load(string path){
 	for(;line != lines.end(); ++line){
 		lineNum++;
 		string lineStr = *line;
-		if(lineStr.find("comment")==0){
+		if(lineStr.find("comment")==0 || lineStr.empty()){
 			continue;
 		}
 
@@ -900,29 +900,28 @@ void ofMesh::load(string path){
 		}
 
 		if(state==Vertices){
-			stringstream sline;
-			sline.str(lineStr);
-			ofVec3f v;
-			sline >> v.x;
-			sline >> v.y;
-			if(vertexCoordsFound>2) sline >> v.z;
-			data.getVertices()[currentVertex] = v;
+			if(data.getNumVertices()<=currentVertex){
+				error = "found more vertices: " + ofToString(currentVertex+1) + " than specified in header: " + ofToString(data.getNumVertices());
+				goto clean;
+			}
+			stringstream sline(lineStr);
+			sline >> data.getVertices()[currentVertex].x;
+			sline >> data.getVertices()[currentVertex].y;
+			if(vertexCoordsFound>2) sline >> data.getVertices()[currentVertex].z;
 
 			if(colorCompsFound>0){
 				if (floatColor){
-					ofFloatColor c;
+					sline >> data.getColors()[currentVertex].r;
+					sline >> data.getColors()[currentVertex].g;
+					sline >> data.getColors()[currentVertex].b;
+					if(colorCompsFound>3) sline >> data.getColors()[currentVertex].a;
+				}else{
+					ofColor c;
 					sline >> c.r;
 					sline >> c.g;
 					sline >> c.b;
 					if(colorCompsFound>3) sline >> c.a;
 					data.getColors()[currentVertex] = c;
-				}else{
-					int r, g, b, a = 255;
-					sline >> r;
-					sline >> g;
-					sline >> b;
-					if(colorCompsFound>3) sline >> a;
-					data.getColors()[currentVertex] = ofColor(r, g, b, a);
 				}
 			}
 
@@ -953,8 +952,11 @@ void ofMesh::load(string path){
 		}
 
 		if(state==Faces){
-			stringstream sline;
-			sline.str(lineStr);
+			if(data.getNumIndices()/3<currentFace){
+				error = "found more faces than specified in header";
+				goto clean;
+			}
+			stringstream sline(lineStr);
 			int numV;
 			sline >> numV;
 			if(numV!=3){

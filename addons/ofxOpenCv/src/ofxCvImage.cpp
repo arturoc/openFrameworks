@@ -75,12 +75,12 @@ void ofxCvImage::clear() {
 }
 
 //--------------------------------------------------------------------------------
-float ofxCvImage::getWidth(){
+float ofxCvImage::getWidth() const{
 	return width;
 }
 
 //--------------------------------------------------------------------------------
-float ofxCvImage::getHeight(){
+float ofxCvImage::getHeight() const{
 	return height;
 }
 
@@ -89,8 +89,17 @@ void ofxCvImage::setUseTexture( bool bUse ) {
 	bUseTexture = bUse;
 }
 
+bool ofxCvImage::isUsingTexture() const{
+	return bUseTexture;
+}
+
 //--------------------------------------------------------------------------------
 ofTexture& ofxCvImage::getTextureReference() {
+	return tex;
+}
+
+//--------------------------------------------------------------------------------
+const ofTexture & ofxCvImage::getTextureReference() const{
 	return tex;
 }
 
@@ -128,7 +137,7 @@ void ofxCvImage::setROI( const ofRectangle& rect ) {
 }
 
 //--------------------------------------------------------------------------------
-ofRectangle ofxCvImage::getROI() {
+ofRectangle ofxCvImage::getROI() const {
     CvRect rect = cvGetImageROI(cvImage);
     return ofRectangle((float)rect.x, (float)rect.y, (float)rect.width, (float)rect.height);
 }
@@ -374,18 +383,18 @@ void  ofxCvImage::drawBlobIntoMe( ofxCvBlob& blob, int color ) {
 // Draw Image
 
 //--------------------------------------------------------------------------------
-void ofxCvImage::draw( float x, float y ) {
+void ofxCvImage::draw( float x, float y ) const {
     draw( x,y, width, height );
 }
 
 //----------------------------------------------------------
-void ofxCvImage::draw(const ofPoint & point){
+void ofxCvImage::draw(const ofPoint & point) const{
 	draw(point.x, point.y);
 }
 
 
 //----------------------------------------------------------
-void ofxCvImage::draw(const ofRectangle & rect){
+void ofxCvImage::draw(const ofRectangle & rect) const{
 	draw(rect.x, rect.y, rect.width, rect.height);
 }
 
@@ -402,16 +411,17 @@ void ofxCvImage::updateTexture(){
 				tex.clear();
 				tex.allocate( width, height, glchannels );
 			}
-			tex.loadData( getPixelsRef() );
+			tex.loadData( getPixels() );
 			bTextureDirty = false;
 		}
 	}
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvImage::draw( float x, float y, float w, float h ) {
+void ofxCvImage::draw( float x, float y, float w, float h ) const {
     if( bUseTexture ) {
-    	updateTexture();
+    	ofxCvImage* mutImage = const_cast<ofxCvImage*>(this);
+    	mutImage->updateTexture();
         tex.draw(x,y, w,h);
     } else {
         #ifdef TARGET_OPENGLES
@@ -449,13 +459,13 @@ void ofxCvImage::draw( float x, float y, float w, float h ) {
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvImage::drawROI( float x, float y ) {
+void ofxCvImage::drawROI( float x, float y ) const {
     ofRectangle roi = getROI();
     drawROI( x,y, roi.width, roi.height );
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvImage::drawROI( float x, float y, float w, float h ) {
+void ofxCvImage::drawROI( float x, float y, float w, float h ) const {
     if( bUseTexture ) {
         ofRectangle roi = getROI();
         if( bTextureDirty ) {
@@ -465,7 +475,7 @@ void ofxCvImage::drawROI( float x, float y, float w, float h ) {
                 tex.clear();
                 tex.allocate( (int)roi.width, (int)roi.height, glchannels );
             }
-            tex.loadData( getRoiPixelsRef() );
+            tex.loadData( getRoiPixels() );
             bTextureDirty = false;
         }
 
@@ -863,14 +873,9 @@ void ofxCvImage::setRoiFromPixels( const ofPixels & pixels ){
 }
 
 //--------------------------------------------------------------------------------
-unsigned char*  ofxCvImage::getPixels(){
-	return getPixelsRef().getPixels();
-}
-
-//--------------------------------------------------------------------------------
-ofPixelsRef ofxCvImage::getPixelsRef(){
+ofPixels& ofxCvImage::getPixels(){
 	if(!bAllocated) {
-		ofLogWarning("ofxCvImage") << "getPixelsRef(): image not allocated";	
+		ofLogWarning("ofxCvImage") << "getPixels(): image not allocated";
 	} else if(bPixelsDirty) {
 		IplImage * cv8bit= getCv8BitsImage();
 
@@ -888,16 +893,9 @@ ofPixelsRef ofxCvImage::getPixelsRef(){
 }
 
 //--------------------------------------------------------------------------------
-unsigned char*  ofxCvImage::getRoiPixels(){
-	return getRoiPixelsRef().getPixels();
-}
-
-
-
-//--------------------------------------------------------------------------------
-ofPixelsRef  ofxCvImage::getRoiPixelsRef(){
+ofPixels& ofxCvImage::getRoiPixels(){
 	if(!bAllocated) {
-		ofLogWarning("ofxCvImage") << "getRoiPixelsRef(): image not allocated";	
+		ofLogWarning("ofxCvImage") << "getRoiPixels(): image not allocated";
 	} else if(bRoiPixelsDirty) {
 		IplImage * cv8bit= getCv8BitsRoiImage();
 		ofRectangle roi = getROI();
@@ -907,3 +905,17 @@ ofPixelsRef  ofxCvImage::getRoiPixelsRef(){
 	}
 	return roiPixels;
 }
+
+//--------------------------------------------------------------------------------
+const ofPixels& ofxCvImage::getPixels() const{
+	ofxCvImage* mutImage = const_cast<ofxCvImage*>(this);
+	return mutImage->getPixels();
+}
+
+//--------------------------------------------------------------------------------
+const ofPixels& ofxCvImage::getRoiPixels() const{
+	ofxCvImage* mutImage = const_cast<ofxCvImage*>(this);
+	return mutImage->getRoiPixels();
+}
+
+//--------------------------------------------------------------------------------

@@ -142,11 +142,11 @@ ofxAndroidVideoGrabber::~ofxAndroidVideoGrabber(){
 }
 
 
-vector<ofVideoDevice> ofxAndroidVideoGrabber::listDevices(){
+vector<ofVideoDevice> ofxAndroidVideoGrabber::listDevices() const{
 	return vector<ofVideoDevice>();
 }
 
-bool ofxAndroidVideoGrabber::isFrameNew(){
+bool ofxAndroidVideoGrabber::isFrameNew() const{
 	return bIsFrameNew;
 }
 
@@ -313,15 +313,19 @@ bool ofxAndroidVideoGrabber::initGrabber(int w, int h){
 	return true;
 }
 
+bool ofxAndroidVideoGrabber::isInitialized() const{
+	return bGrabberInited;
+}
+
 void ofxAndroidVideoGrabber::videoSettings(){
 }
 
-unsigned char * ofxAndroidVideoGrabber::getPixels(){
-	return pixels.getPixels();
+ofPixels&	ofxAndroidVideoGrabber::getPixels(){
+	return pixels;
 }
 
-ofPixelsRef	ofxAndroidVideoGrabber::getPixelsRef(){
-	return pixels;
+const ofPixels& ofxAndroidVideoGrabber::getPixels() const {
+    return pixels;
 }
 
 void ofxAndroidVideoGrabber::setVerbose(bool bTalkToMe){
@@ -365,11 +369,11 @@ void ofxAndroidVideoGrabber::setDesiredFrameRate(int framerate){
 	attemptFramerate = framerate;
 }
 
-float ofxAndroidVideoGrabber::getHeight(){
+float ofxAndroidVideoGrabber::getHeight() const{
 	return pixels.getHeight();
 }
 
-float ofxAndroidVideoGrabber::getWidth(){
+float ofxAndroidVideoGrabber::getWidth() const{
 	return pixels.getWidth();
 }
 
@@ -378,7 +382,7 @@ bool ofxAndroidVideoGrabber::setPixelFormat(ofPixelFormat pixelFormat){
 	return true;
 }
 
-ofPixelFormat ofxAndroidVideoGrabber::getPixelFormat(){
+ofPixelFormat ofxAndroidVideoGrabber::getPixelFormat() const{
 	return internalPixelFormat;
 }
 
@@ -654,7 +658,7 @@ Java_cc_openframeworks_OFAndroidVideoGrabber_newFrame(JNIEnv*  env, jobject  thi
 		}
 
 		if(int(instances[cameraId]->getWidth())!=width || int(instances[cameraId]->getHeight())!=height){
-			grabber->getAuxBuffer().resizeTo(instances[cameraId]->getPixelsRef());
+			grabber->getAuxBuffer().resizeTo(instances[cameraId]->getPixels());
 		}
 		/*acc_time += ofGetSystemTime() - time_one_frame;
 		num_frames ++;
@@ -665,7 +669,7 @@ Java_cc_openframeworks_OFAndroidVideoGrabber_newFrame(JNIEnv*  env, jobject  thi
 
 		env->ReleasePrimitiveArrayCritical(array,buffer,0);
 		newPixels = true;
-		ofNotifyEvent(grabber->newFrameE,instances[cameraId]->getPixelsRef());
+		ofNotifyEvent(grabber->newFrameE,instances[cameraId]->getPixels());
 		//((ofxAndroidApp*)ofGetAppPtr())->imageReceived(pixels,width,height);
 		return 0;
 	}

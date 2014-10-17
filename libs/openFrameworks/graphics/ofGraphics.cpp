@@ -56,8 +56,8 @@ static ofPath shape;
 static ofVboMesh gradientMesh;
 
 shared_ptr<ofBaseRenderer> & ofGetCurrentRenderer(){
-	static shared_ptr<ofBaseRenderer> * renderer = new shared_ptr<ofBaseRenderer>();
-	return *renderer;
+	static shared_ptr<ofBaseRenderer> currentRenderer;
+	return currentRenderer;
 }
 
 void ofSetCurrentRenderer(const string & rendererType,bool setDefaults){
@@ -124,7 +124,7 @@ void ofBeginSaveScreenAsPDF(string filename, bool bMultipage, bool b3D, ofRectan
 	rendererCollection->renderers.push_back(ofGetGLRenderer());
 	rendererCollection->renderers.push_back(cairoScreenshot);
 	
-	ofSetCurrentRenderer(cairoScreenshot, true);
+	ofSetCurrentRenderer(rendererCollection, true);
 	bScreenShotStarted = true;
 }
 
@@ -680,12 +680,16 @@ void ofEnableBlendMode(ofBlendMode blendMode){
 
 //----------------------------------------------------------
 void ofEnablePointSprites(){
-	ofGetCurrentRenderer()->enablePointSprites();
+	if(ofGetCurrentRenderer()->getType()=="GL" || ofGetCurrentRenderer()->getType()=="ProgrammableGL"){
+		((shared_ptr<ofBaseGLRenderer>&)ofGetCurrentRenderer())->enablePointSprites();
+	}
 }
 
 //----------------------------------------------------------
 void ofDisablePointSprites(){
-	ofGetCurrentRenderer()->disablePointSprites();
+	if(ofGetCurrentRenderer()->getType()=="GL" || ofGetCurrentRenderer()->getType()=="ProgrammableGL"){
+		((shared_ptr<ofBaseGLRenderer>&)ofGetCurrentRenderer())->disablePointSprites();
+	}
 }
 
 //----------------------------------------------------------
