@@ -3,6 +3,11 @@
 
 openFrameworks is a C++ toolkit for creative coding.  If you are new to OF, welcome!
 
+##Build status
+
+osx    [![Build Status](https://travis-ci.org/danoli3/openFrameworks.svg?branch=Automated%2FTravisUpdate)](https://travis-ci.org/danoli3/openFrameworks)
+
+visual studio   [![Build status](https://ci.appveyor.com/api/projects/status/sm9jxy0u56bl8syi/branch/master?svg=true)](https://ci.appveyor.com/project/arturoc/openframeworks/branch/master) 
 
 folder structure
 --------
