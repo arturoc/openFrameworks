@@ -1,4 +1,3 @@
-
 language: objective-c
 compiler: clang
 node_js: '0.10'
@@ -15,8 +14,14 @@ env:
     - NAME="docs" \
         SCRIPT_PATH="scripts/dev" \
         SCRIPT="$SCRIPT_PATH/documentation.sh"
+    - NAME="linux" \
+        SCRIPT_PATH="scripts/$NAME" \
+        SCRIPT="$SCRIPT_PATH/compileOF.sh -t"
 before_install:
     "if [ \"$NAME\" == \"docs\" ]; then scripts/dev/documentation.sh before_install; fi"
+install:
+    - if [ "$NAME" == "linux" ]; then sudo scripts/linux/ubuntu/install_dependencies.sh; fi
+    - if [ "$NAME" == "linux" ]; export CXX=g++-4.9
 script:
     "$SCRIPT"
 after_success:
