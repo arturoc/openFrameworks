@@ -24,40 +24,128 @@
 
 /// \cond INTERNAL
 
-//--------------------------------------------------
-typedef struct {
-	int characterIndex;
-	int glyph;
-	int height;
-	int width;
-	int bearingX, bearingY;
-	int xmin, xmax, ymin, ymax;
-	int advance;
-	float tW,tH;
-	float t1,t2,v1,v2;
-} charProps;
-
 
 typedef ofPath ofTTFCharacter;
-
-//--------------------------------------------------
-#define NUM_CHARACTER_TO_START		32		// 0 - 32 are control characters, no graphics needed.
-
-
 typedef struct FT_FaceRec_*  FT_Face;
 
 /// \endcond
 
 /// \name Fonts
 /// \{
-static const string OF_TTF_SANS = "sans-serif";
-static const string OF_TTF_SERIF = "serif";
-static const string OF_TTF_MONO = "monospace";
+static const std::string OF_TTF_SANS = "sans-serif";
+static const std::string OF_TTF_SERIF = "serif";
+static const std::string OF_TTF_MONO = "monospace";
 /// \}
 
 
 void ofTrueTypeShutdown();
 
+class ofUnicode{
+public:
+	struct range{
+		std::uint32_t begin;
+		std::uint32_t end;
+		
+		std::uint32_t getNumGlyphs() const{
+			return end - begin + 1;
+		}
+	};
+
+	static const range Space;
+	static const range Latin;
+	static const range Latin1Supplement;
+	static const range Greek;
+	static const range Cyrillic;
+	static const range Arabic;
+	static const range ArabicSupplement;
+	static const range ArabicExtendedA;
+	static const range Devanagari;
+	static const range HangulJamo;
+	static const range VedicExtensions;
+	static const range LatinExtendedAdditional;
+	static const range GreekExtended;
+	static const range GeneralPunctuation;
+	static const range SuperAndSubScripts;
+	static const range CurrencySymbols;
+	static const range LetterLikeSymbols;
+	static const range NumberForms;
+	static const range Arrows;
+	static const range MathOperators;
+	static const range MiscTechnical;
+	static const range BoxDrawing;
+	static const range BlockElement;
+	static const range GeometricShapes;
+	static const range MiscSymbols;
+	static const range Dingbats;
+	static const range Hiragana;
+	static const range Katakana;
+	static const range HangulCompatJamo;
+	static const range KatakanaPhoneticExtensions;
+	static const range CJKLettersAndMonths;
+	static const range CJKUnified;
+	static const range DevanagariExtended;
+	static const range HangulExtendedA;
+	static const range HangulSyllables;
+	static const range HangulExtendedB;
+	static const range AlphabeticPresentationForms;
+	static const range ArabicPresFormsA;
+	static const range ArabicPresFormsB;
+	static const range KatakanaHalfAndFullwidthForms;
+	static const range KanaSupplement;
+	static const range RumiNumericalSymbols;
+	static const range ArabicMath;
+	static const range MiscSymbolsAndPictographs;
+	static const range Emoticons;
+	static const range TransportAndMap;
+
+};
+
+class ofAlphabet{
+public:
+	static const std::initializer_list<ofUnicode::range> Emoji;
+	static const std::initializer_list<ofUnicode::range> Japanese;
+	static const std::initializer_list<ofUnicode::range> Chinese;
+	static const std::initializer_list<ofUnicode::range> Korean;
+	static const std::initializer_list<ofUnicode::range> Arabic;
+	static const std::initializer_list<ofUnicode::range> Devanagari;
+	static const std::initializer_list<ofUnicode::range> Latin;
+	static const std::initializer_list<ofUnicode::range> Greek;
+	static const std::initializer_list<ofUnicode::range> Cyrillic;
+};
+
+
+
+
+class ofTtfSettings{
+	friend class ofTrueTypeFont;
+	vector<ofUnicode::range> ranges;
+
+public:
+	ofTtfSettings(const string & name, int size)
+	:fontName(name)
+	,fontSize(size){}
+
+	string fontName;
+	int fontSize;
+	bool antialiased = true;
+	bool contours = false;
+	float simplifyAmt = 0.3f;
+	int dpi = 0;
+
+	enum Direction{
+		LeftToRight,
+		RightToLeft
+	};
+	Direction direction = LeftToRight;
+
+	void addRanges(std::initializer_list<ofUnicode::range> alphabet){
+		ranges.insert(ranges.end(), alphabet);
+	}
+
+	void addRange(const ofUnicode::range & range){
+		ranges.push_back(range);
+	}
+};
 
 
 class ofTrueTypeFont{
@@ -65,11 +153,17 @@ class ofTrueTypeFont{
 public:
 
 
-	/// \todo
+	/// \brief Construct a default ofTrueTypeFont.
 	ofTrueTypeFont();
 
-	/// \todo
+	/// \brief Destroy the ofTrueTypeFont.
 	virtual ~ofTrueTypeFont();
+
+	ofTrueTypeFont(const ofTrueTypeFont& mom);
+	ofTrueTypeFont & operator=(const ofTrueTypeFont& mom);
+
+	ofTrueTypeFont(ofTrueTypeFont&& mom);
+	ofTrueTypeFont & operator=(ofTrueTypeFont&& mom);
 
 	/// \name Load Font
 	/// \{
@@ -95,16 +189,19 @@ public:
                   bool _bAntiAliased=true,
                   bool _bFullCharacterSet=true,
                   bool makeContours=false,
-                  float simplifyAmt=0.3,
-                  int dpi=0);
+                  float simplifyAmt=0.3f,
+				  int dpi=0);
+
 	OF_DEPRECATED_MSG("Use load instead",bool loadFont(string filename,
                   int fontsize,
                   bool _bAntiAliased=true,
                   bool _bFullCharacterSet=false,
                   bool makeContours=false,
-                  float simplifyAmt=0.3,
-                  int dpi=0));
+                  float simplifyAmt=0.3f,
+				  int dpi=0));
 	
+	bool load(const ofTtfSettings & settings);
+
 	/// \brief Has the font been loaded successfully?
 	/// \returns true if the font was loaded.
 	bool isLoaded() const;
@@ -113,8 +210,7 @@ public:
 	/// \name Font Settings
 	/// \{
 	
-	// set the default dpi for all typefaces.
-	/// \todo
+	/// \brief Set the default dpi for all typefaces.
 	static void setGlobalDpi(int newDpi);
 	
 	/// \brief Is the font anti-aliased?
@@ -125,24 +221,24 @@ public:
 	/// \returns true if the font was allocated with a full character set.
 	bool hasFullCharacterSet() const;
 	
-	/// \brief Get the number characters in the loaded character set.
+	/// \brief Get the number of characters in the loaded character set.
 	/// 
 	/// If you allocate the font using different parameters, you can load in partial 
 	/// and full character sets, this helps you know how many characters it can represent.
 	///
 	/// \returns Number of characters in loaded character set.
-	int	getNumCharacters();	
+	std::size_t	getNumCharacters() const;
 
 	/// \}
 	/// \name Font Size
-	/// \{
+	/// \{
 
 	/// \brief Returns the size of the font.
 	/// \returns Size of font, set when font was loaded.
 	int getSize() const;
 	
 	/// \brief Computes line height based on font size.
-	/// \returns Returns current line height.
+	/// \returns the current line height.
 	float getLineHeight() const;
 
 	/// \brief Sets line height for text drawn on screen. 
@@ -158,7 +254,7 @@ public:
 	/// The meaning of "character" coordinate depends on the font. Some fonts take accents into account,
 	/// others do not, and still others define it simply to be the highest coordinate over all glyphs.
 	///
-	/// \returns Returns font ascender height in pixels.
+	/// \returns the font ascender height in pixels.
 	float getAscenderHeight() const;
 
 	/// \brief Get the descender distance for this font.
@@ -168,7 +264,7 @@ public:
 	/// others do not, and still others define it simply to be the lowest coordinate over all glyphs.
 	/// This value will be negative for descenders below the baseline (which is typical).
 	///
-	/// \returns Returns font descender height in pixels.
+	/// \returns the font descender height in pixels.
 	float getDescenderHeight() const;
 
 	/// \brief Get the global bounding box for this font.
@@ -177,7 +273,7 @@ public:
     /// Glyphs are drawn starting from (0,0) in the returned box (though note that the box can
     /// extend in any direction out from the origin).
     ///
-	/// \returns Returns font descender height in pixels.
+	/// \returns the font descender height in pixels.
     const ofRectangle & getGlyphBBox() const;
 
 	/// \brief Returns letter spacing of font object.
@@ -185,7 +281,7 @@ public:
 	/// You can control this by the ofTrueTypeFont::setLetterSpacing() function. 1.0 = default spacing, 
 	/// less then 1.0 would be tighter spacing, greater then 1.0 would be wider spacing.
 	///
-	/// \returns Returns letter spacing of font object.
+	/// \returns the letter spacing of font object.
 	float getLetterSpacing() const;
 
 	/// \brief Sets the letter spacing of the font object.
@@ -199,7 +295,7 @@ public:
 	/// It's a scalar for the width of the letter 'p', so 1.0 means that a space will be the size of the lower 
 	/// case 'p' of that font. 2.0 means that it's 2 times the size of the lower case 'p', etc.
 	///
-	/// \returns Returns a variable that represents how wide spaces are.
+	/// \returns the width of the space.
 	float getSpaceSize() const;
 
 	/// \brief Sets the size of the space ' ' character. 
@@ -214,23 +310,23 @@ public:
 	/// This is essentially the width component of the ofTrueTypeFont::getStringBoundingBox() rectangle.
 	///
 	/// \param s The string to get the width of.
-	/// \returns Returns the string width. 
-	float stringWidth(string s) const;
+	/// \returns the string width. 
+	float stringWidth(const std::string& s) const;
 
 	/// \brief Returns the string height.
 	///
 	/// This is essentially the height component of the ofTrueTypeFont::getStringBoundingBox() rectangle.
 	///
 	/// \param s The string to get the height of.
-	/// \returns Returns the string height. 
-	float stringHeight(string s) const;
+	/// \returns the string height.
+	float stringHeight(const std::string& s) const;
 
 	/// \brief Returns the bounding box of a string as a rectangle.
 	/// \param s The string to get bounding box of.
 	/// \param x X position of returned rectangle.
 	/// \param y Y position of returned rectangle.
-	/// \returns Returns the bounding box of a string as a rectangle.
-	ofRectangle getStringBoundingBox(string s, float x, float y, bool vflip=true) const;
+	/// \returns the bounding box of a string as a rectangle.
+	ofRectangle getStringBoundingBox(const std::string& s, float x, float y, bool vflip=true) const;
 
 	/// \}
 	/// \name Drawing
@@ -240,7 +336,7 @@ public:
 	/// \param s String to draw
 	/// \param x X position of string
 	/// \param y Y position of string
-	void drawString(string s, float x, float y) const;
+	void drawString(const std::string& s, float x, float y) const;
 
 	/// \brief Draws the string as if it was geometrical shapes.
 	/// 
@@ -248,31 +344,22 @@ public:
 	/// 
 	/// \param x X position of shapes
 	/// \param y Y position of shapes
-	void drawStringAsShapes(string s, float x, float y) const;
-
-	/// \brief Get the num chars in the loaded character set.
-	/// 
-	/// If you allocate the font using different paramters, you can load in partial 
-	/// and full character sets, this helps you know how many characters it can represent.
-	///
-	/// \returns Number of characters in loaded character set.
-	int	getNumCharacters() const;
+	void drawStringAsShapes(const std::string& s, float x, float y) const;
 	
 	/// \todo
-	ofTTFCharacter getCharacterAsPoints(int character, bool vflip=true, bool filled=true) const;
-	vector<ofTTFCharacter> getStringAsPoints(string str, bool vflip=true, bool filled=true) const;
-	const ofMesh & getStringMesh(string s, float x, float y, bool vflip=true) const;
+	ofTTFCharacter getCharacterAsPoints(uint32_t character, bool vflip=true, bool filled=true) const;
+	vector<ofTTFCharacter> getStringAsPoints(const std::string &  str, bool vflip=true, bool filled=true) const;
+	const ofMesh & getStringMesh(const std::string &  s, float x, float y, bool vflip=true) const;
 	const ofTexture & getFontTexture() const;
+	ofTexture getStringTexture(const std::string &  s, bool vflip=true) const;
+	bool isValidGlyph(uint32_t) const;
+	/// \}
 
-	/// \}
-	
+	void setDirection(ofTtfSettings::Direction direction);
 protected:
 	/// \cond INTERNAL
 	
 	bool bLoadedOk;
-	bool bAntiAliased;
-	bool bFullCharacterSet;
-	int nCharacters;
 	
 	vector <ofTTFCharacter> charOutlines;
 	vector <ofTTFCharacter> charOutlinesNonVFlipped;
@@ -285,21 +372,40 @@ protected:
 	ofRectangle glyphBBox;
 	float letterSpacing;
 	float spaceSize;
-
-	vector<charProps> cps; // properties for each character
-
-	int fontSize;
-	bool bMakeContours;
-	float simplifyAmt;
-	int dpi;
+	float fontUnitScale;
 
 
-    int getKerning(int c, int prevC) const;
-	void drawChar(int c, float x, float y, bool vFlipped) const;
-	void drawCharAsShape(int c, float x, float y, bool vFlipped, bool filled) const;
-	void createStringMesh(string s, float x, float y, bool vFlipped) const;
-	
-	string filename;
+	struct glyphProps{
+		std::size_t characterIndex;
+		uint32_t glyph;
+		long height;
+		long width;
+		long bearingX, bearingY;
+		long xmin, xmax, ymin, ymax;
+		long advance;
+		float tW,tH;
+		float t1,t2,v1,v2;
+	};
+
+	struct glyph{
+		glyphProps props;
+		ofPixels pixels;
+	};
+
+	vector<glyphProps> cps; // properties for each character
+
+	ofTtfSettings settings;
+	unordered_map<uint32_t,size_t> glyphIndexMap;
+
+
+    int getKerning(uint32_t c, uint32_t prevC) const;
+	void drawChar(uint32_t c, float x, float y, bool vFlipped) const;
+	void drawCharAsShape(uint32_t c, float x, float y, bool vFlipped, bool filled) const;
+	void createStringMesh(const string & s, float x, float y, bool vFlipped) const;
+	glyph loadGlyph(uint32_t utf8) const;
+	const glyphProps & getGlyphProperties(uint32_t glyph) const;
+	void iterateString(const string & str, float x, float y, bool vFlipped, std::function<void(uint32_t, ofVec2f)> f) const;
+	size_t indexForGlyph(uint32_t glyph) const;
 
 	ofTexture texAtlas;
 	mutable ofMesh stringQuads;
@@ -311,13 +417,13 @@ private:
 	friend void ofUnloadAllFontTextures();
 	friend void ofReloadAllFontTextures();
 #endif
-	FT_Face		face;
+	shared_ptr<struct FT_FaceRec_>	face;
+	static const glyphProps invalidProps;
 	void		unloadTextures();
 	void		reloadTextures();
 	static bool	initLibraries();
 	static void finishLibraries();
 
 	friend void ofExitCallback();
+
 };
-
-

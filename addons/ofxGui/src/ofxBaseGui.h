@@ -12,15 +12,22 @@ class ofxBaseGui {
 			Horizontal,
 			Vertical
 		};
+		enum TextLayout{
+			Left,
+			Right,
+			Centered
+		};
 		struct Config{
 			ofColor headerBackgroundColor = ofxBaseGui::headerBackgroundColor;
 			ofColor backgroundColor = ofxBaseGui::backgroundColor;
 			ofColor borderColor = ofxBaseGui::borderColor;
 			ofColor textColor = ofxBaseGui::textColor;
 			ofColor fillColor = ofxBaseGui::fillColor;
-			Layout layout = Vertical;
+			Layout layout = Horizontal;
+			TextLayout textLayout = Left;
 			bool inContainer = false;
 			ofRectangle shape{0.0f, 0.0f, (float)defaultWidth, (float)defaultHeight};
+			bool showName = true;
 		};
 		ofxBaseGui();
 		ofxBaseGui(const Config & config);
@@ -42,13 +49,18 @@ class ofxBaseGui {
 		std::string getName();
 		void setName(const std::string& name);
 
-		virtual void setPosition(ofPoint p);
+
+		virtual void setPosition(const ofPoint & p);
 		virtual void setPosition(float x, float y);
+
 		virtual void setSize(float w, float h);
 		virtual void setShape(ofRectangle r);
 		virtual void setShape(float x, float y, float w, float h);
 		virtual void setInContainer(bool inContainer=true);
 		virtual void setLayout(Layout layout=Vertical);
+		virtual void setTextLayout(TextLayout textLayout=Left);
+		Layout getLayout() const;
+		TextLayout getTextLayout() const;
 
 		ofPoint getPosition() const;
 		ofRectangle getShape() const;
@@ -77,12 +89,14 @@ class ofxBaseGui {
 		static void setDefaultWidth(int width);
 		static void setDefaultHeight(int height);
 
+		void setShowName(bool show);
+
 		virtual ofAbstractParameter & getParameter() = 0;
 		static void loadFont(const std::string& filename, int fontsize, bool _bAntiAliased = true, bool _bFullCharacterSet = false, int dpi = 0);
 		static void setUseTTF(bool bUseTTF);
 
-		void registerMouseEvents();
-		void unregisterMouseEvents();
+		void registerMouseEvents(int priority = OF_EVENT_ORDER_BEFORE_APP);
+		void unregisterMouseEvents(int priority = OF_EVENT_ORDER_BEFORE_APP);
 
 		virtual bool mouseMoved(ofMouseEventArgs & args) = 0;
 		virtual bool mousePressed(ofMouseEventArgs & args) = 0;
@@ -104,6 +118,7 @@ class ofxBaseGui {
 		void unbindFontTexture();
 		ofMesh getTextMesh(const std::string & text, float x, float y);
 		ofRectangle getTextBoundingBox(const std::string & text, float x, float y);
+		float getTextWidth(const std::string & text, float height);
 
 		ofRectangle b;
 		static ofTrueTypeFont font;
@@ -125,10 +140,13 @@ class ofxBaseGui {
 		ofColor thisFillColor;
 		bool inContainer;
 		Layout layout;
+		TextLayout textLayout;
 
 		static int textPadding;
 		static int defaultWidth;
 		static int defaultHeight;
+
+		bool bShowName;
 
 		static std::string saveStencilToHex(const ofImage & img);
 		static void loadStencilFromHex(ofImage & img, unsigned char * data);

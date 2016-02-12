@@ -87,9 +87,6 @@ public:
 	/// ofVec3f v3(0.1, 0.3); // v3.x is 0.1, v3.y is 0.3
 	/// ~~~~
 	///
-	/// \param x The x component
-	/// \param y The y component
-	/// \returns A new ofVec2f with the `x` and `y` components set to 0
 	ofVec2f();
 
 	/// \brief Construct a 2D vector with `x` and `y` set to `scalar`
@@ -105,7 +102,6 @@ public:
 	///
 	/// \param x The x component
 	/// \param y The y component
-	/// \returns A new ofVec2f with the `x` and `y` components set
 	ofVec2f( float x, float y );
 
 	/// \brief Create a 2D vector (ofVec2f) from a 3D vector (ofVec3f) by
@@ -248,7 +244,7 @@ public:
 	/// This is handy if, for example, you want to find out when a point becomes
 	/// *close enough* to another point to trigger an event.
 	/// 
-    bool match( const ofVec2f& vec, float tolerance=0.0001 ) const;
+    bool match( const ofVec2f& vec, float tolerance = 0.0001f ) const;
     
 	/// \brief Determine if two vectors are aligned
     /// 
@@ -260,13 +256,13 @@ public:
     /// \param vec The vector to compare alignment with
     /// \param tolerance an angle tolerance/threshold (specified in degrees) for deciding if the vectors are sufficiently aligned.
     /// \returns true if both vectors are aligned (pointing in the same direction). 
-    bool isAligned( const ofVec2f& vec, float tolerance=0.0001 ) const;
+    bool isAligned( const ofVec2f& vec, float tolerance = 0.0001f ) const;
     
     /// \brief Determine if two vectors are aligned with tolerance in radians
     /// \param vec The vector to compare alignment with
     /// \param tolerance an angle tolerance/threshold (specified in radians) for deciding if the vectors are sufficiently aligned.
     /// \sa isAligned()
-    bool isAlignedRad( const ofVec2f& vec, float tolerance=0.0001 ) const;
+    bool isAlignedRad( const ofVec2f& vec, float tolerance = 0.0001f ) const;
 
     /// \brief Determine if two vectors are aligned
     /// 
@@ -278,13 +274,13 @@ public:
     /// \param vec The vector to compare alignment with
     /// \param tolerance an angle tolerance/threshold (specified in degrees) for deciding if the vectors are sufficiently aligned.
     /// \returns true if both vectors are aligned (pointing in the same direction). 
-    bool align( const ofVec2f& vec, float tolerance=0.0001 ) const;
+    bool align( const ofVec2f& vec, float tolerance = 0.0001f ) const;
 
     /// \brief Determine if two vectors are aligned with tolerance in radians
     /// \param vec The vector to compare alignment with
     /// \param tolerance an angle tolerance/threshold (specified in radians) for deciding if the vectors are sufficiently aligned.
     /// \sa align()
-    bool alignRad( const ofVec2f& vec, float tolerance=0.0001 ) const;
+    bool alignRad( const ofVec2f& vec, float tolerance = 0.0001f ) const;
 	
 	/// \}
 
@@ -597,7 +593,7 @@ public:
 	/// squareDistance() instead.
 	/// 
 	/// \param pnt The point to calculate the distance to
-	/// \returns The distance as float
+	/// \returns The distance as float
 	/// \sa squareDistance()
     float distance( const ofVec2f& pnt) const;
 
@@ -718,7 +714,7 @@ public:
 	/// \param points The array of ofVec2f to avarage over
 	/// \param num specifies the number of ofVec2f in the array.
 	/// \returns Vector that is the avarage of the points in the array
-    ofVec2f&  average( const ofVec2f* points, int num );
+    ofVec2f&  average( const ofVec2f* points, std::size_t num );
     
     /// \}
 
@@ -770,13 +766,12 @@ public:
 	/// // v2Limited is (2, 1) (same as v2)
 	/// ~~~~
 	/// 
-	/// \sa limit()
+	/// \sa limit()
 	/// \param max The maximum length of the vector to return
 	/// \returns A copy of this vector with its length (magnitude) restricted to a
     /// maximum of max units by scaling down if necessary.
 	ofVec2f  getLimited(float max) const;
 
-    ofVec2f& getLimited(float max);
 
    	/// \brief Restrict the length (magnitude) of this vector to a maximum of max units by scaling down if necessary.
 	/// 
@@ -789,7 +784,7 @@ public:
 	/// // v2 is unchanged
 	/// ~~~~
 	///
-	/// \sa limit()
+	/// \sa limit()
     ofVec2f& limit(float max);
 
 	
@@ -1359,10 +1354,13 @@ inline ofVec2f& ofVec2f::middle( const ofVec2f& pnt ) {
 
 
 
-inline ofVec2f& ofVec2f::average( const ofVec2f* points, int num ) {
+inline ofVec2f& ofVec2f::average( const ofVec2f* points, std::size_t num ) {
+	if (0 == num) {
+		return *this;
+	}
 	x = 0.f;
 	y = 0.f;
-	for( int i=0; i<num; i++) {
+	for( std::size_t i=0; i<num; i++) {
 		x += points[i].x;
 		y += points[i].y;
 	}

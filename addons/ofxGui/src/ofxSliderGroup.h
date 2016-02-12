@@ -14,22 +14,23 @@ public:
 		:ofxGuiGroup::Config(c){}
 	};
 	ofxVecSlider_();
-    ofxVecSlider_(ofParameter<VecType> value, const Config & config = Config());
-    ofxVecSlider_(ofParameter<VecType> value, float width, float height = defaultHeight);
+	ofxVecSlider_(ofParameter<VecType> value, const Config & config = Config());
+	ofxVecSlider_(ofParameter<VecType> value, float width, float height = defaultHeight);
 
-    ofxVecSlider_ & setup(ofParameter<VecType> value, float width = defaultWidth, float height = defaultHeight);
-    ofxVecSlider_ & setup(const std::string& controlName, const VecType & value, const VecType & min, const VecType & max, float width = defaultWidth, float height = defaultHeight);
+	ofxVecSlider_ & setup(ofParameter<VecType> value, float width = defaultWidth, float height = defaultHeight);
+	ofxVecSlider_ & setup(ofParameter<VecType> value, const Config & config = Config());
+	ofxVecSlider_ & setup(const std::string& controlName, const VecType & value, const VecType & min, const VecType & max, float width = defaultWidth, float height = defaultHeight);
 
-    ofAbstractParameter & getParameter();
+	ofAbstractParameter & getParameter();
 
-    VecType operator=(const VecType & v);
+	VecType operator=(const VecType & v);
 	operator const VecType & ();
 	const VecType * operator->();
 protected:
-    void changeSlider(const void * parameter, float & value);
-    void changeValue(VecType & value);
-    ofParameter<VecType> value;
-    bool sliderChanging;
+	void changeSlider(const void * parameter, float & value);
+	void changeValue(VecType & value);
+	ofParameter<VecType> value;
+	bool sliderChanging;
 };
 
 typedef ofxVecSlider_<ofVec3f> ofxVec3Slider;
@@ -54,6 +55,7 @@ public:
 	ofxColorSlider_(ofParameter<ofColor_<ColorType> > value, float width = defaultWidth, float height = defaultHeight);
 
 	ofxColorSlider_ & setup(ofParameter<ofColor_<ColorType> > value, float width = defaultWidth, float height = defaultHeight);
+	ofxColorSlider_ & setup(ofParameter<ofColor_<ColorType> > value, const Config & config = Config());
 	ofxColorSlider_ & setup(const std::string& controlName, const ofColor_<ColorType> & value, const ofColor_<ColorType> & min, const ofColor_<ColorType> & max, float width = defaultWidth, float height = defaultHeight);
 
 	ofAbstractParameter & getParameter();
@@ -61,10 +63,10 @@ public:
 	ofColor_<ColorType> operator=(const ofColor_<ColorType> & v);
 	operator const ofColor_<ColorType> & ();
 protected:
-    void changeSlider(const void * parameter, ColorType & value);
-    void changeValue(ofColor_<ColorType> & value);
-    ofParameter<ofColor_<ColorType> > value;
-    bool sliderChanging;
+	void changeSlider(const void * parameter, ColorType & value);
+	void changeValue(ofColor_<ColorType> & value);
+	ofParameter<ofColor_<ColorType> > value;
+	bool sliderChanging;
 };
 
 typedef ofxColorSlider_<unsigned char> ofxColorSlider;

@@ -2,16 +2,9 @@
 #include "ofGraphics.h"
 using namespace std;
 
-ofxToggle::ofxToggle()
-:ofxBaseGui(Config())
-,bGuiActive(false){
-	checkboxRect.set(1, 1, b.height - 2, b.height - 2);
-	value.addListener(this,&ofxToggle::valueChanged);
-	registerMouseEvents();
-	setNeedsRedraw();
-}
+ofxToggle::ofxToggle():ofxBaseGui(){}
 
-ofxToggle::ofxToggle(ofParameter<bool> _bVal, const Config & config)
+ofxToggle::ofxToggle(ofParameter<bool> &_bVal, const Config & config)
 :ofxBaseGui(config)
 ,bGuiActive(false){
 	value.makeReferenceTo(_bVal);
@@ -21,15 +14,28 @@ ofxToggle::ofxToggle(ofParameter<bool> _bVal, const Config & config)
 	setNeedsRedraw();
 }
 
-ofxToggle::ofxToggle(ofParameter<bool> _bVal, float width, float height){
-	setup(_bVal,width,height);
-}
-
 ofxToggle::~ofxToggle(){
 	value.removeListener(this,&ofxToggle::valueChanged);
 }
 
-ofxToggle & ofxToggle::setup(ofParameter<bool> _bVal, float width, float height){
+ofxToggle & ofxToggle::setup(ofParameter<bool> &_bVal, const Config & config){
+	ofxBaseGui::setup(config);
+	bGuiActive = false;
+	value.makeReferenceTo(_bVal);
+	checkboxRect.set(1, 1, b.height - 2, b.height - 2);
+	value.addListener(this,&ofxToggle::valueChanged);
+	registerMouseEvents();
+	setNeedsRedraw();
+
+	return *this;
+}
+
+ofxToggle & ofxToggle::setup(const std::string& toggleName, const Config & config){
+	value.setName(toggleName);
+	return setup(value, config);
+}
+
+ofxToggle & ofxToggle::setup(ofParameter<bool> &_bVal, float width, float height){
 	b.x = 0;
 	b.y = 0;
 	b.width = width;
@@ -98,7 +104,7 @@ void ofxToggle::generateDraw(){
 	}else{
 		fg.setFilled(false);
 		fg.setStrokeWidth(1);
-		fg.setStrokeColor(thisFillColor);
+		fg.setStrokeColor(thisBorderColor);
 	}
 	fg.rectangle(b.getPosition()+checkboxRect.getTopLeft(),checkboxRect.width,checkboxRect.height);
 
@@ -111,7 +117,9 @@ void ofxToggle::generateDraw(){
 	cross.moveTo(b.getPosition()+checkboxRect.getTopRight());
 	cross.lineTo(b.getPosition()+checkboxRect.getBottomLeft());
 
-	textMesh = getTextMesh(getName(), b.x+textPadding + checkboxRect.width, b.y+b.height / 2 + 4);
+	if(bShowName){
+		textMesh = getTextMesh(getName(), b.x+textPadding + checkboxRect.width, b.y+b.height / 2 + 4);
+	}
 }
 
 void ofxToggle::render(){
@@ -122,20 +130,22 @@ void ofxToggle::render(){
 		cross.draw();
 	}
 
-	ofColor c = ofGetStyle().color;
-	ofBlendMode blendMode = ofGetStyle().blendingMode;
-	if(blendMode!=OF_BLENDMODE_ALPHA){
-		ofEnableAlphaBlending();
-	}
-	ofSetColor(thisTextColor);
+	if(bShowName){
+		ofColor c = ofGetStyle().color;
+		ofBlendMode blendMode = ofGetStyle().blendingMode;
+		if(blendMode!=OF_BLENDMODE_ALPHA){
+			ofEnableAlphaBlending();
+		}
+		ofSetColor(thisTextColor);
 
-	bindFontTexture();
-	textMesh.draw();
-	unbindFontTexture();
+		bindFontTexture();
+		textMesh.draw();
+		unbindFontTexture();
 
-	ofSetColor(c);
-	if(blendMode!=OF_BLENDMODE_ALPHA){
-		ofEnableBlendMode(blendMode);
+		ofSetColor(c);
+		if(blendMode!=OF_BLENDMODE_ALPHA){
+			ofEnableBlendMode(blendMode);
+		}
 	}
 }
 
@@ -178,5 +188,5 @@ ofAbstractParameter & ofxToggle::getParameter(){
 }
 
 void ofxToggle::valueChanged(bool & value){
-    setNeedsRedraw();
+	setNeedsRedraw();
 }

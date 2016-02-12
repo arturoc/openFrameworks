@@ -1,7 +1,9 @@
 #pragma once
 
+#include <climits>
 #include "ofConstants.h"
 #include "ofTypes.h"
+#include "ofFileUtils.h"
 
 #if defined( TARGET_OSX ) || defined( TARGET_LINUX ) || defined (TARGET_ANDROID)
 	#include <termios.h>
@@ -16,10 +18,10 @@
 	#define MAX_SERIAL_PORTS 256
 	/// \endcond
 	#include <winioctl.h>
-	#ifdef __MINGW32__
+	/*#ifndef _MSC_VER
 		#define INITGUID
 		#include <initguid.h> // needed for dev-c++ & DEFINE_GUID
-	#endif
+	#endif*/
 #endif
 
 
@@ -189,7 +191,9 @@ public:
 	/// Be aware that the type of your buffer can only be unsigned char. If you're
 	/// trying to receieve ints or signed chars over a serial connection you'll
 	/// need to do some bit manipulation to correctly interpret that values.
-	int readBytes(unsigned char * buffer, int length);
+	long readBytes(unsigned char * buffer, size_t length);
+	long readBytes(char * buffer, size_t length);
+	long readBytes(ofBuffer & buffer, size_t length);
 
 	/// \brief Reads and returns a single byte from the requested device.
 	///
@@ -222,7 +226,9 @@ public:
 	/// unsigned char buf[3] = {'o', 'f', '!'};
 	/// device.writeBytes(&buf[0], 3);
 	/// ~~~~
-	int writeBytes(unsigned char * buffer, int length);
+	long writeBytes(const unsigned char * buffer, size_t length);
+	long writeBytes(const char * buffer, size_t length);
+	long writeBytes(const ofBuffer & buffer);
 
 	/// \brief Writes a single byte to the connected serial device.
 	///
@@ -236,6 +242,7 @@ public:
 	///	 ofLog(OF_LOG_ERROR, "Byte was not written to serial port");
 	/// ~~~~
 	bool writeByte(unsigned char singleByte);
+	bool writeByte(char singleByte);
 
 	/// \}
 	/// \name Clear Data
@@ -245,7 +252,7 @@ public:
 	///
 	/// Any data in the cleared buffers is discarded.
 	/// \param flushIn If true then it clears the incoming data buffer
-	/// \param fluhOut If true then it clears the outgoing data buffer.
+	/// \param flushOut If true then it clears the outgoing data buffer.
 	void flush(bool flushIn = true, bool flushOut = true);
 
 	/// \brief Drain is only available on OSX and Linux and is very similar to

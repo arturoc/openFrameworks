@@ -10,6 +10,8 @@ public:
 	ofFbo();
 	ofFbo(const ofFbo & mom);
 	ofFbo & operator=(const ofFbo & fbo);
+    ofFbo(ofFbo && mom);
+    ofFbo & operator=(ofFbo && fbo);
 	virtual ~ofFbo();
 
 	void allocate(int width, int height, int internalformat = GL_RGBA, int numSamples = 0);
@@ -41,7 +43,7 @@ public:
 	const ofTexture & getTexture() const ;
 	const ofTexture & getTexture(int attachmentPoint) const;
 	const ofTexture & getDepthTexture() const;
-	void setUseTexture(bool bUseTex){ /*irrelevant*/ };
+	void setUseTexture(bool){ /*irrelevant*/ };
 	bool isUsingTexture() const {return true;}
 
 	/// \brief    Sets up the framebuffer and binds it for rendering.
@@ -61,6 +63,12 @@ public:
 	void readToPixels(ofShortPixels & pixels, int attachmentPoint = 0) const;
 	void readToPixels(ofFloatPixels & pixels, int attachmentPoint = 0) const;
 
+#ifndef TARGET_OPENGLES
+	/// \brief Copy the fbo to an ofBufferObject.
+	/// \param buffer the target buffer to copy to.
+	void copyTo(ofBufferObject & buffer) const;
+#endif
+	
 	float getWidth() const;
 	float getHeight() const;
 

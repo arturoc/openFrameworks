@@ -1,7 +1,9 @@
 #include "ofxBaseGui.h"
-#include "ofXml.h"
 #include "ofImage.h"
 #include "ofBitmapFont.h"
+#ifndef TARGET_EMSCRIPTEN
+#include "ofXml.h"
+#endif
 using namespace std;
 
 
@@ -64,7 +66,9 @@ ofBitmapFont ofxBaseGui::bitmapFont;
 
 ofxBaseGui::ofxBaseGui()
 :b(Config().shape)
-,serializer(new ofXml)
+#ifndef TARGET_EMSCRIPTEN
+	,serializer(std::make_shared<ofXml>())
+#endif
 ,thisHeaderBackgroundColor(Config().headerBackgroundColor)
 ,thisBackgroundColor(Config().backgroundColor)
 ,thisBorderColor(Config().borderColor)
@@ -72,6 +76,8 @@ ofxBaseGui::ofxBaseGui()
 ,thisFillColor(Config().fillColor)
 ,inContainer(Config().inContainer)
 ,layout(Config().layout)
+,textLayout(Config().textLayout)
+,bShowName(Config().showName)
 ,needsRedraw(true)
 ,currentFrame(ofGetFrameNum())
 ,bRegisteredForMouseEvents(false){
@@ -80,7 +86,9 @@ ofxBaseGui::ofxBaseGui()
 
 ofxBaseGui::ofxBaseGui(const Config & config)
 :b(config.shape)
-,serializer(new ofXml)
+#ifndef TARGET_EMSCRIPTEN
+	,serializer(std::make_shared<ofXml>())
+#endif
 ,thisHeaderBackgroundColor(config.headerBackgroundColor)
 ,thisBackgroundColor(config.backgroundColor)
 ,thisBorderColor(config.borderColor)
@@ -88,6 +96,8 @@ ofxBaseGui::ofxBaseGui(const Config & config)
 ,thisFillColor(config.fillColor)
 ,inContainer(config.inContainer)
 ,layout(config.layout)
+,textLayout(config.textLayout)
+,bShowName(config.showName)
 ,needsRedraw(true)
 ,currentFrame(ofGetFrameNum())
 ,bRegisteredForMouseEvents(false){
@@ -103,10 +113,11 @@ void ofxBaseGui::setup(const Config & config){
 	thisFillColor = config.fillColor;
 	inContainer = config.inContainer;
 	layout = config.layout;
+	textLayout = config.textLayout;
 }
 
 void ofxBaseGui::loadFont(const std::string& filename, int fontsize, bool _bAntiAliased, bool _bFullCharacterSet, int dpi){
-	font.load(filename, fontsize, _bAntiAliased, _bFullCharacterSet, dpi);
+	font.load(filename, fontsize, _bAntiAliased, _bFullCharacterSet, false, 0, dpi);
 	fontLoaded = true;
 	useTTF = true;
 }
@@ -122,19 +133,19 @@ ofxBaseGui::~ofxBaseGui(){
 	unregisterMouseEvents();
 }
 
-void ofxBaseGui::registerMouseEvents(){
+void ofxBaseGui::registerMouseEvents(int priority){
 	if(bRegisteredForMouseEvents == true){
 		return; // already registered.
 	}
 	bRegisteredForMouseEvents = true;
-	ofRegisterMouseEvents(this, OF_EVENT_ORDER_BEFORE_APP);
+	ofRegisterMouseEvents(this, priority);
 }
 
-void ofxBaseGui::unregisterMouseEvents(){
+void ofxBaseGui::unregisterMouseEvents(int priority){
 	if(bRegisteredForMouseEvents == false){
 		return; // not registered.
 	}
-	ofUnregisterMouseEvents(this, OF_EVENT_ORDER_BEFORE_APP);
+	ofUnregisterMouseEvents(this, priority);
 	bRegisteredForMouseEvents = false;
 }
 
@@ -189,14 +200,22 @@ ofRectangle ofxBaseGui::getTextBoundingBox(const string & text, float x, float y
 }
 
 void ofxBaseGui::saveToFile(const std::string& filename){
-	serializer->load(filename);
-	saveTo(*serializer);
-	serializer->save(filename);
+	if(serializer){
+		serializer->load(filename);
+		saveTo(*serializer);
+		serializer->save(filename);
+	}else{
+		ofLogError("ofxGui") << "element has no serializer to save to";
+	}
 }
 
 void ofxBaseGui::loadFromFile(const std::string& filename){
-	serializer->load(filename);
-	loadFrom(*serializer);
+	if(serializer){
+		serializer->load(filename);
+		loadFrom(*serializer);
+	}else{
+		ofLogError("ofxGui") << "element has no serializer to load from";
+	}
 }
 
 
@@ -221,7 +240,7 @@ void ofxBaseGui::setName(const std::string& _name){
 	getParameter().setName(_name);
 }
 
-void ofxBaseGui::setPosition(ofPoint p){
+void ofxBaseGui::setPosition(const ofPoint & p){
 	setPosition(p.x, p.y);
 }
 
@@ -258,6 +277,10 @@ void ofxBaseGui::setLayout(Layout layout){
 	this->layout = layout;
 }
 
+void ofxBaseGui::setTextLayout(TextLayout textLayout){
+	this->textLayout = textLayout;
+}
+
 ofPoint ofxBaseGui::getPosition() const {
 	return ofPoint(b.x, b.y);
 }
@@ -272,6 +295,14 @@ float ofxBaseGui::getWidth() const {
 
 float ofxBaseGui::getHeight() const {
 	return b.height;
+}
+
+ofxBaseGui::Layout ofxBaseGui::getLayout() const {
+	return layout;
+}
+
+ofxBaseGui::TextLayout ofxBaseGui::getTextLayout() const {
+	return textLayout;
 }
 
 ofColor ofxBaseGui::getHeaderBackgroundColor() const {
@@ -355,6 +386,11 @@ void ofxBaseGui::setNeedsRedraw(){
 	needsRedraw = true;
 }
 
+void ofxBaseGui::setShowName(bool show){
+	bShowName = show;
+	setNeedsRedraw();
+}
+
 string ofxBaseGui::saveStencilToHex(const ofImage & img){
 	stringstream strm;
 	int width = img.getWidth();
@@ -399,4 +435,16 @@ void ofxBaseGui::loadStencilFromHex(ofImage & img, unsigned char * data){
 		}
 	}
 	img.update();
+}
+
+float ofxBaseGui::getTextWidth(const std::string & text, float _height){
+	float _width = 0;
+	ofVboMesh mesh = getTextMesh(text, 0, _height / 2 + 4);
+	for(unsigned int i = 0; i < mesh.getVertices().size(); i++){
+		if(mesh.getVertex(i).x > _width){
+			_width = mesh.getVertex(i).x;
+		}
+	}
+	_width += textPadding * 2;
+	return _width;
 }
