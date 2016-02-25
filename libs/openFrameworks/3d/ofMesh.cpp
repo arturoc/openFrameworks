@@ -1,5 +1,6 @@
 #include "ofMesh.h"
 #include "ofAppRunner.h"
+#include "ofVectorMath.h"
 #include <map>
 
 //--------------------------------------------------------------
@@ -149,10 +150,24 @@ void ofMesh::addVertices(const vector<glm::vec3>& verts){
 }
 
 //--------------------------------------------------------------
+void ofMesh::addVertices(const vector<ofVec3f>& verts){
+	std::transform(verts.begin(), verts.end(), std::back_inserter(vertices), [](const ofVec3f & v){
+		return toGlm(v);
+	});
+}
+
+//--------------------------------------------------------------
 void ofMesh::addVertices(const glm::vec3* verts, std::size_t amt){
 	vertices.insert(vertices.end(),verts,verts+amt);
 	bVertsChanged = true;
 	bFacesDirty = true;
+}
+
+//--------------------------------------------------------------
+void ofMesh::addVertices(const ofVec3f* verts, std::size_t amt){
+	std::transform(verts, verts + amt, std::back_inserter(vertices), [](const ofVec3f & v){
+		return toGlm(v);
+	});
 }
 
 //--------------------------------------------------------------
@@ -191,10 +206,24 @@ void ofMesh::addNormals(const vector<glm::vec3>& norms){
 }
 
 //--------------------------------------------------------------
+void ofMesh::addNormals(const vector<ofVec3f>& norms){
+	std::transform(norms.begin(), norms.end(), std::back_inserter(normals), [](const ofVec3f & v){
+		return toGlm(v);
+	});
+}
+
+//--------------------------------------------------------------
 void ofMesh::addNormals(const glm::vec3* norms, std::size_t amt){
 	normals.insert(normals.end(),norms,norms+amt);
 	bNormalsChanged = true;
 	bFacesDirty = true;
+}
+
+//--------------------------------------------------------------
+void ofMesh::addNormals(const ofVec3f* norms, std::size_t amt){
+	std::transform(norms, norms + amt, std::back_inserter(normals), [](const ofVec3f & v){
+		return toGlm(v);
+	});
 }
 
 //--------------------------------------------------------------
@@ -213,10 +242,24 @@ void ofMesh::addTexCoords(const vector<glm::vec2>& tCoords){
 }
 
 //--------------------------------------------------------------
+void ofMesh::addTexCoords(const vector<ofVec2f>& tCoords){
+	std::transform(tCoords.begin(), tCoords.end(), std::back_inserter(texCoords), [](const ofVec2f & v){
+		return toGlm(v);
+	});
+}
+
+//--------------------------------------------------------------
 void ofMesh::addTexCoords(const glm::vec2* tCoords, std::size_t amt){
 	texCoords.insert(texCoords.end(),tCoords,tCoords+amt);
 	bTexCoordsChanged = true;
 	bFacesDirty = true;
+}
+
+//--------------------------------------------------------------
+void ofMesh::addTexCoords(const ofVec2f* tCoords, std::size_t amt){
+	std::transform(tCoords, tCoords + amt, std::back_inserter(texCoords), [](const ofVec2f & v){
+		return toGlm(v);
+	});
 }
 
 //--------------------------------------------------------------

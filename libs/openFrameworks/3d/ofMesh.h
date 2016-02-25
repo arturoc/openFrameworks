@@ -186,11 +186,17 @@ public:
 	/// is added after the end of the current vertices list.
 	void addVertices(const vector<glm::vec3>& verts);
 
+	OF_DEPRECATED_MSG("Use glm::vec3 instead of ofVec3f",
+					  void addVertices(const vector<ofVec3f>& verts));
+
 	/// \brief Add an array of vertices to the mesh. 
 	/// Because you are using a pointer to the array you also have to define 
 	/// the length of the array as an int (amt). The vertices are added at the 
 	/// end of the current vertices list.
 	void addVertices(const glm::vec3* verts, std::size_t amt);
+
+	OF_DEPRECATED_MSG("Use glm::vec3 instead of ofVec3f",
+					  void addVertices(const ofVec3f* verts, std::size_t amt));
 
 	/// \brief Removes the vertex at the index in the vector.
 	void removeVertex(ofIndexType index);
@@ -264,12 +270,16 @@ public:
 	/// adding one at a time. The vector of normals is added after the end of 
 	/// the current normals list.
 	void addNormals(const vector<glm::vec3>& norms);
+	OF_DEPRECATED_MSG("Use glm::vec3 instead of ofVec3f",
+					  void addNormals(const vector<ofVec3f>& norms));
 
 	/// \brief Add an array of normals to the mesh. 
 	/// Because you are using a pointer to the array you also have to define 
 	/// the length of the array as an std::size_t (amt). The normals are added at the
 	/// end of the current normals list.
 	void addNormals(const glm::vec3* norms, std::size_t amt);
+	OF_DEPRECATED_MSG("Use glm::vec3 instead of ofVec3f",
+					  void addNormals(const ofVec3f* norms, std::size_t amt));
 
 	/// \brief Remove a normal.
 	void removeNormal(ofIndexType index);
@@ -418,6 +428,8 @@ public:
 	/// The vector of texture coordinates is added after the end of the current 
 	/// texture coordinates list.
 	void addTexCoords(const vector<glm::vec2>& tCoords);
+	OF_DEPRECATED_MSG("Use glm::vec2 instead of ofVec2f",
+					  void addTexCoords(const vector<ofVec2f>& tCoords));
 
 	/// \brief  Add an array of texture coordinates to the mesh. 
 	/// Because you are using a pointer to the array you also have to define 
@@ -425,6 +437,8 @@ public:
 	/// The texture coordinates are added at the end of the current texture 
 	/// coordinates list.
 	void addTexCoords(const glm::vec2* tCoords, std::size_t amt);
+	OF_DEPRECATED_MSG("Use glm::vec2 instead of ofVec2f",
+					  void addTexCoords(const ofVec2f* tCoords, std::size_t amt));
 
 	/// \brief  Remove a Vec2f representing the texture coordinate.
 	void removeTexCoord(ofIndexType index);
