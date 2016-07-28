@@ -31,7 +31,7 @@ void ofEasyCam::update(ofEventArgs & args){
 
 		if (bDoRotate) {
 			updateRotation();
-		}else if (bDoTranslate || bDoScrollZoom) {
+		}else if (bDoTranslate || bDoScrollZoom || bIsBeingScrolled) {
 			updateTranslation(); 
 			bDoScrollZoom = false;
 		}
@@ -263,13 +263,21 @@ void ofEasyCam::updateTranslation(){
 		moveX *= drag;
 		moveY *= drag;
 		moveZ *= drag;
+
+		if(ABS(moveZ) >= minDifference){
+			bIsBeingScrolled = true;
+		} else {
+			bIsBeingScrolled = false;
+		}
+
 		if(ABS(moveX) <= minDifference && ABS(moveY) <= minDifference && ABS(moveZ) <= minDifference){
 			bApplyInertia = false;
 			bDoTranslate = false;
 		}
 		move((getXAxis() * moveX) + (getYAxis() * moveY) + (getZAxis() * moveZ));
-	}else{
+	}else if(bDoTranslate || bIsBeingScrolled){
 		setPosition(prevPosition + glm::vec3(prevAxisX * moveX) + (prevAxisY * moveY) + (prevAxisZ * moveZ));
+		bIsBeingScrolled = false;
 	}
 }	
 
@@ -290,7 +298,7 @@ void ofEasyCam::updateRotation(){
 		curRot = glm::angleAxis(zRot, getZAxis()) * glm::angleAxis(yRot, up()) * glm::angleAxis(xRot, getXAxis());
 		setPosition(curRot * (getGlobalPosition()-target.getGlobalPosition()) + target.getGlobalPosition());
 		rotate(curRot);
-	}else{
+	}else if(bDoRotate){
 		curRot = glm::angleAxis(zRot, prevAxisZ) * glm::angleAxis(yRot, up()) * glm::angleAxis(xRot, prevAxisX);
 		setPosition(curRot * (prevPosition-target.getGlobalPosition()) + target.getGlobalPosition());
 		setOrientation(curRot * prevOrientation);
@@ -371,11 +379,15 @@ void ofEasyCam::mouseDragged(ofMouseEventArgs & mouse){
 
 //----------------------------------------
 void ofEasyCam::mouseScrolled(ofMouseEventArgs & mouse){
+	if (doInertia) {
+		bApplyInertia = true;
+	}
 	ofRectangle viewport = getViewport(this->viewport);
 	prevPosition = ofCamera::getGlobalPosition();
 	prevAxisZ = getZAxis();
 	moveZ = mouse.scrollY * 30 * sensitivityZ * (getDistance() + FLT_EPSILON)/ viewport.height;
 	bDoScrollZoom = true;
+	bIsBeingScrolled = true;
 }
 
 //----------------------------------------
