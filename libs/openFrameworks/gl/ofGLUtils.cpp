@@ -839,13 +839,72 @@ void ofReloadGLResources(){
 #ifndef TARGET_OPENGLES
 namespace{
 	void gl_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, void * user){
-		ofLogNotice("GL DEBUG") << message;
+		//ofLogNotice("GL DEBUG") << message;
+		ofLogLevel level;
+		string typeStr;
+		switch (type) {
+		case GL_DEBUG_TYPE_ERROR:
+			level = OF_LOG_ERROR;
+			typeStr = "ERROR";
+			break;
+		case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+			level = OF_LOG_WARNING;
+			typeStr = "DEPRECATED_BEHAVIOR";
+			break;
+		case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+			level = OF_LOG_WARNING;
+			typeStr = "UNDEFINED_BEHAVIOR";
+			break;
+		case GL_DEBUG_TYPE_PORTABILITY:
+			level = OF_LOG_NOTICE;
+			typeStr = "PORTABILITY";
+			break;
+		case GL_DEBUG_TYPE_PERFORMANCE:
+			level = OF_LOG_NOTICE;
+			typeStr = "PERFORMANCE";
+			break;
+		case GL_DEBUG_TYPE_OTHER:
+		default:
+			level = OF_LOG_VERBOSE;
+			typeStr = "OTHER";
+			break;
+		}
+		ofLog(level, "GL Debug", typeStr);
+		ofLog(level, "GL Debug", "  %s", message);
+
+		//cout << "---------------------opengl-callback-start------------" << endl;
+		//cout << "message: " << message << endl;
+		//cout << "type: ";
+
+		//cout << endl;
+
+		//cout << "id: " << id << endl;
+		//cout << "severity: ";
+		//switch (severity) {
+		//case GL_DEBUG_SEVERITY_LOW:
+		//	cout << "LOW";
+		//	break;
+		//case GL_DEBUG_SEVERITY_MEDIUM:
+		//	cout << "MEDIUM";
+		//	break;
+		//case GL_DEBUG_SEVERITY_HIGH:
+		//	cout << "HIGH";
+		//	break;
+		//}
+		//cout << endl;
+		//cout << "---------------------opengl-callback-end--------------" << endl;
+
+		if (type == GL_DEBUG_TYPE_ERROR && severity == GL_DEBUG_SEVERITY_HIGH)
+		{
+			cout << "shit" << endl;
+		}
 	}
 }
 
 void ofEnableGLDebugLog(){
 	if(ofGLCheckExtension("GL_KHR_debug") && ofGLCheckExtension("GL_ARB_debug_output")){
 		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); 
 		glDebugMessageCallback((GLDEBUGPROC)gl_debug_callback, nullptr);
 	}
 }
