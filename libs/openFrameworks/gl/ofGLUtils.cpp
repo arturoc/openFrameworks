@@ -232,23 +232,24 @@ int ofGetGlTypeFromInternal(int glInternalFormat){
 #ifndef TARGET_OPENGLES
 		case GL_LUMINANCE32F_ARB:
 		case GL_LUMINANCE_ALPHA32F_ARB:
-		case GL_R16F:
-		case GL_RG16F:
-		case GL_RGB16F:
-		case GL_RGBA16F:
 		case GL_R32F:
 		case GL_RG32F:
 		case GL_RGB32F:
 		case GL_RGBA32F:
+#endif
+			return GL_FLOAT;
+
+		case GL_R16F:
+		case GL_RG16F:
+		case GL_RGB16F:
+		case GL_RGBA16F:
 		case GL_LUMINANCE16:
 		case GL_LUMINANCE16_ALPHA16:
 		case GL_R16:
 		case GL_RG16:
 		case GL_RGB16:
 		case GL_RGBA16:
-#endif
-			return GL_FLOAT;
-
+			return GL_HALF_FLOAT;
 
 		case GL_DEPTH_STENCIL:
 			 return GL_UNSIGNED_INT_24_8;
@@ -896,7 +897,7 @@ namespace{
 
 		if (type == GL_DEBUG_TYPE_ERROR && severity == GL_DEBUG_SEVERITY_HIGH)
 		{
-			cout << "shit" << endl;
+ 			cout << "shit" << endl;
 		}
 	}
 }
