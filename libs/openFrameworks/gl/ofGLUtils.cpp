@@ -840,65 +840,53 @@ void ofReloadGLResources(){
 #ifndef TARGET_OPENGLES
 namespace{
 	void gl_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, void * user){
-		//ofLogNotice("GL DEBUG") << message;
+		ostringstream oss;
+		oss << "GL Debug: ";
+		
 		ofLogLevel level;
-		string typeStr;
 		switch (type) {
 		case GL_DEBUG_TYPE_ERROR:
 			level = OF_LOG_ERROR;
-			typeStr = "ERROR";
+			oss << "ERROR";
 			break;
 		case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
 			level = OF_LOG_WARNING;
-			typeStr = "DEPRECATED_BEHAVIOR";
+			oss << "DEPRECATED_BEHAVIOR";
 			break;
 		case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
 			level = OF_LOG_WARNING;
-			typeStr = "UNDEFINED_BEHAVIOR";
+			oss << "UNDEFINED_BEHAVIOR";
 			break;
 		case GL_DEBUG_TYPE_PORTABILITY:
 			level = OF_LOG_NOTICE;
-			typeStr = "PORTABILITY";
+			oss << "PORTABILITY";
 			break;
 		case GL_DEBUG_TYPE_PERFORMANCE:
 			level = OF_LOG_NOTICE;
-			typeStr = "PERFORMANCE";
+			oss << "PERFORMANCE";
 			break;
 		case GL_DEBUG_TYPE_OTHER:
 		default:
 			level = OF_LOG_VERBOSE;
-			typeStr = "OTHER";
+			oss << "OTHER";
 			break;
 		}
-		ofLog(level, "GL Debug", typeStr);
-		ofLog(level, "GL Debug", "  %s", message);
 
-		//cout << "---------------------opengl-callback-start------------" << endl;
-		//cout << "message: " << message << endl;
-		//cout << "type: ";
-
-		//cout << endl;
-
-		//cout << "id: " << id << endl;
-		//cout << "severity: ";
-		//switch (severity) {
-		//case GL_DEBUG_SEVERITY_LOW:
-		//	cout << "LOW";
-		//	break;
-		//case GL_DEBUG_SEVERITY_MEDIUM:
-		//	cout << "MEDIUM";
-		//	break;
-		//case GL_DEBUG_SEVERITY_HIGH:
-		//	cout << "HIGH";
-		//	break;
-		//}
-		//cout << endl;
-		//cout << "---------------------opengl-callback-end--------------" << endl;
-
-		if (type == GL_DEBUG_TYPE_ERROR && severity == GL_DEBUG_SEVERITY_HIGH)
-		{
- 			cout << "shit" << endl;
+		switch (severity) {
+		case GL_DEBUG_SEVERITY_LOW:
+			oss << " (LOW)";
+			break;
+		case GL_DEBUG_SEVERITY_MEDIUM:
+			oss << " (MEDIUM)";
+			break;
+		case GL_DEBUG_SEVERITY_HIGH:
+			oss << " (HIGH)";
+			break;
 		}
+
+		oss << ", " << id << ": " << message;
+		
+		ofLog(level, oss.str());
 	}
 }
 
