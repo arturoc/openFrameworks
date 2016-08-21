@@ -834,39 +834,6 @@ void ofFbo::beginNoPerspective() const {
 	}
 }
 
-
-//----------------------------------------------------------
-void ofFbo::begin() const {
-	auto renderer = settings.renderer.lock();
-	if (renderer) {
-		renderer->begin(*this, true);
-	}
-}
-
-//----------------------------------------------------------
-void ofFbo::beginNoPerspective() const {
-	auto renderer = settings.renderer.lock();
-	if (renderer) {
-		renderer->begin(*this, false);
-	}
-}
-
-//----------------------------------------------------------
-void ofFbo::beginNoMatrixFlip() const {
-	auto renderer = settings.renderer.lock();
-	if (renderer) {
-		renderer->beginNoMatrixFlip(*this);
-	}
-}
-
-//----------------------------------------------------------
-void ofFbo::beginNoMatrixFlipNoPerspective() const {
-	auto renderer = settings.renderer.lock();
-	if (renderer) {
-		renderer->beginNoMatrixFlipNoPerspective(*this);
-	}
-}
-
 //----------------------------------------------------------
 void ofFbo::beginNoMatrixFlip() const {
 	auto renderer = settings.renderer.lock();
