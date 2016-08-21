@@ -801,7 +801,36 @@ void ofFbo::createAndAttachDepthStencilTexture(GLenum target, GLint internalform
 void ofFbo::begin(bool setupScreen) const{
 	auto renderer = settings.renderer.lock();
 	if(renderer){
-		renderer->begin(*this,setupScreen);
+        if(setupScreen){
+            renderer->begin(*this, ofFboBeginMode::Perspective | ofFboBeginMode::MatrixFlip);
+        }else{
+            renderer->begin(*this, ofFboBeginMode::NoDefaults);
+        }
+	}
+}
+
+
+void ofFbo::begin(ofFboBeginMode mode){
+    auto renderer = settings.renderer.lock();
+    if(renderer){
+        renderer->begin(*this, mode);
+    }
+}
+
+
+//----------------------------------------------------------
+/*void ofFbo::begin() const {
+	auto renderer = settings.renderer.lock();
+	if (renderer) {
+		renderer->begin(*this, true);
+	}
+}
+
+//----------------------------------------------------------
+void ofFbo::beginNoPerspective() const {
+	auto renderer = settings.renderer.lock();
+	if (renderer) {
+		renderer->begin(*this, false);
 	}
 }
 
@@ -837,6 +866,22 @@ void ofFbo::beginNoMatrixFlipNoPerspective() const {
 		renderer->beginNoMatrixFlipNoPerspective(*this);
 	}
 }
+
+//----------------------------------------------------------
+void ofFbo::beginNoMatrixFlip() const {
+	auto renderer = settings.renderer.lock();
+	if (renderer) {
+		renderer->beginNoMatrixFlip(*this);
+	}
+}
+
+//----------------------------------------------------------
+void ofFbo::beginNoMatrixFlipNoPerspective() const {
+	auto renderer = settings.renderer.lock();
+	if (renderer) {
+		renderer->beginNoMatrixFlipNoPerspective(*this);
+	}
+}*/
 
 //----------------------------------------------------------
 void ofFbo::end() const{
