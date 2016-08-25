@@ -256,6 +256,7 @@ private:
 #endif
 
     bool setupShaderFromSource(Source && source);
+	ofShader::Source sourceFromFile(GLenum type, std::filesystem::path filename);
     void checkProgramInfoLog();
     bool checkProgramLinkStatus();
     void checkShaderInfoLog(GLuint shader, GLenum type, ofLogLevel logLevel);
