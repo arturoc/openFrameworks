@@ -70,7 +70,7 @@ public:
     ///           explicit void ofBaseGLRenderer::begin(const ofFbo & fbo, ofFboBeginMode mode)
 	///           method instead.
     /// \sa       void ofBaseGLRenderer::begin(const ofFbo & fbo, ofFboBeginMode mode)
-    OF_DEPRECATED_MSG("Use begin(ofFboBeginMode::NoDefauls) instead", void begin(bool setupScreen) const);
+    OF_DEPRECATED_MSG("Use begin(ofFboBeginMode::NoDefaults) instead", void begin(bool setupScreen) const);
 
 
     /// Sets up the framebuffer and binds it for rendering.
@@ -84,7 +84,7 @@ public:
     /// matrix in y so when drawing the fbo later or accesing it from a shader
     /// it's correctly oriented
     ///
-    /// Passing ofFboBeginMode::Perspetive will only set perspective and viewport
+    /// Passing ofFboBeginMode::Perspective will only set perspective and viewport
     ///
     /// Passing ofFboBeginMode::MatrixFlip won't set the perspective but will flip
     /// the matrix.
