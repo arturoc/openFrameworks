@@ -165,6 +165,10 @@ public:
 
 	/// Returns the area bounds used for mouse control.
 	ofRectangle getControlArea() const;
+
+	/// Returns whether the camera is currently in motion, 
+	/// whether by mouse control or inertia.
+	bool isMoving() const;
 	
 private:
 	void setDistance(float distance, bool save);
