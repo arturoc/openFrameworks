@@ -342,6 +342,11 @@ ofRectangle ofEasyCam::getControlArea() const {
 }
 
 //----------------------------------------
+bool ofEasyCam::isMoving() const {
+	return (bDoRotate || bDoTranslate || bDoScrollZoom || bIsBeingScrolled || bApplyInertia);
+}
+
+//----------------------------------------
 void ofEasyCam::mousePressed(ofMouseEventArgs & mouse){
 	ofRectangle area = getControlArea();
 	if(area.inside(mouse.x, mouse.y)){
