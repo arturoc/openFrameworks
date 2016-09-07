@@ -292,7 +292,7 @@ bool ofShader::setupShaderFromFile(GLenum type, std::filesystem::path filename) 
 	if(buffer.size()) {
 		return setupShaderFromSource(type, buffer.getText(), sourceDirectoryPath);
 	} else {
-		ofLogError("ofShader") << "setupShaderFromFile(): couldn't load " << nameForType(type) << " shader " << " from \"" << filename << "\"";
+		ofLogError("ofShader") << "setupShaderFromFile(): couldn't load " << nameForType(type) << " shader " << " from \"" << absoluteFilePath << "\"";
 		return false;
 	}
 }
@@ -307,7 +307,7 @@ ofShader::Source ofShader::sourceFromFile(GLenum type, std::filesystem::path fil
 	if(buffer.size()) {
 		return std::move(Source{type, buffer.getText(), sourceDirectoryPath});
 	} else {
-		ofLogError("ofShader") << "setupShaderFromFile(): couldn't load " << nameForType(type) << " shader " << " from \"" << filename << "\"";
+		ofLogError("ofShader") << "setupShaderFromFile(): couldn't load " << nameForType(type) << " shader " << " from \"" << absoluteFilePath << "\"";
 		return Source{};
 	}
 }
@@ -754,9 +754,8 @@ void ofShader::reloadGL(){
 #endif
 	attributesBindingsCache.clear();
 	for(auto & shader: source){
-		auto type = shader.second.type;
-		auto source = shader.second.expandedSource;
-		setupShaderFromSource(type,source);
+		auto source = shader.second.source;
+		setupShaderFromSource(std::move(shader.second.source));
 	}
 	for(auto binding: bindings){
 		bindAttribute(binding.second, binding.first);
@@ -1187,6 +1186,7 @@ void ofShader::setAttribute4f(GLint location, float v1, float v2, float v3, floa
 		glVertexAttrib4f(location, v1, v2, v3, v4);
 }
 
+//--------------------------------------------------------------
 void ofShader::setAttribute1fv(const string & name, const float* v, GLsizei stride) const{
 	if(bLoaded){
 		GLint location = getAttributeLocation(name);
@@ -1197,6 +1197,7 @@ void ofShader::setAttribute1fv(const string & name, const float* v, GLsizei stri
 	}
 }
 
+//--------------------------------------------------------------
 void ofShader::setAttribute2fv(const string & name, const float* v, GLsizei stride) const{
 	if(bLoaded){
 		GLint location = getAttributeLocation(name);
@@ -1208,6 +1209,7 @@ void ofShader::setAttribute2fv(const string & name, const float* v, GLsizei stri
 
 }
 
+//--------------------------------------------------------------
 void ofShader::setAttribute3fv(const string & name, const float* v, GLsizei stride) const{
 	if(bLoaded){
 		GLint location = getAttributeLocation(name);
@@ -1218,6 +1220,7 @@ void ofShader::setAttribute3fv(const string & name, const float* v, GLsizei stri
 	}
 }
 
+//--------------------------------------------------------------
 void ofShader::setAttribute4fv(const string & name, const float* v, GLsizei stride) const{
 	if(bLoaded){
 		GLint location = getAttributeLocation(name);
@@ -1316,8 +1319,6 @@ void ofShader::printActiveUniformBlocks()  const{
 		GLint uniformBlockMaxLength = 0;
 		glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformBlockMaxLength);
 
-		GLint count = -1;
-		GLenum type = 0;
 		GLchar* uniformBlockName = new GLchar[uniformBlockMaxLength];
 		stringstream line;
 		for(GLint i = 0; i < numUniformBlocks; i++) {
