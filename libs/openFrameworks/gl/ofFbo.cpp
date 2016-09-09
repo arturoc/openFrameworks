@@ -452,11 +452,11 @@ void ofFbo::clear() {
 }
 
 
+#ifndef TARGET_OPENGLES
 //--------------------------------------------------------------
 void ofFbo::clearColorBuffer(const ofFloatColor & color){
 	glClearBufferfv(GL_COLOR, 0, &color.r);
 }
-
 
 //--------------------------------------------------------------
 void ofFbo::clearColorBuffer(size_t buffer_idx, const ofFloatColor & color){
@@ -477,6 +477,7 @@ void ofFbo::clearStencilBuffer(int value){
 void ofFbo::clearDepthStencilBuffer(float depth, int stencil){
 	glClearBufferfi(GL_DEPTH_STENCIL, 0, depth, stencil);
 }
+#endif
 
 //--------------------------------------------------------------
 void ofFbo::destroy() {
@@ -679,8 +680,11 @@ void ofFbo::allocate(Settings _settings) {
 		for(int i=0; i<_settings.numColorbuffers; i++) createAndAttachTexture(_settings.internalformat, i);
 		_settings.colorFormats = settings.colorFormats;
 	} else {
-		//ofLogWarning("ofFbo") << "allocate(): no color buffers specified for frame buffer object " << fbo;
+#ifndef TARGET_OPENGLES
 		glDrawBuffer(GL_NONE);
+#else
+		ofLogWarning("ofFbo") << "allocate(): no color buffers specified for frame buffer object " << fbo;
+#endif
 	}
 	settings.internalformat = _settings.internalformat;
 	
