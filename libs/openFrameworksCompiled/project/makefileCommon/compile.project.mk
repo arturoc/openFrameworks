@@ -13,7 +13,6 @@ endif
 # Name TARGET
 ifeq ($(findstring Debug,$(MAKECMDGOALS)),Debug)
 	TARGET_NAME = Debug
-	CFLAGS += -DDEBUG
 
 	ifndef RUN_TARGET
 		RUN_TARGET = RunDebug
@@ -154,7 +153,7 @@ ifneq ($(strip $(PROJECT_ADDONS_DATA)),)
 endif
 
 ReleaseABI: $(TARGET)
-	@$(MAKE) afterplatform BIN_NAME=$(BIN_NAME) ABIS_TO_COMPILE="$(ABIS_TO_COMPILE_DEBUG)" RUN_TARGET=$(RUN_TARGET) TARGET=$(TARGET)
+	@$(MAKE) afterplatform BIN_NAME=$(BIN_NAME) ABIS_TO_COMPILE="$(ABIS_TO_COMPILE_RELEASE)" RUN_TARGET=$(RUN_TARGET) TARGET=$(TARGET)
 	@$(PROJECT_AFTER)
 
 DebugABI: $(TARGET)
@@ -409,7 +408,7 @@ endif
 	@rm -rf bin/libs
 
 after: $(TARGET_NAME)
-	@if [ -d $(OF_EXPORT_PATH)/$(ABI_LIB_SUBPATH) ]; then cp -r $(OF_EXPORT_PATH)/$(ABI_LIB_SUBPATH)/* bin/; fi
+	@if [ -e $(OF_LIBS_PATH)/*/lib/$(PLATFORM_LIB_SUBPATH)/*.$(SHARED_LIB_EXTENSION) ]; then cp $(OF_LIBS_PATH)/*/lib/$(PLATFORM_LIB_SUBPATH)/*.$(SHARED_LIB_EXTENSION) bin/; fi
 	@echo
 	@echo "     compiling done"
 	@echo "     to launch the application"

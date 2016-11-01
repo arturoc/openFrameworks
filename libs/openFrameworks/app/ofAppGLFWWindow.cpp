@@ -69,7 +69,9 @@ void ofAppGLFWWindow::close(){
 		glfwSetWindowSizeCallback( windowP, nullptr );
 		glfwSetWindowCloseCallback( windowP, nullptr );
 		glfwSetScrollCallback( windowP, nullptr );
+#if GLFW_VERSION_MAJOR>3 || GLFW_VERSION_MINOR>=1
 		glfwSetDropCallback( windowP, nullptr );
+#endif
 		//hide the window before we destroy it stops a flicker on OS X on exit.
 		glfwHideWindow(windowP);
 		glfwDestroyWindow(windowP);
@@ -316,7 +318,9 @@ void ofAppGLFWWindow::setup(const ofGLFWWindowSettings & _settings){
 	glfwSetWindowSizeCallback(windowP, resize_cb);
 	glfwSetWindowCloseCallback(windowP, exit_cb);
 	glfwSetScrollCallback(windowP, scroll_cb);
-	glfwSetDropCallback(windowP, drop_cb);
+#if GLFW_VERSION_MAJOR>3 || GLFW_VERSION_MINOR>=1
+		glfwSetDropCallback( windowP, drop_cb );
+#endif
 }
 
 #ifdef TARGET_LINUX
@@ -334,7 +338,7 @@ void ofAppGLFWWindow::setWindowIcon(const ofPixels & iconPixels){
 	vector<unsigned long> buffer(length);
 	buffer[0]=iconPixels.getWidth();
 	buffer[1]=iconPixels.getHeight();
-	for(int i=0;i<iconPixels.getWidth()*iconPixels.getHeight();i++){
+	for(size_t i=0;i<iconPixels.getWidth()*iconPixels.getHeight();i++){
 		buffer[i+2]  = iconPixels[i*4+3]<<24;
 		buffer[i+2] += iconPixels[i*4+0]<<16;
 		buffer[i+2] += iconPixels[i*4+1]<<8;
@@ -441,7 +445,6 @@ bool ofAppGLFWWindow::getWindowShouldClose(){
 //--------------------------------------------
 void ofAppGLFWWindow::setWindowShouldClose(){
 	glfwSetWindowShouldClose(windowP,1);
-	events().notifyExit();
 }
 
 //------------------------------------------------------------

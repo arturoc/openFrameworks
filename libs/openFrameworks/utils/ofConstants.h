@@ -76,6 +76,7 @@ enum ofTargetPlatform{
     #define OF_TARGET_IPHONE OF_TARGET_IOS
 #endif 
 
+
 // Cross-platform deprecation warning
 #ifdef __GNUC__
 	// clang also has this defined. deprecated(message) is only for gcc>=4.5
@@ -150,8 +151,7 @@ enum ofTargetPlatform{
 	#define GLEW_STATIC
 	#define GLEW_NO_GLU
 	#include "GL/glew.h"
-	#include "GL/wglew.h"
-   	#include "glu.h"
+    #include "GL/wglew.h"
 	#define __WINDOWS_DS__
 	#define __WINDOWS_MM__
 	#if (_MSC_VER)       // microsoft visual studio
@@ -308,8 +308,11 @@ typedef TESSindex ofIndexType;
 		//on 10.6 and below we can use the old grabber
 		#ifndef MAC_OS_X_VERSION_10_7
 			#define OF_VIDEO_CAPTURE_QUICKTIME
-		#else
+		//if we are below 10.12 or targeting below 10.12 we use QTKit
+		#elif !defined(MAC_OS_X_VERSION_10_12) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_12
 			#define OF_VIDEO_CAPTURE_QTKIT
+		#else
+			#define OF_VIDEO_CAPTURE_AVF
         #endif
 
 	#elif defined (TARGET_WIN32)
@@ -409,7 +412,7 @@ typedef TESSindex ofIndexType;
 // on c++11, this is a workaround that bug
 #ifndef HAS_TLS
 	#if defined(__clang__) && __clang__
-		#if __has_feature(cxx_thread_local) && !defined(__MINGW64__) && !defined(__MINGW32__) && !defined(__ANDROID__)
+		#if __has_feature(cxx_thread_local) && !defined(__MINGW64__) && !defined(__MINGW32__) && !defined(__ANDROID__) && !defined(TARGET_OF_IOS)
 			#define HAS_TLS 1
 		#endif
     #elif !defined(TARGET_WIN32) || _MSC_VER
@@ -920,16 +923,6 @@ enum ofDrawBitmapMode{
 	OF_BITMAPMODE_MODEL_BILLBOARD
 };
 
-/// \brief Sets the text encoding mode.
-/// 
-/// This is not currently used in the codebase, but the
-/// assumption is that will once again begin using this as we
-/// continue to work on our UTF8 implementation.
-enum ofTextEncoding{
-	OF_ENCODING_UTF8,
-	OF_ENCODING_ISO_8859_15
-};
-
 //#define OF_USE_LEGACY_MESH
 template<class V, class N, class C, class T>
 class ofMesh_;
@@ -954,3 +947,4 @@ using ofDefaultVertexType = ofDefaultVec3;
 using ofDefaultNormalType = ofDefaultVec3;
 using ofDefaultColorType = ofFloatColor;
 using ofDefaultTexCoordType = ofDefaultVec2;
+

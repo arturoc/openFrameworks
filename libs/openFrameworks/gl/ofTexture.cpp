@@ -485,8 +485,18 @@ void ofTexture::setRGToRGBASwizzles(bool rToRGBSwizzles){
 	glBindTexture(texData.textureTarget,texData.textureID);
 	if(rToRGBSwizzles){
 		if(texData.glInternalFormat==GL_R8 ||
-				texData.glInternalFormat==GL_R16 ||
-				texData.glInternalFormat==GL_R32F){
+			texData.glInternalFormat==GL_R16 ||
+			texData.glInternalFormat==GL_R32F||
+			texData.glInternalFormat==GL_DEPTH_COMPONENT
+
+	#ifndef TARGET_OPENGLES
+			||
+			texData.glInternalFormat==GL_DEPTH_COMPONENT16 ||
+			texData.glInternalFormat==GL_DEPTH_COMPONENT24 ||
+			texData.glInternalFormat==GL_DEPTH_COMPONENT32
+
+	#endif
+		   ){
 			 glTexParameteri(texData.textureTarget, GL_TEXTURE_SWIZZLE_R, GL_RED);
 			 glTexParameteri(texData.textureTarget, GL_TEXTURE_SWIZZLE_G, GL_RED);
 			 glTexParameteri(texData.textureTarget, GL_TEXTURE_SWIZZLE_B, GL_RED);
@@ -1029,6 +1039,11 @@ void ofTexture::drawSubsection(float x, float y, float w, float h, float sx, flo
 //------------------------------------
 void ofTexture::drawSubsection(float x, float y, float w, float h, float sx, float sy, float _sw, float _sh) const{
 	drawSubsection(x,y,0,w,h,sx,sy,_sw,_sh);
+}
+
+//------------------------------------
+void ofTexture::drawSubsection(ofRectangle& drawBounds, ofRectangle& subsectionBounds) const {
+	drawSubsection(drawBounds.x,drawBounds.y,0,drawBounds.width,drawBounds.height,subsectionBounds.x,subsectionBounds.y,subsectionBounds.width,subsectionBounds.height);
 }
 
 //------------------------------------

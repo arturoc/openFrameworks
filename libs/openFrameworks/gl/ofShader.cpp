@@ -17,6 +17,7 @@
 #include "ofxAndroidUtils.h"
 #endif
 
+
 static const string COLOR_ATTRIBUTE="color";
 static const string POSITION_ATTRIBUTE="position";
 static const string NORMAL_ATTRIBUTE="normal";
@@ -84,15 +85,20 @@ static void releaseProgram(GLuint id){
 
 #ifndef TARGET_OPENGLES
 //--------------------------------------------------------------
-ofShader::TransformFeedbackBinding::TransformFeedbackBinding(const ofBufferObject & buffer)
-:size(buffer.size())
-,buffer(buffer){}
+ofShader::TransformFeedbackRangeBinding::TransformFeedbackRangeBinding(const ofBufferObject & buffer, GLuint offset, GLuint size)
+	:offset(offset)
+	,size(size)
+	,buffer(buffer){}
+
+//--------------------------------------------------------------
+ofShader::TransformFeedbackBaseBinding::TransformFeedbackBaseBinding(const ofBufferObject & buffer)
+	:buffer(buffer){}
 #endif
 
 //--------------------------------------------------------------
 ofShader::ofShader() :
-program(0),
-bLoaded(false)
+	program(0),
+	bLoaded(false)
 {
 }
 
@@ -102,17 +108,16 @@ ofShader::~ofShader() {
 }
 
 //--------------------------------------------------------------
-ofShader::ofShader(const ofShader & mom) :
-program(mom.program),
-bLoaded(mom.bLoaded),
-shaders(mom.shaders),
-uniformsCache(mom.uniformsCache),
-#ifndef TARGET_OPENGLES
-#ifdef GLEW_ARB_uniform_buffer_object // Core in OpenGL 3.1
-uniformBlocksCache(mom.uniformBlocksCache),
-#endif
-#endif
-attributesBindingsCache(mom.attributesBindingsCache){
+ofShader::ofShader(const ofShader & mom)
+	:program(mom.program)
+	,bLoaded(mom.bLoaded)
+	,shaders(mom.shaders)
+	,uniformsCache(mom.uniformsCache)
+	,attributesBindingsCache(mom.attributesBindingsCache)
+  #ifndef TARGET_OPENGLES
+	,uniformBlocksCache(mom.uniformBlocksCache)
+  #endif
+{
 	if(mom.bLoaded){
 		retainProgram(program);
 		for(auto it: shaders){
@@ -127,9 +132,9 @@ attributesBindingsCache(mom.attributesBindingsCache){
 
 //--------------------------------------------------------------
 ofShader & ofShader::operator=(const ofShader & mom){
-    if(this == &mom) {
-        return *this;
-    }
+	if(this == &mom) {
+		return *this;
+	}
 	if(bLoaded){
 		unload();
 	}
@@ -152,43 +157,43 @@ ofShader & ofShader::operator=(const ofShader & mom){
 }
 
 ofShader::ofShader(ofShader && mom)
-:program(std::move(mom.program))
-,bLoaded(std::move(mom.bLoaded))
-,shaders(std::move(mom.shaders))
-,uniformsCache(std::move(mom.uniformsCache))
-,attributesBindingsCache(std::move(mom.attributesBindingsCache)){
-    if(mom.bLoaded){
-    #ifdef TARGET_ANDROID
-        ofAddListener(ofxAndroidEvents().unloadGL,this,&ofShader::unloadGL);
-    #endif
-    }
-    mom.bLoaded = false;
+	:program(std::move(mom.program))
+	,bLoaded(std::move(mom.bLoaded))
+	,shaders(std::move(mom.shaders))
+	,uniformsCache(std::move(mom.uniformsCache))
+	,attributesBindingsCache(std::move(mom.attributesBindingsCache)){
+	if(mom.bLoaded){
+#ifdef TARGET_ANDROID
+		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofShader::unloadGL);
+#endif
+	}
+	mom.bLoaded = false;
 }
 
 ofShader & ofShader::operator=(ofShader && mom){
-    if(this == &mom) {
-        return *this;
-    }
-    if(bLoaded){
-        unload();
-    }
-    program = std::move(mom.program);
-    bLoaded = std::move(mom.bLoaded);
-    shaders = std::move(mom.shaders);
-    attributesBindingsCache = std::move(mom.attributesBindingsCache);
-    uniformsCache = std::move(mom.uniformsCache);
-    if(mom.bLoaded){
-    #ifdef TARGET_ANDROID
-        ofAddListener(ofxAndroidEvents().unloadGL,this,&ofShader::unloadGL);
-    #endif
-    }
-    mom.bLoaded = false;
-    return *this;
+	if(this == &mom) {
+		return *this;
+	}
+	if(bLoaded){
+		unload();
+	}
+	program = std::move(mom.program);
+	bLoaded = std::move(mom.bLoaded);
+	shaders = std::move(mom.shaders);
+	attributesBindingsCache = std::move(mom.attributesBindingsCache);
+	uniformsCache = std::move(mom.uniformsCache);
+	if(mom.bLoaded){
+#ifdef TARGET_ANDROID
+		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofShader::unloadGL);
+#endif
+	}
+	mom.bLoaded = false;
+	return *this;
 }
 
 //--------------------------------------------------------------
 bool ofShader::load(std::filesystem::path shaderName) {
-    return load(shaderName.string() + ".vert", shaderName.string() + ".frag");
+	return load(shaderName.string() + ".vert", shaderName.string() + ".frag");
 }
 
 //--------------------------------------------------------------
@@ -200,7 +205,7 @@ bool ofShader::load(std::filesystem::path vertName, std::filesystem::path fragNa
 #endif
 	if(ofIsGLProgrammableRenderer()){
 		bindDefaults();
-    }
+	}
 	return linkProgram();
 }
 
@@ -216,7 +221,10 @@ bool ofShader::setup(const Settings & settings) {
 	for (auto shader : settings.shaderFiles) {
 		auto ty = shader.first;
 		auto file = shader.second;
-		if (!setupShaderFromFile(ty, file)) {
+		auto shaderSource = sourceFromFile(ty, file);
+		shaderSource.intDefines = settings.intDefines;
+		shaderSource.floatDefines = settings.floatDefines;
+		if (!setupShaderFromSource(std::move(shaderSource))) {
 			return false;
 		}
 	}
@@ -224,14 +232,17 @@ bool ofShader::setup(const Settings & settings) {
 	for (auto shader : settings.shaderSources) {
 		auto ty = shader.first;
 		auto source = shader.second;
-        if (!setupShaderFromSource(ty, source, settings.sourceDirectoryPath)) {
+		Source shaderSource{ty, source, settings.sourceDirectoryPath};
+		shaderSource.intDefines = settings.intDefines;
+		shaderSource.floatDefines = settings.floatDefines;
+		if (!setupShaderFromSource(std::move(shaderSource))) {
 			return false;
 		}
 	}
-	
+
 	if (ofIsGLProgrammableRenderer() && settings.bindDefaults) {
 		bindDefaults();
-    }
+	}
 
 	return linkProgram();
 }
@@ -242,7 +253,10 @@ bool ofShader::setup(const TransformFeedbackSettings & settings) {
 	for (auto shader : settings.shaderFiles) {
 		auto ty = shader.first;
 		auto file = shader.second;
-		if (!setupShaderFromFile(ty, file)) {
+		auto shaderSource = sourceFromFile(ty, file);
+		shaderSource.intDefines = settings.intDefines;
+		shaderSource.floatDefines = settings.floatDefines;
+		if (!setupShaderFromSource(std::move(shaderSource))) {
 			return false;
 		}
 	}
@@ -250,27 +264,26 @@ bool ofShader::setup(const TransformFeedbackSettings & settings) {
 	for (auto shader : settings.shaderSources) {
 		auto ty = shader.first;
 		auto source = shader.second;
-        if (!setupShaderFromSource(ty, source, settings.sourceDirectoryPath)) {
+		Source shaderSource{ty, source, settings.sourceDirectoryPath};
+		shaderSource.intDefines = settings.intDefines;
+		shaderSource.floatDefines = settings.floatDefines;
+		if (!setupShaderFromSource(std::move(shaderSource))) {
 			return false;
 		}
 	}
 
 	if (ofIsGLProgrammableRenderer() && settings.bindDefaults) {
 		bindDefaults();
-    }
+	}
 
 	if (!settings.varyingsToCapture.empty()) {
-        varyingsToCapture = settings.varyingsToCapture;
 		std::vector<const char*> varyings(settings.varyingsToCapture.size());
 		std::transform(settings.varyingsToCapture.begin(), settings.varyingsToCapture.end(), varyings.begin(), [](const std::string & str) {
 			return str.c_str();
 		});
-        glTransformFeedbackVaryings(getProgram(), varyings.size(), varyings.data(), settings.bufferMode);
+		glTransformFeedbackVaryings(getProgram(), varyings.size(), varyings.data(), settings.bufferMode);
 	}
-
-    xfbBufferMode = settings.bufferMode;
-    bLoadedAsXFB = linkProgram();
-    return bLoadedAsXFB;
+	return linkProgram();
 }
 #endif
 
@@ -284,70 +297,107 @@ bool ofShader::setupShaderFromFile(GLenum type, std::filesystem::path filename) 
 	if(buffer.size()) {
 		return setupShaderFromSource(type, buffer.getText(), sourceDirectoryPath);
 	} else {
-		ofLogError("ofShader") << "setupShaderFromFile(): couldn't load " << nameForType(type) << " shader " << " from \"" << filename << "\"";
+		ofLogError("ofShader") << "setupShaderFromFile(): couldn't load " << nameForType(type) << " shader " << " from \"" << absoluteFilePath << "\"";
 		return false;
 	}
 }
 
 //--------------------------------------------------------------
+ofShader::Source ofShader::sourceFromFile(GLenum type, std::filesystem::path filename) {
+	ofBuffer buffer = ofBufferFromFile(filename);
+	// we need to make absolutely sure to have an absolute path here, so that any #includes
+	// within the shader files have a root directory to traverse from.
+	string absoluteFilePath = ofFilePath::getAbsolutePath(filename, true);
+	string sourceDirectoryPath = ofFilePath::getEnclosingDirectory(absoluteFilePath,false);
+	if(buffer.size()) {
+		return Source{type, buffer.getText(), sourceDirectoryPath};
+	} else {
+		ofLogError("ofShader") << "setupShaderFromFile(): couldn't load " << nameForType(type) << " shader " << " from \"" << absoluteFilePath << "\"";
+		return Source{};
+	}
+}
+
+//--------------------------------------------------------------
 bool ofShader::setupShaderFromSource(GLenum type, string source, string sourceDirectoryPath) {
-    unload();
-    
+	return setupShaderFromSource({type, source, sourceDirectoryPath});
+}
+
+
+//--------------------------------------------------------------
+bool ofShader::setupShaderFromSource(ofShader::Source && source){
+	unload();
+
 	// create program if it doesn't exist already
 	checkAndCreateProgram();
 	GLuint clearErrors = glGetError(); //needed for some users to clear gl errors
-    if( clearErrors != GL_NO_ERROR ){
-        ofLogVerbose("ofShader") << "setupShaderFromSource(): OpenGL error after checkAndCreateProgram() (probably harmless): error " << clearErrors;
-    }
+	if( clearErrors != GL_NO_ERROR ){
+		ofLogVerbose("ofShader") << "setupShaderFromSource(): OpenGL error after checkAndCreateProgram() (probably harmless): error " << clearErrors;
+	}
 
 	// create shader
-	GLuint shader = glCreateShader(type);
-	if(shader == 0) {
-		ofLogError("ofShader") << "setupShaderFromSource(): failed creating " << nameForType(type) << " shader";
+	GLuint shaderId = glCreateShader(source.type);
+	if(shaderId == 0) {
+		ofLogError("ofShader") << "setupShaderFromSource(): failed creating " << nameForType(source.type) << " shader";
 		return false;
 	} else {
-		// if the shader object has been allocated successfully on the GPU 
+		// if the shader object has been allocated successfully on the GPU
 		// we must retain it so that it can be de-allocated again, once
 		// this ofShader object has been discarded, or re-allocated.
-		// we need to do this at this point in the code path, since early 
+		// we need to do this at this point in the code path, since early
 		// return statements might prevent us from retaining later.
-		retainShader(shader);
+		retainShader(shaderId);
 	}
 
 	// parse for includes
-	string src = parseForIncludes( source , sourceDirectoryPath);
+	source.expandedSource = parseForIncludes( source.source, source.directoryPath );
+
+    // parse and set defines
+    for(auto & define: source.intDefines){
+        const auto & name = define.first;
+        const auto & value = define.second;
+		std::regex re_define("#define[ \t]+" + name + "[ \t]+([0-9]+)");
+        source.expandedSource = std::regex_replace(source.expandedSource, re_define, "#define " + name + " " + std::to_string(value));
+    }
+
+    for(auto & define: source.floatDefines){
+        const auto & name = define.first;
+        const auto & value = define.second;
+		std::regex re_define("#define[ \t]+" + name + "[ \t]+[0-9]*(\\.[0-9]*f?)?");
+        source.expandedSource = std::regex_replace(source.expandedSource, re_define, "#define " + name + " " + std::to_string(value));
+	}
 
 	// store source code (that's the expanded source with all includes copied in)
-	// we need to store this here, and before shader compilation, 
-	// so that any shader compilation errors can be 
+	// we need to store this here, and before shader compilation,
+	// so that any shader compilation errors can be
 	// traced down to the correct shader source code line.
-	shaders[type] = { type, shader, source, src, sourceDirectoryPath };
+	shaders[source.type] = { shaderId, std::move(source) };
+	auto & shader = shaders[source.type];
 
 	// compile shader
-	const char* sptr = src.c_str();
-	int ssize = src.size();
-	glShaderSource(shader, 1, &sptr, &ssize);
-	glCompileShader(shader);
-	
+	const char* sptr = shader.source.expandedSource.c_str();
+	int ssize = shader.source.expandedSource.size();
+	glShaderSource(shaderId, 1, &sptr, &ssize);
+	glCompileShader(shaderId);
+
 	// check compile status
 	GLint status = GL_FALSE;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    GLuint err = glGetError();
-    if (err != GL_NO_ERROR){
-        ofLogError("ofShader") << "setupShaderFromSource(): OpenGL generated error " << err << " trying to get the compile status for a " << nameForType(type) << " shader, does your video card support this?";
-        return false;
-    }
-    
+	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &status);
+	GLuint err = glGetError();
+	if (err != GL_NO_ERROR){
+		ofLogError("ofShader") << "setupShaderFromSource(): OpenGL generated error " << err << " trying to get the compile status for a " << nameForType(shader.source.type) << " shader, does your video card support this?";
+		return false;
+	}
+
 	if(status == GL_TRUE){
-		ofLogVerbose("ofShader") << "setupShaderFromSource(): " << nameForType(type) + " shader compiled";
+		ofLogVerbose("ofShader") << "setupShaderFromSource(): " << nameForType(shader.source.type) + " shader compiled";
 #ifdef TARGET_EMSCRIPTEN
-		checkShaderInfoLog(shader, type, OF_LOG_VERBOSE);
+		checkShaderInfoLog(shaderId, source.type, OF_LOG_VERBOSE);
 #else
-		checkShaderInfoLog(shader, type, OF_LOG_WARNING);
+		checkShaderInfoLog(shaderId, source.type, OF_LOG_WARNING);
 #endif
 	}else if (status == GL_FALSE) {
-		ofLogError("ofShader") << "setupShaderFromSource(): " << nameForType(type) + " shader failed to compile";
-		checkShaderInfoLog(shader, type, OF_LOG_ERROR);
+		ofLogError("ofShader") << "setupShaderFromSource(): " << nameForType(shader.source.type) + " shader failed to compile";
+		checkShaderInfoLog(shaderId, source.type, OF_LOG_ERROR);
 		return false;
 	}
 	return true;
@@ -358,18 +408,20 @@ bool ofShader::setupShaderFromSource(GLenum type, string source, string sourceDi
  * https://www.opengl.org/discussion_boards/showthread.php/169209-include-in-glsl?p=1192415&viewfull=1#post1192415
  */
 
+//--------------------------------------------------------------
 string ofShader::parseForIncludes( const string& source, const string& sourceDirectoryPath) {
 	vector<string> included;
 	return parseForIncludes( source, included, 0, sourceDirectoryPath);
 }
 
+//--------------------------------------------------------------
 string ofShader::parseForIncludes( const string& source, vector<string>& included, int level, const string& sourceDirectoryPath) {
-    
+
 	if ( level > 32 ) {
 		ofLogError( "ofShader", "glsl header inclusion depth limit reached, might be caused by cyclic header inclusion" );
 		return "";
 	}
-	
+
 	stringstream output;
 	stringstream input;
 	input << source;
@@ -378,71 +430,71 @@ string ofShader::parseForIncludes( const string& source, vector<string>& include
 		filename_ = "";
 		std::istringstream s(s_);
 		s >> std::ws; // eat up any leading whitespace.
-		
+
 		if (s.peek() != '#') return false;
 		// -----| invariant: found '#'
 		s.seekg(1, std::ios::cur); // move forward one character
-		
+
 		std::string p, i, f;
-		
+
 		// while skipping whitespace, read in tokens for: pragma, include, and filename
 		s >> std::skipws >> p >> i >> f;
-		
+
 		if (p.empty() || i.empty() || (f.size() < 2) ) return false;
 		// -----| invariant: all tokens have values
-		
+
 		if (p != "pragma") return false;
 		if (i != "include") return false;
-		
+
 		// first and last character of filename token must match and be either
 		// '<' and '>', or '"
-		
+
 		if (f[0] == '<' && f[f.size()-1] != '>') return false; //< mismatching brackets
-		
+
 		if ((f[0] == '"' || f[0] == '\'') && (f[0] != f[f.size()-1])) return false; // mismatching quotes
-		
+
 		// invariant: filename properly quoted.
-		
+
 		filename_ = f.substr(1,f.size()-2);
-		
+
 		return true;
 	};
-	
+
 	// once std::regex is available across the board, use this regex in favour of the above lambda:
 	// std::regex re("^\\s*#\\s*pragma\\s+include\\s+[\"<](.*)[\">].*");
-	
+
 	string line;
 	while( std::getline( input, line ) ) {
 
 		string include;
-		
+
 		if (!match_pragma_include(line, include)){
 			output << line << endl;
 			continue;
 		};
-		
+
 		// --------| invariant: '#pragma include' has been requested
-		
+
 		if ( std::find( included.begin(), included.end(), include ) != included.end() ) {
 			ofLogVerbose("ofShader") << include << " already included";
 			continue;
 		}
-		
+
 		// we store the absolute paths so as have (more) unique file identifiers.
-		
+
 		include = ofFile(ofFilePath::join(sourceDirectoryPath, include)).getAbsolutePath();
 		included.push_back( include );
-		
+
 		ofBuffer buffer = ofBufferFromFile( include );
 		if ( !buffer.size() ) {
 			ofLogError("ofShader") <<"Could not open glsl include file " << include;
 			continue;
 		}
-		
+
 		string currentDir = ofFile(include).getEnclosingDirectory();
 		output << parseForIncludes( buffer.getText(), included, level + 1, currentDir ) << endl;
 	}
-	
+
 	return output.str();
 }
 
@@ -450,7 +502,7 @@ string ofShader::parseForIncludes( const string& source, vector<string>& include
 string ofShader::getShaderSource(GLenum type)  const{
 	auto source = shaders.find(type);
 	if ( source != shaders.end()) {
-		return source->second.expandedSource;
+		return source->second.source.expandedSource;
 	} else {
 		ofLogError("ofShader") << "No shader source for shader of type: " << nameForType(type);
 		return "";
@@ -493,21 +545,21 @@ int ofShader::getGeometryMaxOutputCount()  const{
 }
 
 //--------------------------------------------------------------
-bool ofShader::checkProgramLinkStatus(GLuint program) {
+bool ofShader::checkProgramLinkStatus() {
 	GLint status;
 	glGetProgramiv(program, GL_LINK_STATUS, &status);
-    GLuint err = glGetError();
-    if (err != GL_NO_ERROR){
-        ofLogError("ofShader") << "checkProgramLinkStatus(): OpenGL generated error " << err << " trying to get the program link status, does your video card support shader programs?";
-        return false;
-    }
+	GLuint err = glGetError();
+	if (err != GL_NO_ERROR){
+		ofLogError("ofShader") << "checkProgramLinkStatus(): OpenGL generated error " << err << " trying to get the program link status, does your video card support shader programs?";
+		return false;
+	}
 	if(status == GL_TRUE)
 		ofLogVerbose("ofShader") << "checkProgramLinkStatus(): program " << program << " linked";
 	else if (status == GL_FALSE) {
 		ofLogError("ofShader") << "checkProgramLinkStatus(): program failed to link";
-		checkProgramInfoLog(program);
+		checkProgramInfoLog();
 		return false;
-	}										  
+	}
 	return true;
 }
 
@@ -529,8 +581,8 @@ void ofShader::checkShaderInfoLog(GLuint shader, GLenum type, ofLogLevel logLeve
 			std::smatch matches;
 			string infoString = ofTrim(infoBuffer);
 			if (std::regex_search(infoString, matches, intel) || std::regex_search(infoString, matches, nvidia_ati)){
-                ofBuffer buf;
-                buf.set(shaders[type].expandedSource);
+				ofBuffer buf;
+				buf.set(shaders[type].source.expandedSource);
 				ofBuffer::Line line = buf.getLines().begin();
 				int  offendingLineNumber = ofToInt(matches[1]);
 				ostringstream msg;
@@ -543,7 +595,7 @@ void ofShader::checkShaderInfoLog(GLuint shader, GLenum type, ofLogLevel logLeve
 				}
 				ofLog(logLevel) << msg.str();
 			}else{
-				ofLog(logLevel) << shaders[type].expandedSource;
+				ofLog(logLevel) << shaders[type].source.expandedSource;
 			}
 		}
 #endif
@@ -551,7 +603,7 @@ void ofShader::checkShaderInfoLog(GLuint shader, GLenum type, ofLogLevel logLeve
 }
 
 //--------------------------------------------------------------
-void ofShader::checkProgramInfoLog(GLuint program) {
+void ofShader::checkProgramInfoLog() {
 	GLsizei infoLength;
 	glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLength);
 	if (infoLength > 1) {
@@ -611,7 +663,7 @@ bool ofShader::linkProgram() {
 
 		glLinkProgram(program);
 
-		checkProgramLinkStatus(program);
+		checkProgramLinkStatus();
 
 
 		// Pre-cache all active uniforms
@@ -643,10 +695,8 @@ bool ofShader::linkProgram() {
 		}
 
 #ifndef TARGET_OPENGLES
-#ifdef GLEW_ARB_uniform_buffer_object // Core in OpenGL 3.1
-		if(ofGLCheckExtension("GL_ARB_uniform_buffer_object")) {
-			uboAvailable = true;
-
+#ifdef GLEW_ARB_uniform_buffer_object
+		if(GLEW_ARB_uniform_buffer_object) {
 			// Pre-cache all active uniforms blocks
 			GLint numUniformBlocks = 0;
 			glGetProgramiv(program, GL_ACTIVE_UNIFORM_BLOCKS, &numUniformBlocks);
@@ -659,8 +709,6 @@ bool ofShader::linkProgram() {
 				string name(uniformBlockName.begin(), uniformBlockName.begin()+length);
 				uniformBlocksCache[name] = glGetUniformBlockIndex(program, name.c_str());
 			}
-		} else {
-			uboAvailable = false;
 		}
 #endif
 #endif
@@ -707,9 +755,8 @@ void ofShader::reloadGL(){
 #endif
 	attributesBindingsCache.clear();
 	for(auto & shader: source){
-		auto type = shader.second.type;
-		auto source = shader.second.expandedSource;
-		setupShaderFromSource(type,source);
+		auto source = shader.second.source;
+		setupShaderFromSource(std::move(shader.second.source));
 	}
 	for(auto binding: bindings){
 		bindAttribute(binding.second, binding.first);
@@ -734,28 +781,10 @@ bool ofShader::bindDefaults(){
 		bindAttribute(ofShader::COLOR_ATTRIBUTE,::COLOR_ATTRIBUTE);
 		bindAttribute(ofShader::NORMAL_ATTRIBUTE,::NORMAL_ATTRIBUTE);
 		bindAttribute(ofShader::TEXCOORD_ATTRIBUTE,::TEXCOORD_ATTRIBUTE);
-        boundDefaults = true;
 		return true;
 	}
 
 }
-
-#ifndef TARGET_OPENGLES
-#ifdef GLEW_ARB_uniform_buffer_object // Core in OpenGL 3.1
-void ofShader::bindUniformBlock(GLuint binding, const string & name) const{
-	if(bLoaded){
-		if(uboAvailable) {
-			GLint index = getUniformBlockIndex(name);
-			if (index != -1) {
-				glUniformBlockBinding( program, index, binding );
-			}
-		} else {
-			ofLogError("ofShader::bindUniformBlock") << "Sorry, it looks like you can't run 'ARB_uniform_buffer_object'";
-		}
-	}
-}
-#endif
-#endif
 
 //--------------------------------------------------------------
 void ofShader::unload() {
@@ -763,7 +792,7 @@ void ofShader::unload() {
 		for(auto it: shaders) {
 			auto shader = it.second;
 			if(shader.id) {
-				ofLogVerbose("ofShader") << "unload(): detaching and deleting " << nameForType(shader.type) << " shader from program " << program;
+				ofLogVerbose("ofShader") << "unload(): detaching and deleting " << nameForType(shader.source.type) << " shader from program " << program;
 				releaseShader(program,shader.id);
 			}
 		}
@@ -787,9 +816,6 @@ void ofShader::unload() {
 #endif
 	}
 	bLoaded = false;
-    boundDefaults = false;
-    bLoadedAsXFB = false;
-    varyingsToCapture.clear();
 }
 
 //--------------------------------------------------------------
@@ -815,15 +841,29 @@ void ofShader::beginTransformFeedback(GLenum mode) const {
 }
 
 //--------------------------------------------------------------
-void ofShader::beginTransformFeedback(GLenum mode, const TransformFeedbackBinding & binding) const {
+void ofShader::beginTransformFeedback(GLenum mode, const TransformFeedbackRangeBinding & binding) const {
 	binding.buffer.bindRange(GL_TRANSFORM_FEEDBACK_BUFFER, binding.index, binding.offset, binding.size);
 	beginTransformFeedback(mode);
 }
 
 //--------------------------------------------------------------
-void ofShader::beginTransformFeedback(GLenum mode, const std::vector<TransformFeedbackBinding> & bindings) const {
+void ofShader::beginTransformFeedback(GLenum mode, const std::vector<TransformFeedbackRangeBinding> & bindings) const {
 	for (auto & binding : bindings) {
 		binding.buffer.bindRange(GL_TRANSFORM_FEEDBACK_BUFFER, binding.index, binding.offset, binding.size);
+	}
+	beginTransformFeedback(mode);
+}
+
+//--------------------------------------------------------------
+void ofShader::beginTransformFeedback(GLenum mode, const TransformFeedbackBaseBinding & binding) const {
+	binding.buffer.bindBase(GL_TRANSFORM_FEEDBACK_BUFFER, binding.index);
+	beginTransformFeedback(mode);
+}
+
+//--------------------------------------------------------------
+void ofShader::beginTransformFeedback(GLenum mode, const std::vector<TransformFeedbackBaseBinding> & bindings) const {
+	for (auto & binding : bindings) {
+		binding.buffer.bindBase(GL_TRANSFORM_FEEDBACK_BUFFER, binding.index);
 	}
 	beginTransformFeedback(mode);
 }
@@ -835,15 +875,29 @@ void ofShader::endTransformFeedback() const {
 }
 
 //--------------------------------------------------------------
-void ofShader::endTransformFeedback(const TransformFeedbackBinding & binding) const {
+void ofShader::endTransformFeedback(const TransformFeedbackRangeBinding & binding) const {
 	binding.buffer.unbindRange(GL_TRANSFORM_FEEDBACK_BUFFER, binding.index);
 	endTransformFeedback();
 }
 
 //--------------------------------------------------------------
-void ofShader::endTransformFeedback(const std::vector<TransformFeedbackBinding> & bindings) const {
+void ofShader::endTransformFeedback(const std::vector<TransformFeedbackRangeBinding> & bindings) const {
 	for (auto & binding : bindings) {
 		binding.buffer.unbindRange(GL_TRANSFORM_FEEDBACK_BUFFER, binding.index);
+	}
+	endTransformFeedback();
+}
+
+//--------------------------------------------------------------
+void ofShader::endTransformFeedback(const TransformFeedbackBaseBinding & binding) const {
+	binding.buffer.unbindBase(GL_TRANSFORM_FEEDBACK_BUFFER, binding.index);
+	endTransformFeedback();
+}
+
+//--------------------------------------------------------------
+void ofShader::endTransformFeedback(const std::vector<TransformFeedbackBaseBinding> & bindings) const {
+	for (auto & binding : bindings) {
+		binding.buffer.unbindBase(GL_TRANSFORM_FEEDBACK_BUFFER, binding.index);
 	}
 	endTransformFeedback();
 }
@@ -852,7 +906,7 @@ void ofShader::endTransformFeedback(const std::vector<TransformFeedbackBinding> 
 #if !defined(TARGET_OPENGLES) && defined(glDispatchCompute)
 //--------------------------------------------------------------
 void ofShader::dispatchCompute(GLuint x, GLuint y, GLuint z) const{
-    glDispatchCompute(x,y,z);
+	glDispatchCompute(x,y,z);
 }
 #endif
 
@@ -1078,163 +1132,6 @@ void ofShader::setUniforms(const ofParameterGroup & parameters) const{
 	}
 }
 
-
-//--------------------------------------------------------------
-template<typename T>
-void ofShader::setDefineConstantTemp(const string & name, T value){
-#if (!defined(TARGET_LINUX) || defined(GCC_HAS_REGEX))
-    if(bLoaded){
-        std::regex re_define("#define[ \t]+" + name + "[ \t]+(([0-9]+)|(([0-9]*).([0-9]*)))");
-        for(auto & shader_pair: shaders){
-            auto & shader = shader_pair.second;
-            shader.expandedSource = std::regex_replace(shader.expandedSource, re_define, "#define " + name + " " + std::to_string(value));
-        }
-#ifndef TARGET_OPENGLES
-        if(bLoadedAsXFB){
-            auto settings = TransformFeedbackSettings();
-            settings.bindDefaults = boundDefaults;
-            settings.varyingsToCapture = varyingsToCapture;
-            for(auto & shader_pair: shaders){
-                settings.shaderSources[shader_pair.first] = shader_pair.second.expandedSource;
-            }
-            settings.bufferMode = xfbBufferMode;
-            setup(settings);
-        }else{
-#endif
-            auto settings = Settings();
-            settings.bindDefaults = boundDefaults;
-            for(auto & shader_pair: shaders){
-                settings.shaderSources[shader_pair.first] = shader_pair.second.expandedSource;
-            }
-            setup(settings);
-#ifndef TARGET_OPENGLES
-        }
-#endif
-    }
-#endif
-}
-
-//--------------------------------------------------------------
-void ofShader::setDefineConstant(const string & name, float value){
-    setDefineConstantTemp(name, value);
-}
-
-//--------------------------------------------------------------
-void ofShader::setDefineConstant(const string & name, int value){
-    setDefineConstantTemp(name, value);
-}
-
-//--------------------------------------------------------------
-void ofShader::setDefineConstant(const string & name, bool value){
-#if (!defined(TARGET_LINUX) || defined(GCC_HAS_REGEX))
-    if(bLoaded){
-        std::regex re_define("#define[ \t]+" + name + "[ \t]+(([0-1])|(true|false))");
-        for(auto & shader_pair: shaders){
-            auto & shader = shader_pair.second;
-            shader.expandedSource = std::regex_replace(shader.expandedSource, re_define, "#define " + name + " " + std::to_string(value));
-        }
-#ifndef TARGET_OPENGLES
-        if(bLoadedAsXFB){
-            auto settings = TransformFeedbackSettings();
-            settings.bindDefaults = boundDefaults;
-            settings.varyingsToCapture = varyingsToCapture;
-            for(auto & shader_pair: shaders){
-                settings.shaderSources[shader_pair.first] = shader_pair.second.expandedSource;
-            }
-            settings.bufferMode = xfbBufferMode;
-            setup(settings);
-        }else{
-#endif
-            auto settings = Settings();
-            settings.bindDefaults = boundDefaults;
-            for(auto & shader_pair: shaders){
-                settings.shaderSources[shader_pair.first] = shader_pair.second.expandedSource;
-            }
-            setup(settings);
-#ifndef TARGET_OPENGLES
-        }
-#endif
-    }
-#endif
-}
-
-
-
-//--------------------------------------------------------------
-template<typename T>
-void ofShader::setConstantTemp(const string & name, const string & type, T value){
-#if (!defined(TARGET_LINUX) || defined(GCC_HAS_REGEX))
-    if(bLoaded){
-        std::regex re_define("const[ \t]+" + type + "[ \t]+" + name + "[ \t]*=[ \t]*(([0-9]+)|(([0-9]*).([0-9]*)));");
-        for(auto & shader_pair: shaders){
-            auto & shader = shader_pair.second;
-            shader.expandedSource = std::regex_replace(shader.expandedSource, re_define, "const " + type + " " + name + " " + std::to_string(value) + ";");
-        }
-#ifndef TARGET_OPENGLES
-        if(bLoadedAsXFB){
-            auto settings = TransformFeedbackSettings();
-            settings.bindDefaults = boundDefaults;
-            settings.varyingsToCapture = varyingsToCapture;
-            for(auto & shader_pair: shaders){
-                settings.shaderSources[shader_pair.first] = shader_pair.second.expandedSource;
-            }
-            settings.bufferMode = xfbBufferMode;
-            setup(settings);
-        }else{
-#endif
-            auto settings = Settings();
-            settings.bindDefaults = boundDefaults;
-            for(auto & shader_pair: shaders){
-                settings.shaderSources[shader_pair.first] = shader_pair.second.expandedSource;
-            }
-            setup(settings);
-#ifndef TARGET_OPENGLES
-        }
-#endif
-    }
-#endif
-}
-
-//--------------------------------------------------------------
-void ofShader::setConstant1f(const string & name, float value){
-    setConstantTemp(name, "float", value);
-}
-
-//--------------------------------------------------------------
-void ofShader::setConstant1i(const string & name, int value){
-    setConstantTemp(name, "int", value);
-}
-
-//--------------------------------------------------------------
-void ofShader::setConstantb(const string & name, bool value){
-#if (!defined(TARGET_LINUX) || defined(GCC_HAS_REGEX))
-    if(bLoaded){
-        std::regex re_define("const[ \t]+bool[ \t]+" + name + "[ \t]*=[ \t]*(([0-1])|(true|false));");
-        for(auto & shader_pair: shaders){
-            auto & shader = shader_pair.second;
-            shader.expandedSource = std::regex_replace(shader.expandedSource, re_define, "const bool " + name + "=" + (value?"true":"false") + ";");
-        }
-        if(bLoadedAsXFB){
-            auto settings = TransformFeedbackSettings();
-            settings.bindDefaults = boundDefaults;
-            settings.varyingsToCapture = varyingsToCapture;
-            for(auto & shader_pair: shaders){
-                settings.shaderSources[shader_pair.first] = shader_pair.second.expandedSource;
-            }
-            settings.bufferMode = xfbBufferMode;
-            setup(settings);
-        }else{
-            auto settings = Settings();
-            settings.bindDefaults = boundDefaults;
-            for(auto & shader_pair: shaders){
-                settings.shaderSources[shader_pair.first] = shader_pair.second.expandedSource;
-            }
-            setup(settings);
-        }
-    }
-#endif
-}
-	
 //--------------------------------------------------------------
 void ofShader::setUniformMatrix3f(const string & name, const glm::mat3 & m, int count)  const{
 	if(bLoaded) {
@@ -1301,6 +1198,7 @@ void ofShader::setAttribute4f(GLint location, float v1, float v2, float v3, floa
 		glVertexAttrib4f(location, v1, v2, v3, v4);
 }
 
+//--------------------------------------------------------------
 void ofShader::setAttribute1fv(const string & name, const float* v, GLsizei stride) const{
 	if(bLoaded){
 		GLint location = getAttributeLocation(name);
@@ -1311,6 +1209,7 @@ void ofShader::setAttribute1fv(const string & name, const float* v, GLsizei stri
 	}
 }
 
+//--------------------------------------------------------------
 void ofShader::setAttribute2fv(const string & name, const float* v, GLsizei stride) const{
 	if(bLoaded){
 		GLint location = getAttributeLocation(name);
@@ -1322,6 +1221,7 @@ void ofShader::setAttribute2fv(const string & name, const float* v, GLsizei stri
 
 }
 
+//--------------------------------------------------------------
 void ofShader::setAttribute3fv(const string & name, const float* v, GLsizei stride) const{
 	if(bLoaded){
 		GLint location = getAttributeLocation(name);
@@ -1332,6 +1232,7 @@ void ofShader::setAttribute3fv(const string & name, const float* v, GLsizei stri
 	}
 }
 
+//--------------------------------------------------------------
 void ofShader::setAttribute4fv(const string & name, const float* v, GLsizei stride) const{
 	if(bLoaded){
 		GLint location = getAttributeLocation(name);
@@ -1384,13 +1285,13 @@ GLint ofShader::getUniformLocation(const string & name)  const{
 	}
 }
 
-#ifdef GLEW_ARB_uniform_buffer_object // Core in OpenGL 3.1
-
+#ifndef TARGET_OPENGLES
+#ifdef GLEW_ARB_uniform_buffer_object
 //--------------------------------------------------------------
 GLint ofShader::getUniformBlockIndex(const string & name)  const{
 	if(!bLoaded) return -1;
 
-	if(uboAvailable) {
+	if(GLEW_ARB_uniform_buffer_object) {
 		auto it = uniformBlocksCache.find(name);
 		if (it == uniformBlocksCache.end()){
 			return -1;
@@ -1407,7 +1308,7 @@ GLint ofShader::getUniformBlockIndex(const string & name)  const{
 GLint ofShader::getUniformBlockBinding( const string & name ) const{
 	if(!bLoaded) return -1;
 
-	if(uboAvailable) {
+	if(GLEW_ARB_uniform_buffer_object) {
 		GLint index = getUniformBlockIndex(name);
 		if (index == -1) return -1;
 
@@ -1422,7 +1323,7 @@ GLint ofShader::getUniformBlockBinding( const string & name ) const{
 
 //--------------------------------------------------------------
 void ofShader::printActiveUniformBlocks()  const{
-	if(uboAvailable) {
+	if(GLEW_ARB_uniform_buffer_object) {
 		GLint numUniformBlocks = 0;
 		glGetProgramiv(program, GL_ACTIVE_UNIFORM_BLOCKS, &numUniformBlocks);
 		ofLogNotice("ofShader") << numUniformBlocks << " uniform blocks";
@@ -1430,8 +1331,6 @@ void ofShader::printActiveUniformBlocks()  const{
 		GLint uniformBlockMaxLength = 0;
 		glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformBlockMaxLength);
 
-		GLint count = -1;
-		GLenum type = 0;
 		GLchar* uniformBlockName = new GLchar[uniformBlockMaxLength];
 		stringstream line;
 		for(GLint i = 0; i < numUniformBlocks; i++) {
@@ -1456,6 +1355,20 @@ void ofShader::printActiveUniformBlocks()  const{
 	}
 }
 
+
+void ofShader::bindUniformBlock(GLuint binding, const string & name) const{
+	if(bLoaded){
+		if(GLEW_ARB_uniform_buffer_object) {
+			GLint index = getUniformBlockIndex(name);
+			if (index != -1) {
+				glUniformBlockBinding( program, index, binding );
+			}
+		} else {
+			ofLogError("ofShader::bindUniformBlock") << "Sorry, it looks like you can't run 'ARB_uniform_buffer_object'";
+		}
+	}
+}
+#endif
 #endif
 
 //--------------------------------------------------------------
@@ -1463,10 +1376,10 @@ void ofShader::printActiveUniforms()  const{
 	GLint numUniforms = 0;
 	glGetProgramiv(program, GL_ACTIVE_UNIFORMS, &numUniforms);
 	ofLogNotice("ofShader") << numUniforms << " uniforms";
-	
+
 	GLint uniformMaxLength = 0;
 	glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformMaxLength);
-	
+
 	GLint count = -1;
 	GLenum type = 0;
 	GLchar* uniformName = new GLchar[uniformMaxLength];
@@ -1492,10 +1405,10 @@ void ofShader::printActiveAttributes()  const{
 	GLint numAttributes = 0;
 	glGetProgramiv(program, GL_ACTIVE_ATTRIBUTES, &numAttributes);
 	ofLogNotice("ofShader") << numAttributes << " attributes";
-	
+
 	GLint attributeMaxLength = 0;
 	glGetProgramiv(program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &attributeMaxLength);
-	
+
 	GLint count = -1;
 	GLenum type = 0;
 	GLchar* attributeName = new GLchar[attributeMaxLength];
@@ -1544,12 +1457,12 @@ string ofShader::nameForType(GLenum type){
 	switch(type) {
 		case GL_VERTEX_SHADER: return "GL_VERTEX_SHADER";
 		case GL_FRAGMENT_SHADER: return "GL_FRAGMENT_SHADER";
-		#ifndef TARGET_OPENGLES
+#ifndef TARGET_OPENGLES
 		case GL_GEOMETRY_SHADER_EXT: return "GL_GEOMETRY_SHADER_EXT";
-		#ifdef glDispatchCompute
+#ifdef glDispatchCompute
 		case GL_COMPUTE_SHADER: return "GL_COMPUTE_SHADER";
-		#endif
-		#endif
+#endif
+#endif
 		default: return "UNKNOWN SHADER TYPE";
 	}
 }
