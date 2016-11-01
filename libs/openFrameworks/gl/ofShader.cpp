@@ -17,6 +17,7 @@
 #include "ofxAndroidUtils.h"
 #endif
 
+
 static const string COLOR_ATTRIBUTE="color";
 static const string POSITION_ATTRIBUTE="position";
 static const string NORMAL_ATTRIBUTE="normal";
@@ -114,9 +115,7 @@ ofShader::ofShader(const ofShader & mom)
 	,uniformsCache(mom.uniformsCache)
 	,attributesBindingsCache(mom.attributesBindingsCache)
   #ifndef TARGET_OPENGLES
-  #ifdef GLEW_ARB_uniform_buffer_object // Core in OpenGL 3.1
 	,uniformBlocksCache(mom.uniformBlocksCache)
-  #endif
   #endif
 {
 	if(mom.bLoaded){
@@ -311,7 +310,7 @@ ofShader::Source ofShader::sourceFromFile(GLenum type, std::filesystem::path fil
 	string absoluteFilePath = ofFilePath::getAbsolutePath(filename, true);
 	string sourceDirectoryPath = ofFilePath::getEnclosingDirectory(absoluteFilePath,false);
 	if(buffer.size()) {
-		return std::move(Source{type, buffer.getText(), sourceDirectoryPath});
+		return Source{type, buffer.getText(), sourceDirectoryPath};
 	} else {
 		ofLogError("ofShader") << "setupShaderFromFile(): couldn't load " << nameForType(type) << " shader " << " from \"" << absoluteFilePath << "\"";
 		return Source{};
@@ -696,6 +695,7 @@ bool ofShader::linkProgram() {
 		}
 
 #ifndef TARGET_OPENGLES
+#ifdef GLEW_ARB_uniform_buffer_object
 		if(GLEW_ARB_uniform_buffer_object) {
 			// Pre-cache all active uniforms blocks
 			GLint numUniformBlocks = 0;
@@ -710,6 +710,7 @@ bool ofShader::linkProgram() {
 				uniformBlocksCache[name] = glGetUniformBlockIndex(program, name.c_str());
 			}
 		}
+#endif
 #endif
 
 #ifdef TARGET_ANDROID
@@ -1285,6 +1286,7 @@ GLint ofShader::getUniformLocation(const string & name)  const{
 }
 
 #ifndef TARGET_OPENGLES
+#ifdef GLEW_ARB_uniform_buffer_object
 //--------------------------------------------------------------
 GLint ofShader::getUniformBlockIndex(const string & name)  const{
 	if(!bLoaded) return -1;
@@ -1366,6 +1368,7 @@ void ofShader::bindUniformBlock(GLuint binding, const string & name) const{
 		}
 	}
 }
+#endif
 #endif
 
 //--------------------------------------------------------------
