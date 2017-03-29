@@ -170,7 +170,7 @@ void ofSerial::buildDeviceList(){
 		ofDirectory dir("/dev");
 		int deviceCount = 0;
 		for(auto & entry: dir){
-			std::string deviceName = entry.path();
+			std::string deviceName = entry.getFileName();
 
 			//we go through the prefixes
 			for(auto & prefix: prefixMatch){
@@ -342,6 +342,10 @@ bool ofSerial::setup(string portName, int baud){
 		   case 230400:
 			cfsetispeed(&options, B230400);
 		cfsetospeed(&options, B230400);
+		break;
+		   case 12000000: 
+			cfsetispeed(&options, 12000000);
+		cfsetospeed(&options, 12000000);	
 		break;
 		   default:
 			cfsetispeed(&options, B9600);

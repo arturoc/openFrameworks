@@ -12,8 +12,6 @@
 #include "ofxAndroidUtils.h"
 #endif
 
-ofImageLoadSettings ofImageLoadSettings::defaultSetting;
-
 
 //----------------------------------------------------------
 // static variable for freeImage initialization:
@@ -778,6 +776,13 @@ void ofImage_<PixelType>::draw(float x, float y, float z) const{
 	draw(x,y,z,getWidth(),getHeight());
 }
 
+
+//------------------------------------
+template<typename PixelType>
+void ofImage_<PixelType>::draw(const glm::vec3 & pos) const{
+	draw(pos.x,pos.y,pos.z,getWidth(),getHeight());
+}
+
 //------------------------------------
 template<typename PixelType>
 void ofImage_<PixelType>::draw(float x, float y, float w, float h) const{
@@ -788,6 +793,13 @@ void ofImage_<PixelType>::draw(float x, float y, float w, float h) const{
 template<typename PixelType>
 void ofImage_<PixelType>::draw(float x, float y, float z, float w, float h) const{
 	drawSubsection(x,y,z,w,h,0,0,getWidth(),getHeight());
+}
+
+
+//------------------------------------
+template<typename PixelType>
+void ofImage_<PixelType>::draw(const glm::vec3 & pos, float w, float h) const{
+	draw(pos.x,pos.y,pos.z,w,h);
 }
 
 //------------------------------------

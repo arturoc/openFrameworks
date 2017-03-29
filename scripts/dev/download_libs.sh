@@ -4,6 +4,7 @@ VER=master
 PLATFORM=""
 ARCH=""
 OVERWRITE=1
+SILENT_ARGS=""
 
 printHelp(){
 cat << EOF
@@ -18,16 +19,17 @@ cat << EOF
                                     vs: 32 or 64
                                     msys2: 32
                                     android: armv7 or x86 (if not specified will download both)
-                                    linux: 64, 64gcc5, armv6l or armv7l
+                                    linux: 64, 64gcc5, 64gcc6, armv6l or armv7l
     -n, --no-overwrite          Merge new libraries with exisiting ones, use only to download same version for different platforms
                                 If not set deletes any existing libraries
+    -s, --silent                Silent download progress
     -h, --help                  Shows this message
 EOF
 }
 
 download(){
     echo "Downloading $1"
-    wget ci.openframeworks.cc/libs/$1
+    wget ci.openframeworks.cc/libs/$1 $SILENT_ARGS
 }
 
 # trap any script errors and exit
@@ -70,6 +72,9 @@ while [[ $# -gt 0 ]]; do
         ;;
         -n|--no-overwrite)
         OVERWRITE=0
+        ;;
+        -s|--silent)
+        SILENT_ARGS=-nv
         ;;
         -h|--help)
         printHelp
