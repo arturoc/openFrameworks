@@ -20,7 +20,7 @@ ofxGuiGroup::ofxGuiGroup(const ofParameterGroup & parameters, const std::string&
 }
 
 ofxGuiGroup * ofxGuiGroup::setup(const std::string& collectionName, const std::string& filename, float x, float y){
-	parameters.setName(collectionName);
+	ofParameterGroup parameters(collectionName);
 	return setup(parameters, filename, x, y);
 }
 
@@ -73,6 +73,9 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, const std
 			add(p);
 		}else if(type == typeid(ofParameter <bool> ).name()){
 			auto p = _parameters.getBool(i);
+			add(p);
+		}else if(type == typeid(ofParameter <void> ).name()){
+			auto p = _parameters.getVoid(i);
 			add(p);
 		}else if(type == typeid(ofParameter <ofDefaultVec2> ).name()){
 			auto p = _parameters.getVec2f(i);
@@ -157,6 +160,10 @@ void ofxGuiGroup::add(const ofParameterGroup & parameters){
 	ofxGuiGroup * panel = new ofxGuiGroup(parameters);
 	panel->parent = this;
 	add(panel);
+}
+
+void ofxGuiGroup::add(ofParameter <void> & parameter){
+	add(new ofxButton(parameter, b.width));
 }
 
 void ofxGuiGroup::add(ofParameter <bool> & parameter){

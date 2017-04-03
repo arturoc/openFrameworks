@@ -338,7 +338,7 @@ void ofAppGLFWWindow::setWindowIcon(const ofPixels & iconPixels){
 	vector<unsigned long> buffer(length);
 	buffer[0]=iconPixels.getWidth();
 	buffer[1]=iconPixels.getHeight();
-	for(int i=0;i<iconPixels.getWidth()*iconPixels.getHeight();i++){
+	for(size_t i=0;i<iconPixels.getWidth()*iconPixels.getHeight();i++){
 		buffer[i+2]  = iconPixels[i*4+3]<<24;
 		buffer[i+2] += iconPixels[i*4+0]<<16;
 		buffer[i+2] += iconPixels[i*4+1]<<8;
@@ -449,7 +449,8 @@ void ofAppGLFWWindow::setWindowShouldClose(){
 
 //------------------------------------------------------------
 void ofAppGLFWWindow::setWindowTitle(string title){
-	glfwSetWindowTitle(windowP,title.c_str());
+	settings.title = title;
+	glfwSetWindowTitle(windowP,settings.title.c_str());
 }
 
 //------------------------------------------------------------
@@ -814,7 +815,8 @@ void ofAppGLFWWindow::setFullscreen(bool fullscreen){
 		[cocoaWindow setStyleMask:NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask];
  
 		setWindowShape(windowRect.width, windowRect.height);
- 
+		setWindowTitle(settings.title);
+		
 		//----------------------------------------------------
 		// if we have recorded the screen posion, put it there
 		// if not, better to let the system do it (and put it where it wants)

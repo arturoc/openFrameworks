@@ -1,20 +1,22 @@
 #include "ofUtils.h"
 #include "ofImage.h"
 #include "ofFileUtils.h"
+#include "ofLog.h"
 
 #include <chrono>
 #include <numeric>
 #include <locale>
+#include "uriparser/Uri.h"
 
-#if OF_USE_POCO
-#include "Poco/URI.h"
+#ifdef TARGET_WIN32	 // For ofLaunchBrowser.
+	#include <shellapi.h>
 #endif
 
 
 #ifdef TARGET_WIN32
     #ifndef _MSC_VER
         #include <unistd.h> // this if for MINGW / _getcwd
-	#include <sys/param.h> // for MAXPATHLEN
+		#include <sys/param.h> // for MAXPATHLEN
     #endif
 #endif
 
@@ -432,7 +434,7 @@ string ofToHex(const string& value) {
 	std::size_t numBytes = value.size();
 	for(std::size_t i = 0; i < numBytes; i++) {
 		// print each byte as a 2-character wide hex value
-		out << setfill('0') << setw(2) << hex << (unsigned int) ((unsigned char)value[i]);
+		out << setfill('0') << std::setw(2) << std::hex << (unsigned int) ((unsigned char)value[i]);
 	}
 	return out.str();
 }
@@ -453,7 +455,7 @@ int ofToInt(const string& intString) {
 int ofHexToInt(const string& intHexString) {
 	int x = 0;
 	istringstream cur(intHexString);
-	cur >> hex >> x;
+	cur >> std::hex >> x;
 	return x;
 }
 
@@ -461,19 +463,19 @@ int ofHexToInt(const string& intHexString) {
 char ofHexToChar(const string& charHexString) {
 	int x = 0;
 	istringstream cur(charHexString);
-	cur >> hex >> x;
+	cur >> std::hex >> x;
 	return (char) x;
 }
 
 //----------------------------------------
 float ofHexToFloat(const string& floatHexString) {
 	union intFloatUnion {
-		int x;
+		uint32_t i;
 		float f;
 	} myUnion;
-	myUnion.x = 0;
+	myUnion.i = 0;
 	istringstream cur(floatHexString);
-	cur >> hex >> myUnion.x;
+	cur >> std::hex >> myUnion.i;
 	return myUnion.f;
 }
 
@@ -491,7 +493,7 @@ string ofHexToString(const string& stringHexString) {
 		stringstream curByteStream(curByte);
 		int cur = 0;
 		// parse the two characters as a hex-encoded int
-		curByteStream >> hex >> cur;
+		curByteStream >> std::hex >> cur;
 		// add the int as a char to our output stream
 		out << (char) cur;
 	}
@@ -819,38 +821,46 @@ string ofVAArgsToString(const char * format, va_list args){
 	return s;
 }
 
-#if OF_USE_POCO
 //--------------------------------------------------
 void ofLaunchBrowser(const string& url, bool uriEncodeQuery){
-	Poco::URI uri;
-	try {
-		uri = Poco::URI(url);
-	} catch(const std::exception & exc) {
-		ofLogError("ofUtils") << "ofLaunchBrowser(): malformed url \"" << url << "\": " << exc.what();
+	UriParserStateA state;
+	UriUriA uri;
+	state.uri = &uri;
+	if(uriParseUriA(&state, url.c_str())!=URI_SUCCESS){
+		ofLogError("ofUtils") << "ofLaunchBrowser(): malformed url \"" << url << "\"";
+		uriFreeUriMembersA(&uri);
 		return;
 	}
-
 	if(uriEncodeQuery) {
-		uri.setQuery(uri.getRawQuery()); // URI encodes during set
+		uriNormalizeSyntaxA(&uri); // URI encodes during set
 	}
+	std::string scheme(uri.scheme.first, uri.scheme.afterLast);
+	int size;
+	uriToStringCharsRequiredA(&uri, &size);
+	std::vector<char> buffer(size+1, 0);
+	int written;
+	uriToStringA(buffer.data(), &uri, url.size()*2, &written);
+	std::string uriStr(buffer.data(), written-1);
+	uriFreeUriMembersA(&uri);
+
 
 	// http://support.microsoft.com/kb/224816
 	// make sure it is a properly formatted url:
 	//   some platforms, like Android, require urls to start with lower-case http/https
 	//   Poco::URI automatically converts the scheme to lower case
-	if(uri.getScheme() != "http" && uri.getScheme() != "https"){
-		ofLogError("ofUtils") << "ofLaunchBrowser(): url does not begin with http:// or https://: \"" << uri.toString() << "\"";
+	if(scheme != "http" && scheme != "https"){
+		ofLogError("ofUtils") << "ofLaunchBrowser(): url does not begin with http:// or https://: \"" << uriStr << "\"";
 		return;
 	}
 
 	#ifdef TARGET_WIN32
-		ShellExecuteA(nullptr, "open", uri.toString().c_str(),
+		ShellExecuteA(nullptr, "open", uriStr.c_str(),
                 nullptr, nullptr, SW_SHOWNORMAL);
 	#endif
 
 	#ifdef TARGET_OSX
         // could also do with LSOpenCFURLRef
-		string commandStr = "open \"" + uri.toString() + "\"";
+		string commandStr = "open \"" + uriStr + "\"";
 		int ret = system(commandStr.c_str());
         if(ret!=0) {
 			ofLogError("ofUtils") << "ofLaunchBrowser(): couldn't open browser, commandStr \"" << commandStr << "\"";
@@ -858,7 +868,7 @@ void ofLaunchBrowser(const string& url, bool uriEncodeQuery){
 	#endif
 
 	#ifdef TARGET_LINUX
-		string commandStr = "xdg-open \"" + uri.toString() + "\"";
+		string commandStr = "xdg-open \"" + uriStr + "\"";
 		int ret = system(commandStr.c_str());
 		if(ret!=0) {
 			ofLogError("ofUtils") << "ofLaunchBrowser(): couldn't open browser, commandStr \"" << commandStr << "\"";
@@ -866,14 +876,17 @@ void ofLaunchBrowser(const string& url, bool uriEncodeQuery){
 	#endif
 
 	#ifdef TARGET_OF_IOS
-		ofxiOSLaunchBrowser(uri.toString());
+		ofxiOSLaunchBrowser(uriStr);
 	#endif
 
 	#ifdef TARGET_ANDROID
-		ofxAndroidLaunchBrowser(uri.toString());
+		ofxAndroidLaunchBrowser(uriStr);
+	#endif
+
+	#ifdef TARGET_EMSCRIPTEN
+		ofLogError("ofUtils") << "ofLaunchBrowser() not implementeed in emscripten";
 	#endif
 }
-#endif
 
 //--------------------------------------------------
 string ofGetVersionInfo(){

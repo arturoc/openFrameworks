@@ -151,8 +151,7 @@ enum ofTargetPlatform{
 	#define GLEW_STATIC
 	#define GLEW_NO_GLU
 	#include "GL/glew.h"
-	#include "GL/wglew.h"
-   	#include "glu.h"
+    #include "GL/wglew.h"
 	#define __WINDOWS_DS__
 	#define __WINDOWS_MM__
 	#if (_MSC_VER)       // microsoft visual studio
@@ -309,8 +308,11 @@ typedef TESSindex ofIndexType;
 		//on 10.6 and below we can use the old grabber
 		#ifndef MAC_OS_X_VERSION_10_7
 			#define OF_VIDEO_CAPTURE_QUICKTIME
-		#else
+		//if we are below 10.12 or targeting below 10.12 we use QTKit
+		#elif !defined(MAC_OS_X_VERSION_10_12) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_12
 			#define OF_VIDEO_CAPTURE_QTKIT
+		#else
+			#define OF_VIDEO_CAPTURE_AVF
         #endif
 
 	#elif defined (TARGET_WIN32)
@@ -410,7 +412,7 @@ typedef TESSindex ofIndexType;
 // on c++11, this is a workaround that bug
 #ifndef HAS_TLS
 	#if defined(__clang__) && __clang__
-		#if __has_feature(cxx_thread_local) && !defined(__MINGW64__) && !defined(__MINGW32__) && !defined(__ANDROID__)
+		#if __has_feature(cxx_thread_local) && !defined(__MINGW64__) && !defined(__MINGW32__) && !defined(__ANDROID__) && !defined(TARGET_OF_IOS)
 			#define HAS_TLS 1
 		#endif
     #elif !defined(TARGET_WIN32) || _MSC_VER
@@ -946,8 +948,3 @@ using ofDefaultNormalType = ofDefaultVec3;
 using ofDefaultColorType = ofFloatColor;
 using ofDefaultTexCoordType = ofDefaultVec2;
 
-#if defined(TARGET_EMSCRIPTEN)
-	#define OF_USE_POCO 0
-#elif !defined(OF_USE_POCO)
-	#define OF_USE_POCO 1
-#endif
