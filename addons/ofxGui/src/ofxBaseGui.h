@@ -5,7 +5,7 @@
 #include "ofParameter.h"
 #include "ofTrueTypeFont.h"
 #include "ofBitmapFont.h"
-#define OFX_TIMELINE 1
+//#define OFX_TIMELINE 1
 
 #if OFX_TIMELINE
 	#include "ofxTimeline.h"

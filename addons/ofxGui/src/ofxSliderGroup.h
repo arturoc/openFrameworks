@@ -68,9 +68,9 @@ protected:
 	ofColor originalHeaderBackground;
 	ofColor originalHeaderText;
 	ofxColorPicker_<ColorType> picker;
-	ofxTLColorTrack * tlTrack;
 
 #if OFX_TIMELINE
+	ofxTLColorTrack * tlTrack;
 	bool refreshTimelined(ofxTimeline * timeline);
 #endif
 };
