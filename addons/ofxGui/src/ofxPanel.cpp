@@ -138,7 +138,9 @@ bool ofxPanel::setValue(float mx, float my, bool bCheck){
 			}
 
 			if(loadBox.inside(mx, my)) {
+				cout << "inside load" << endl;
 				if(!ofNotifyEvent(loadPressedE,this)){
+					cout << "loadnig" << endl;
 					loadFromFile(filename);
 				}
 				return true;

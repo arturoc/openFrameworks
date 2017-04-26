@@ -54,13 +54,19 @@ public:
 
 	ofAbstractParameter & getParameter();
 
+#if OFX_TIMELINE
+	virtual void setTimelined(ofxTimeline * timeline, bool timelined);
+#endif
 protected:
 	virtual void render();
 	ofParameter<Type> value;
-	bool bUpdateOnReleaseOnly;
-	bool bGuiActive;
-	bool mouseInside;
-	bool overlappingLabel;
+	bool bUpdateOnReleaseOnly = false;
+	bool bGuiActive = false;
+	bool mouseInside = false;
+	bool mouseDragging = false;
+	bool overlappingLabel = false;
+	bool pressedOnTLIcon = false;
+	bool overTLIcon = false;
 	bool setValue(float mx, float my, bool bCheck);
 	virtual void generateDraw();
 	virtual void generateText();
@@ -68,6 +74,12 @@ protected:
 	ofPath bg, bar;
 	ofVboMesh textMesh;
 	ofxInputField<Type> input{ofxInputField<Type>::createInsideSlider()};
+
+#if OFX_TIMELINE
+	ofxTLCurves * tlCurves = nullptr;
+	virtual bool refreshTimelined(ofxTimeline * timeline);
+#endif
+	bool timelined = false;
 
 	enum State{
 		Slider,

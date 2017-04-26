@@ -57,6 +57,24 @@ bool ofxButton::mouseReleased(ofMouseEventArgs & args){
 	}
 }
 
+#if OFX_TIMELINE
+void ofxButton::setTimelined(ofxTimeline * timeline, bool timelined){
+	this->timeline = timeline;
+	if(timeline==nullptr){
+		this->timelined = false;
+		return;
+	}
+	this->timelined = timelined;
+	if(timelined){
+		timeline->addBangs(parameter);
+	}else{
+		timeline->remove(parameter);
+	}
+	setNeedsRedraw();
+	timeline->setOffset(glm::vec2(0, ofGetHeight() - timeline->getHeight()));
+}
+#endif
+
 bool ofxButton::mouseMoved(ofMouseEventArgs & args){
 	return ofxToggle::mouseMoved(args);
 }

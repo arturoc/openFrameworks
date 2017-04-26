@@ -56,7 +56,9 @@ ofxBaseGui::headerBackgroundColor(64),
 ofxBaseGui::backgroundColor(0),
 ofxBaseGui::borderColor(120, 100),
 ofxBaseGui::textColor(255),
-ofxBaseGui::fillColor(128);
+ofxBaseGui::fillColor(128),
+ofxBaseGui::timelinedColor(ofColor::fromHex(0x80996e)),
+ofxBaseGui::timelinedBgColor(ofColor::fromHex(0x283022));
 
 int ofxBaseGui::textPadding = 4;
 int ofxBaseGui::defaultWidth = 200;
@@ -66,6 +68,8 @@ ofTrueTypeFont ofxBaseGui::font;
 bool ofxBaseGui::fontLoaded = false;
 bool ofxBaseGui::useTTF = false;
 ofBitmapFont ofxBaseGui::bitmapFont;
+bool ofxBaseGui::tlIconInitialized = false;
+ofPath ofxBaseGui::tlIcon;
 
 ofxBaseGui::ofxBaseGui(){
 	parent = nullptr;
@@ -75,6 +79,8 @@ ofxBaseGui::ofxBaseGui(){
 	thisBorderColor = borderColor;
 	thisTextColor = textColor;
 	thisFillColor = fillColor;
+	thisTimelinedColor = timelinedColor;
+	thisTimelinedBgColor = timelinedBgColor;
 
 	bRegisteredForMouseEvents = false;
 	needsRedraw = true;
@@ -84,6 +90,16 @@ ofxBaseGui::ofxBaseGui(){
 	    useTTF=false;
 	}*/
 
+	if(!tlIconInitialized){
+		tlIconInitialized = true;
+		auto side = defaultHeight - textPadding * 2;
+		for(int i = 0; i < side; i+=4){
+			tlIcon.moveTo(textPadding + i, textPadding*2);
+			tlIcon.lineTo(textPadding + i, textPadding*2 + side/2);
+		}
+		tlIcon.setFilled(false);
+		tlIcon.setStrokeWidth(1);
+	}
 }
 
 void ofxBaseGui::loadFont(const std::string& filename, int fontsize, bool _bAntiAliased, bool _bFullCharacterSet, int dpi){
@@ -104,6 +120,12 @@ void ofxBaseGui::setUseTTF(bool bUseTTF){
 	}
 	useTTF = bUseTTF;
 }
+
+#if OFX_TIMELINE
+void ofxBaseGui::setTimeline(ofxTimeline * timeline){
+	this->timeline = timeline;
+}
+#endif
 
 ofxBaseGui::~ofxBaseGui(){
 	unregisterMouseEvents();
@@ -402,4 +424,9 @@ void ofxBaseGui::setParent(ofxBaseGui * parent){
 
 ofxBaseGui * ofxBaseGui::getParent(){
 	return parent;
+}
+
+ofRectangle ofxBaseGui::getTLIconBox(glm::vec2 pos){
+	float side = defaultHeight - textPadding * 2;
+	return ofRectangle(pos + glm::vec2{textPadding, textPadding}, side*3, side);
 }

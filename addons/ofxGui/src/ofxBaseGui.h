@@ -5,6 +5,11 @@
 #include "ofParameter.h"
 #include "ofTrueTypeFont.h"
 #include "ofBitmapFont.h"
+#define OFX_TIMELINE 1
+
+#if OFX_TIMELINE
+	#include "ofxTimeline.h"
+#endif
 
 class ofxBaseGui {
 	public:
@@ -19,11 +24,25 @@ class ofxBaseGui {
 		template<class T>
 		void saveTo(T & serializer){
 			ofSerialize(serializer, getParameter());
+			#if OFX_TIMELINE
+				if(timeline){
+					timeline->saveTracksToFolder("timeline");
+					timeline->saveStructure("timeline");
+				}
+			#endif
 		}
 
 		template<class T>
 		void loadFrom(T & serializer){
 			ofDeserialize(serializer, getParameter());
+			#if OFX_TIMELINE
+				if(timeline){
+					timeline->loadStructure("timeline");
+					timeline->loadTracksFromFolder("timeline");
+					timeline->setOffset(glm::vec2(0, ofGetHeight() - timeline->getHeight()));
+					refreshTimelined(timeline);
+				}
+			#endif
 		}
 
 		std::string getName();
@@ -83,7 +102,16 @@ class ofxBaseGui {
 		}
 		virtual void mouseExited(ofMouseEventArgs &){
 		}
-
+#if OFX_TIMELINE
+		virtual void setTimeline(ofxTimeline * timeline);
+		virtual void setTimelined(ofxTimeline * timeline, bool timelined){};
+		virtual bool refreshTimelined(ofxTimeline * timeline){
+			return false;
+		}
+#endif
+		virtual ofParameterGroup * getHiddenParameters(){
+			return nullptr;
+		}
 	protected:
 		virtual void render() = 0;
 		virtual bool setValue(float mx, float my, bool bCheckBounds) = 0;
@@ -102,12 +130,16 @@ class ofxBaseGui {
 		static bool fontLoaded;
 		static bool useTTF;
 		static ofBitmapFont bitmapFont;
+		static bool tlIconInitialized;
+		static ofPath tlIcon;
 
 		static ofColor headerBackgroundColor;
 		static ofColor backgroundColor;
 		static ofColor borderColor;
 		static ofColor textColor;
 		static ofColor fillColor;
+		static ofColor timelinedColor;
+		static ofColor timelinedBgColor;
 
 		ofColor thisHeaderBackgroundColor;
 		ofColor thisBackgroundColor;
@@ -123,6 +155,22 @@ class ofxBaseGui {
 		static void loadStencilFromHex(ofImage & img, unsigned char * data);
 
 		void setNeedsRedraw();
+
+
+		// Timeline
+		ofColor thisTimelinedColor;
+		ofColor thisTimelinedBgColor;
+#if OFX_TIMELINE
+		ofxTimeline * timeline = nullptr;
+#endif
+		bool usingTimeline(){
+#if OFX_TIMELINE
+			return timeline != nullptr;
+#else
+			return false;
+#endif
+		}
+		static ofRectangle getTLIconBox(glm::vec2 pos);
 
 	private:
 		bool needsRedraw;

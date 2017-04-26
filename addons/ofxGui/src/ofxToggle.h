@@ -36,15 +36,26 @@ public:
 
 	virtual ofAbstractParameter & getParameter();
 
+#if OFX_TIMELINE
+	virtual void setTimelined(ofxTimeline * timeline, bool timelined);
+#endif
 protected:
 	virtual void render();
 	ofRectangle checkboxRect;
 	ofParameter<bool> value;
-	bool bGuiActive;
+	bool bGuiActive = false;
+	bool mouseOver = false;
+	bool overTLIcon = false;
 	
 	bool setValue(float mx, float my, bool bCheck);
 	void generateDraw();
 	void valueChanged(bool & value);
 	ofPath bg,fg,cross;
 	ofVboMesh textMesh;
+
+	bool timelined = false;
+
+#if OFX_TIMELINE
+	bool refreshTimelined(ofxTimeline * timeline);
+#endif
 };

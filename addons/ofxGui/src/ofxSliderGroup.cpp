@@ -121,7 +121,6 @@ template class ofxVecSlider_<glm::vec4>;
 
 template<class ColorType>
 ofxColorSlider_<ColorType>::ofxColorSlider_(ofParameter<ofColor_<ColorType> > value, float width, float height){
-	sliderChanging = false;
     setup(value, width, height);
 }
 
@@ -129,6 +128,8 @@ template<class ColorType>
 ofxColorSlider_<ColorType> * ofxColorSlider_<ColorType>::setup(ofParameter<ofColor_<ColorType> > value, float width, float height){
     ofxGuiGroup::setup(value.getName(), "", 0, 0);
     parameters.clear();
+	parameters.setName(value.getName() + " components");
+	parameters.setSerializable(false);
 
 	const string names[4] = {"r", "g", "b", "a"};
 
@@ -146,7 +147,7 @@ ofxColorSlider_<ColorType> * ofxColorSlider_<ColorType>::setup(ofParameter<ofCol
 		collection[i]->setTextColor(p / p.getMax() > 0.75 ? ofFloatColor(0.) : ofFloatColor(1.));
     }
 	add(&picker);
-	picker.getParameter().template cast<ofColor_<ColorType>>().addListener(this, & ofxColorSlider_::changeValue);
+	getColorParameter().addListener(this, & ofxColorSlider_::changeValue);
 
 
 	sliderChanging = false;
@@ -161,14 +162,20 @@ ofxColorSlider_<ColorType> * ofxColorSlider_<ColorType>::setup(const std::string
 	return setup(color,width,height);
 }
 
+
+template<class ColorType>
+ofParameter<ofColor_<ColorType>> ofxColorSlider_<ColorType>::getColorParameter(){
+	return picker.getParameter().template cast<ofColor_<ColorType>>();
+}
+
 template<class ColorType>
 void ofxColorSlider_<ColorType>::changeSlider(const void * parameter, ColorType & _value){
     sliderChanging = true;
     ofParameter<float> & param = *(ofParameter<float>*)parameter;
     int i = parameters.getPosition(param.getName());
-	ofColor_<ColorType> data = picker.getParameter().template cast<ofColor_<ColorType>>();
+	ofColor_<ColorType> data = getColorParameter();
     data[i] = _value;
-	picker.getParameter().template cast<ofColor_<ColorType>>() = data;
+	getColorParameter() = data;
 
 
     for (int i=0; i<4; i++){
@@ -177,6 +184,9 @@ void ofxColorSlider_<ColorType>::changeSlider(const void * parameter, ColorType 
 		collection[i]->setTextColor(p / p.getMax() > 0.75 ? ofFloatColor(0.) : ofFloatColor(1.));
 	}
     sliderChanging = false;
+	if(isMinimized()){
+		setNeedsRedraw();
+	}
 }
 
 template<class ColorType>
@@ -199,21 +209,19 @@ ofAbstractParameter & ofxColorSlider_<ColorType>::getParameter(){
 
 template<class ColorType>
 ofColor_<ColorType> ofxColorSlider_<ColorType>::operator=(const ofColor_<ColorType> & v){
-	picker.getParameter().template cast<ofColor_<ColorType>>() = v;
-	return picker.getParameter().template cast<ofColor_<ColorType>>();
+	getColorParameter() = v;
+	return getColorParameter();
 }
 
 template<class ColorType>
 ofxColorSlider_<ColorType>::operator const ofColor_<ColorType> & (){
-	return picker.getParameter().template cast<ofColor_<ColorType>>();
+	return getColorParameter();
 }
 
 template<class ColorType>
 void ofxColorSlider_<ColorType>::onMinimize(){
 	originalHeaderBackground = thisHeaderBackgroundColor;
 	originalHeaderText = thisTextColor;
-	setHeaderBackgroundColor(picker.getParameter().template cast<ofColor_<ColorType>>().get());
-	setTextColor(picker.getColorScale() > 0.5 ? ofFloatColor(0.) : ofFloatColor(1.));
 	setNeedsRedraw();
 }
 
@@ -222,6 +230,49 @@ void ofxColorSlider_<ColorType>::onMaximize(){
 	setHeaderBackgroundColor(originalHeaderBackground);
 	setTextColor(originalHeaderText);
 	setNeedsRedraw();
+}
+
+#if OFX_TIMELINE
+template<class ColorType>
+void ofxColorSlider_<ColorType>::setTimelined(ofxTimeline * timeline, bool timelined){
+	this->timeline = timeline;
+	if(timeline==nullptr){
+		this->timelined = false;
+		return;
+	}
+	this->timelined = timelined;
+	auto param = getColorParameter();
+	if(timelined){
+		tlTrack = timeline->addColors(param);
+	}else{
+		timeline->remove(param);
+		tlTrack = nullptr;
+	}
+	setNeedsRedraw();
+	timeline->setOffset(glm::vec2(0, ofGetHeight() - timeline->getHeight()));
+}
+
+template<class ColorType>
+bool ofxColorSlider_<ColorType>::refreshTimelined(ofxTimeline * timeline){
+	if(timeline->getTrack(getColorParameter())){
+		this->timeline = timeline;
+		this->timelined = true;
+		timeline->linkColors(getColorParameter());
+		return true;
+	}else{
+		return false;
+	}
+}
+#endif
+
+
+template<class ColorType>
+void ofxColorSlider_<ColorType>::generateDraw(){
+	if(isMinimized()){
+		setHeaderBackgroundColor(getColorParameter().get());
+		setTextColor(picker.getColorScale() > 0.5 ? ofFloatColor(0.) : ofFloatColor(1.));
+	}
+	ofxGuiGroup::generateDraw();
 }
 
 template class ofxColorSlider_<unsigned char>;
