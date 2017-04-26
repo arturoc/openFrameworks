@@ -29,6 +29,12 @@ string ofAbstractParameter::escape(const string& _str) const{
 }
 
 
+string ofAbstractParameter::getHierarchicName() const{
+	auto names = getGroupHierarchyNames();
+	return ofJoinString(names, "/");
+}
+
+
 string ofAbstractParameter::type() const{
 	return typeid(*this).name();
 }
