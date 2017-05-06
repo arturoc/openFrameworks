@@ -54,6 +54,13 @@ Module{
         property stringList system_libs
         property stringList static_libs
         configure: {
+            includes = [];
+            cflags = [];
+            ldflags = [];
+            system_libs = [];
+            static_libs = [];
+
+            // pkgconfig packages
             var configs = [];
             if(platform === "linux"  || platform === "linux64"){
                 var pkgs = [
@@ -109,6 +116,7 @@ Module{
                 configs = pkgs;
             }
 
+            // library exceptions
             var libsexceptions = [];
             if(platform === "linux"  || platform === "linux64"){
                 libsexceptions = [
@@ -156,6 +164,7 @@ Module{
                 ];
             }
 
+            // parse include search paths from core libraries
             var coreincludes = Helpers.listDirsRecursive(ofRoot + "/libs/openFrameworks");
             var corelibs = Helpers.listDir(ofRoot + '/libs/');
             for(var lib in corelibs){
@@ -166,19 +175,23 @@ Module{
                     coreincludes = coreincludes.concat(include_paths);
                 }
             }
+            includes = coreincludes;
 
+            // add search paths from pkgconfigs;
             if(platform === "linux"  || platform === "linux64" || platform === "msys2"){
-                includes = coreincludes.concat(Helpers.pkgconfig(configs, ["--cflags-only-I"]).map(function(element){
+                includes = includes.concat(Helpers.pkgconfig(configs, ["--cflags-only-I"]).map(function(element){
                     return element.substr(2).trim()
                 }));
             }
 
+            // cflags from pkgconfigs
             if(platform === "linux"  || platform === "linux64" || platform === "msys2"){
                 cflags = Helpers.pkgconfig(configs, ["--cflags-only-other"]);
             }else{
                 cflags = [];
             }
 
+            // ldflags from pkgconfigs
             if(platform === "linux"  || platform === "linux64" || platform === "msys2"){
                 ldflags = Helpers.pkgconfig(configs, ["--libs-only-L"]);
                 if(platform === "msys2"){
@@ -189,6 +202,7 @@ Module{
                 ldflags = [];
             }
 
+            // libraries from pkgconfigs
             if(platform === "linux"  || platform === "linux64" || platform === "msys2"){
                 var pkgconfiglibs = Helpers.pkgconfig(configs, ["--libs-only-l"]);
                 system_libs = pkgconfiglibs.map(function(lib){
@@ -198,6 +212,7 @@ Module{
                 system_libs = [];
             }
 
+            // add static libraries from core directories
             static_libs = Helpers.findLibsRecursive(ofRoot + "/libs", platform, libsexceptions);
 
             found = true;
@@ -258,6 +273,7 @@ Module{
         property stringList frameworks
         property stringList cflags
         property stringList ldflags
+        property stringList defines;
 
         configure: {
             includes = [];
@@ -267,6 +283,7 @@ Module{
             frameworks = [];
             cflags = [];
             ldflags = [];
+            defines = [];
 
             if(isCoreLibrary){
                 found = false;
@@ -283,8 +300,6 @@ Module{
                         var line = addonsmake.readLine().trim();
                         allAddons.push(line);
                         var addonPath = ofRoot + '/addons/' + line;
-                        var dependencies = Helpers.parseAddonConfig(addonPath, "ADDON_DEPENDENCIES", [], platform);
-                        allAddons = allAddons.concat(dependencies);
                     }
                 }catch(e){}
             }else{
@@ -297,7 +312,51 @@ Module{
             }
 
             // map addons list to addons paths
+            var addonsPaths = Helpers.removeDuplicates(allAddons.map(function(addon){
+                var addonPath = Helpers.normalize(FileInfo.joinPaths(sourceDirectory, addon))
+                if(File.exists(addonPath)){
+                    return addonPath;
+                }else{
+                    return Helpers.normalize(FileInfo.joinPaths(ofRoot, '/addons/', addon));
+                }
+            }));
+
+            // Look for dependencies
+            Object.defineProperties(Array.prototype, {
+                'flatMap': {
+                    value: function (lambda) {
+                        return Array.prototype.concat.apply([], this.map(lambda));
+                    },
+                    writeable: false,
+                    enumerable: false
+                }
+            });
+            var dependencies = addonsPaths.flatMap(function(addonPath){
+                var dependencies = Helpers.parseAddonConfig(addonPath, "ADDON_DEPENDENCIES", [], platform);
+                if(addonPath.startsWith(ofRoot + "/addons")){
+                    return dependencies;
+                }else{
+                    // If it's a local addon try to find dependencies in the same folder
+                    var parentAddonFolder = FileInfo.path(addonPath);
+                    return dependencies.map(function(dependency){
+                        var local = FileInfo.joinPaths(parentAddonFolder, dependency);
+                        if(File.exists(local)){
+                            return local;
+                        }else{
+                            return dependency;
+                        }
+                    })
+                }
+            });
+
+            allAddons = allAddons.concat(dependencies);
+
+            // Finally map all addons and dependencies to paths
             allAddons = Helpers.removeDuplicates(allAddons.map(function(addon){
+                if(FileInfo.isAbsolutePath(addon) && File.exists(addon)){
+                    return addon;
+                }
+
                 var addonPath = Helpers.normalize(FileInfo.joinPaths(sourceDirectory, addon))
                 if(File.exists(addonPath)){
                     return addonPath;
@@ -416,6 +475,12 @@ Module{
                 pkgconfigs = pkgconfigs.concat(Helpers.parseAddonConfig(addonPath, "ADDON_PKG_CONFIG_LIBRARIES", [], platform))
             }
 
+            // addon defines
+            for(var addon in allAddons){
+                var addonPath = allAddons[addon];
+                defines = defines.concat(Helpers.parseAddonConfig(addonPath, "ADDON_DEFINES", [], platform))
+            }
+
             // pkg includes
             includes = includes.concat(Helpers.pkgconfig(pkgconfigs, ["--cflags-only-I"]).map(function(element){
                 return element.substr(2).trim()
@@ -442,6 +507,11 @@ Module{
     Properties{
         condition: !of.isCoreLibrary
         property stringList ADDONS_SOURCES: ADDONS.sources
+    }
+
+    Properties{
+        condition: !of.isCoreLibrary
+        property stringList ADDONS_DEFINES: ADDONS.defines
     }
 
     Probe{
