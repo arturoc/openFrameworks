@@ -17,7 +17,6 @@ ofxToggle * ofxToggle::setup(ofParameter<bool> _bVal, float width, float height)
 	b.height = height;
 	bGuiActive = false;
 	value.makeReferenceTo(_bVal);
-	checkboxRect.set(1, 1, b.height - 2, b.height - 2);
 
 	value.addListener(this,&ofxToggle::valueChanged);
 	registerMouseEvents();
@@ -34,14 +33,28 @@ ofxToggle * ofxToggle::setup(const std::string& toggleName, bool _bVal, float wi
 
 
 bool ofxToggle::mouseMoved(ofMouseEventArgs & args){
+	if(isGuiDrawing() && ofxBaseGui::usingTimeline()){
+		auto tlBox = getTLIconBox(b.position.xy());
+		overTLIcon = tlBox.inside(args);
+	}
+
 	if(isGuiDrawing() && b.inside(ofPoint(args.x,args.y))){
+		mouseOver = true;
 		return true;
 	}else{
+		mouseOver = false;
 		return false;
 	}
 }
 
 bool ofxToggle::mousePressed(ofMouseEventArgs & args){
+#ifdef OFX_TIMELINE
+	if(isGuiDrawing() && overTLIcon){
+		setTimelined(timeline, !timelined);
+		return true;
+	}
+#endif
+
 	if(setValue(args.x, args.y, true)){
 		return true;
 	}else{
@@ -69,17 +82,19 @@ bool ofxToggle::mouseReleased(ofMouseEventArgs & args){
 
 void ofxToggle::generateDraw(){
 	bg.clear();
-	bg.setFillColor(thisBackgroundColor);
+	bg.setFillColor(timelined ? thisTimelinedBgColor : thisBackgroundColor);
 	bg.rectangle(b);
 
+	auto side = b.height - 2;
+	checkboxRect.set(b.width - side - 1, 1, side, side);
 	fg.clear();
 	if(value){
 		fg.setFilled(true);
-		fg.setFillColor(thisFillColor);
+		fg.setFillColor(timelined ? thisTimelinedColor : thisFillColor);
 	}else{
 		fg.setFilled(false);
 		fg.setStrokeWidth(1);
-		fg.setStrokeColor(thisFillColor);
+		fg.setStrokeColor(timelined ? thisTimelinedColor : thisFillColor);
 	}
 	fg.rectangle(b.getPosition()+checkboxRect.getTopLeft(),checkboxRect.width,checkboxRect.height);
 
@@ -93,7 +108,7 @@ void ofxToggle::generateDraw(){
 	cross.lineTo(b.getPosition()+checkboxRect.getBottomLeft());
 
 	std::string name;
-	auto textX = b.x + textPadding + checkboxRect.width;
+	auto textX = b.x + textPadding;
 	if(getTextBoundingBox(getName(), textX, 0).getMaxX() > b.getMaxX() - textPadding){
 		for(auto c: ofUTF8Iterator(getName())){
 			auto next = name;
@@ -119,20 +134,25 @@ void ofxToggle::render(){
 		cross.draw();
 	}
 
-	ofColor c = ofGetStyle().color;
-	ofBlendMode blendMode = ofGetStyle().blendingMode;
-	if(blendMode!=OF_BLENDMODE_ALPHA){
-		ofEnableAlphaBlending();
-	}
-	ofSetColor(thisTextColor);
+	if(overTLIcon){
+		tlIcon.setColor(thisTextColor);
+		tlIcon.draw(b.x, b.y);
+	}else{
+		ofColor c = ofGetStyle().color;
+		ofBlendMode blendMode = ofGetStyle().blendingMode;
+		if(blendMode!=OF_BLENDMODE_ALPHA){
+			ofEnableAlphaBlending();
+		}
+		ofSetColor(thisTextColor);
 
-	bindFontTexture();
-	textMesh.draw();
-	unbindFontTexture();
+		bindFontTexture();
+		textMesh.draw();
+		unbindFontTexture();
 
-	ofSetColor(c);
-	if(blendMode!=OF_BLENDMODE_ALPHA){
-		ofEnableBlendMode(blendMode);
+		ofSetColor(c);
+		if(blendMode!=OF_BLENDMODE_ALPHA){
+			ofEnableBlendMode(blendMode);
+		}
 	}
 }
 
@@ -173,6 +193,35 @@ bool ofxToggle::setValue(float mx, float my, bool bCheck){
 ofAbstractParameter & ofxToggle::getParameter(){
 	return value;
 }
+
+#if OFX_TIMELINE
+void ofxToggle::setTimelined(ofxTimeline * timeline, bool timelined){
+	this->timeline = timeline;
+	if(timeline==nullptr){
+		this->timelined = false;
+		return;
+	}
+	this->timelined = timelined;
+	if(timelined){
+		timeline->addSwitches(value);
+	}else{
+		timeline->remove(value);
+	}
+	setNeedsRedraw();
+	timeline->setOffset(glm::vec2(0, ofGetHeight() - timeline->getHeight()));
+}
+
+bool ofxToggle::refreshTimelined(ofxTimeline * timeline){
+	if(timeline->getTrack(value)){
+		this->timeline = timeline;
+		this->timelined = true;
+		timeline->linkSwitches(value);
+		return true;
+	}else{
+		return false;
+	}
+}
+#endif
 
 void ofxToggle::valueChanged(bool & value){
     setNeedsRedraw();

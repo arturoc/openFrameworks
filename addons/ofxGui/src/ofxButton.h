@@ -29,6 +29,10 @@ public:
 	}
 	virtual ofAbstractParameter & getParameter();
 
+#if OFX_TIMELINE
+	virtual void setTimelined(ofxTimeline * timeline, bool timelined);
+#endif
+
 private:
 	ofParameter<void> parameter;
 	void valueChanged(bool & v);

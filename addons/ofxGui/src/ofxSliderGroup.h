@@ -25,6 +25,9 @@ protected:
     void changeValue(VecType & value);
 	static size_t dim();
     ofParameter<VecType> value;
+	virtual ofParameterGroup * getHiddenParameters(){
+		return &parameters;
+	}
     bool sliderChanging;
 };
 
@@ -37,9 +40,7 @@ template<typename ColorType>
 class ofxColorSlider_: public ofxGuiGroup{
 
 public:
-	ofxColorSlider_(){
-	    sliderChanging = false;
-	};
+	ofxColorSlider_(){}
 	ofxColorSlider_(ofParameter<ofColor_<ColorType> > value, float width = defaultWidth, float height = defaultHeight);
 
 	ofxColorSlider_ * setup(ofParameter<ofColor_<ColorType> > value, float width = defaultWidth, float height = defaultHeight);
@@ -49,15 +50,29 @@ public:
 
 	ofColor_<ColorType> operator=(const ofColor_<ColorType> & v);
 	operator const ofColor_<ColorType> & ();
+#if OFX_TIMELINE
+	virtual void setTimelined(ofxTimeline * timeline, bool timelined);
+#endif
 protected:
+	virtual void generateDraw();
 	void onMinimize();
 	void onMaximize();
     void changeSlider(const void * parameter, ColorType & value);
 	void changeValue(ofColor_<ColorType> & value);
-    bool sliderChanging;
+	virtual ofParameterGroup * getHiddenParameters(){
+		return &parameters;
+	}
+	ofParameter<ofColor_<ColorType>> getColorParameter();
+	bool sliderChanging = false;
+	bool mouseOver = false;
 	ofColor originalHeaderBackground;
 	ofColor originalHeaderText;
 	ofxColorPicker_<ColorType> picker;
+
+#if OFX_TIMELINE
+	ofxTLColorTrack * tlTrack;
+	bool refreshTimelined(ofxTimeline * timeline);
+#endif
 };
 
 typedef ofxColorSlider_<unsigned char> ofxColorSlider;

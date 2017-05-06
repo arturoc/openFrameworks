@@ -40,76 +40,88 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, const std
 	clear();
 	filename = _filename;
 	bGuiActive = false;
+	parameters = _parameters;
 
+	std::vector<ofAbstractParameter*> hidden;
 	for(std::size_t i = 0; i < _parameters.size(); i++){
 		string type = _parameters.getType(i);
+		ofxBaseGui * control = nullptr;
 		if(type == typeid(ofParameter <int32_t> ).name()){
 			auto p = _parameters.getInt(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <uint32_t> ).name()){
 			auto p = _parameters.get<uint32_t>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <int64_t> ).name()){
 			auto p = _parameters.get<int64_t>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <uint64_t> ).name()){
 			auto p = _parameters.get<uint64_t>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <int8_t> ).name()){
 			auto p = _parameters.get<int8_t>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <uint8_t> ).name()){
 			auto p = _parameters.get<uint8_t>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <int16_t> ).name()){
 			auto p = _parameters.get<int16_t>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <uint16_t> ).name()){
 			auto p = _parameters.get<uint16_t>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <float> ).name()){
 			auto p = _parameters.getFloat(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <double> ).name()){
 			auto p = _parameters.get<double>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <bool> ).name()){
 			auto p = _parameters.getBool(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <void> ).name()){
 			auto p = _parameters.getVoid(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <ofDefaultVec2> ).name()){
 			auto p = _parameters.getVec2f(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <ofDefaultVec3> ).name()){
 			auto p = _parameters.getVec3f(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <ofDefaultVec4> ).name()){
 			auto p = _parameters.getVec4f(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <ofColor> ).name()){
 			auto p = _parameters.getColor(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <ofShortColor> ).name()){
 			auto p = _parameters.getShortColor(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <ofFloatColor> ).name()){
 			auto p = _parameters.getFloatColor(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <string> ).name()){
 			auto p = _parameters.getString(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameterGroup).name()){
 			auto p = _parameters.getGroup(i);
-			ofxGuiGroup * panel = new ofxGuiGroup(p);
-			add(panel);
+			control = defaultControl(p);
 		}else{
 			ofLogWarning() << "ofxBaseGroup; no control for parameter of type " << type;
 		}
+		if(control){
+			addWithoutParameter(control);
+			auto hiddenParams = control->getHiddenParameters();
+			if(hiddenParams){
+				hidden.push_back(hiddenParams);
+			}
+		}
 	}
 
-	parameters = _parameters;
+	for(auto * p: hidden){
+		parameters.add(*p);
+	}
+
 	registerMouseEvents();
 
 	setNeedsRedraw();
@@ -131,6 +143,11 @@ void ofxGuiGroup::setWidthElements(float w){
 }
 
 void ofxGuiGroup::add(ofxBaseGui * element){
+	addWithoutParameter(element);
+	parameters.add(element->getParameter());
+}
+
+void ofxGuiGroup::addWithoutParameter(ofxBaseGui * element){
 	collection.push_back(element);
 
 	element->setPosition(b.x, b.y + b.height  + spacing);
@@ -153,62 +170,67 @@ void ofxGuiGroup::add(ofxBaseGui * element){
 			element->setPosition(b.x + b.width - element->getWidth(), element->getPosition().y);
 		}
 	}
+#if OFX_TIMELINE
+	element->setTimeline(timeline);
+#endif
 
-	parameters.add(element->getParameter());
 	setNeedsRedraw();
 }
 
 void ofxGuiGroup::add(const ofParameterGroup & parameters){
-	ofxGuiGroup * panel = new ofxGuiGroup(parameters);
-	add(panel);
+	add(defaultControl(parameters));
 }
 
-void ofxGuiGroup::add(ofParameter <void> & parameter){
-	add(new ofxButton(parameter, b.width));
+ofxGuiGroup * ofxGuiGroup::defaultControl(const ofParameterGroup & parameters){
+	return new ofxGuiGroup(parameters);
 }
 
-void ofxGuiGroup::add(ofParameter <bool> & parameter){
-	add(new ofxToggle(parameter, b.width));
+ofxButton * ofxGuiGroup::defaultControl(ofParameter <void> & parameter, float width, float height){
+	return new ofxButton(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <string> & parameter){
-	add(new ofxInputField<std::string>(parameter, b.width));
+ofxToggle * ofxGuiGroup::defaultControl(ofParameter <bool> & parameter, float width, float height){
+	return new ofxToggle(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <ofVec2f> & parameter){
-	add(new ofxVecSlider_ <ofVec2f>(parameter, b.width));
+ofxTextField * ofxGuiGroup::defaultControl(ofParameter <std::string> & parameter, float width, float height){
+	return new ofxTextField(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <ofVec3f> & parameter){
-	add(new ofxVecSlider_ <ofVec3f>(parameter, b.width));
+ofxVecSlider_<ofVec2f> * ofxGuiGroup::defaultControl(ofParameter <ofVec2f> & parameter, float width, float height){
+	return new ofxVecSlider_<ofVec2f>(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <ofVec4f> & parameter){
-	add(new ofxVecSlider_ <ofVec4f>(parameter, b.width));
+ofxVecSlider_<ofVec3f> *  ofxGuiGroup::defaultControl(ofParameter <ofVec3f> & parameter, float width, float height){
+	return new ofxVecSlider_<ofVec3f>(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <glm::vec2> & parameter){
-	add(new ofxVecSlider_ <glm::vec2>(parameter, b.width));
+ofxVecSlider_<ofVec4f> *  ofxGuiGroup::defaultControl(ofParameter <ofVec4f> & parameter, float width, float height){
+	return new ofxVecSlider_<ofVec4f>(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <glm::vec3> & parameter){
-	add(new ofxVecSlider_ <glm::vec3>(parameter, b.width));
+ofxVecSlider_<glm::vec2> * ofxGuiGroup::defaultControl(ofParameter <glm::vec2> & parameter, float width, float height){
+	return new ofxVecSlider_<glm::vec2>(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <glm::vec4> & parameter){
-	add(new ofxVecSlider_ <glm::vec4>(parameter, b.width));
+ofxVecSlider_<glm::vec3> * ofxGuiGroup::defaultControl(ofParameter <glm::vec3> & parameter, float width, float height){
+	return new ofxVecSlider_<glm::vec3>(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <ofColor> & parameter){
-	add(new ofxColorSlider_ <unsigned char>(parameter, b.width));
+ofxVecSlider_<glm::vec4> * ofxGuiGroup::defaultControl(ofParameter <glm::vec4> & parameter, float width, float height){
+	return new ofxVecSlider_<glm::vec4>(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <ofShortColor> & parameter){
-	add(new ofxColorSlider_ <unsigned short>(parameter, b.width));
+ofxColorSlider_<unsigned char> * ofxGuiGroup::defaultControl(ofParameter <ofColor> & parameter, float width, float height){
+	return new ofxColorSlider_<unsigned char>(parameter, width, height);
 }
 
-void ofxGuiGroup::add(ofParameter <ofFloatColor> & parameter){
-	add(new ofxColorSlider_ <float>(parameter, b.width));
+ofxColorSlider_<unsigned short> * ofxGuiGroup::defaultControl(ofParameter <ofShortColor> & parameter, float width, float height){
+	return new ofxColorSlider_<unsigned short>(parameter, width, height);
+}
+
+ofxColorSlider_<float> * ofxGuiGroup::defaultControl(ofParameter <ofFloatColor> & parameter, float width, float height){
+	return new ofxColorSlider_<float>(parameter, width, height);
 }
 
 void ofxGuiGroup::clear(){
@@ -219,11 +241,21 @@ void ofxGuiGroup::clear(){
 }
 
 bool ofxGuiGroup::mouseMoved(ofMouseEventArgs & args){
-	ofMouseEventArgs a = args;
-	for(std::size_t i = 0; i < collection.size(); i++){
-		if(collection[i]->mouseMoved(a)){
-			return true;
+	if(usingTimeline()){
+		auto overTLIcon = getTLIconBox({b.x, b.y + 1 + spacingNextElement}).inside(args);
+		if(isGuiDrawing() && overTLIcon != this->overTLIcon){
+			setNeedsRedraw();
 		}
+		this->overTLIcon = overTLIcon;
+	}
+
+	ofMouseEventArgs a = args;
+	bool attended = false;
+	for(std::size_t i = 0; i < collection.size(); i++){
+		attended |= collection[i]->mouseMoved(a);
+	}
+	if(attended){
+		return true;
 	}
 	if(isGuiDrawing() && b.inside(ofPoint(args.x, args.y))){
 		return true;
@@ -233,6 +265,14 @@ bool ofxGuiGroup::mouseMoved(ofMouseEventArgs & args){
 }
 
 bool ofxGuiGroup::mousePressed(ofMouseEventArgs & args){
+#if OFX_TIMELINE
+	if(usingTimeline() && isGuiDrawing() && overTLIcon){
+		setTimelined(timeline, !timelined);
+		setNeedsRedraw();
+		return true;
+	}
+#endif
+
 	if(setValue(args.x, args.y, true)){
 		return true;
 	}
@@ -302,7 +342,10 @@ void ofxGuiGroup::generateDraw(){
 	headerBg.setFilled(true);
 	headerBg.rectangle(b.x, b.y + 1 + spacingNextElement, b.width, header);
 
-	textMesh = getTextMesh(getName(), textPadding + b.x, header / 2 + 4 + b.y + spacingNextElement);
+	textMesh.clear();
+	if(!overTLIcon){
+		textMesh.append(getTextMesh(getName(), textPadding + b.x, header / 2 + 4 + b.y + spacingNextElement));
+	}
 	if(minimized){
 		textMesh.append(getTextMesh("+", b.width - textPadding - 8 + b.x, header / 2 + 4 + b.y + spacingNextElement));
 	}else{
@@ -324,6 +367,11 @@ void ofxGuiGroup::render(){
 	bindFontTexture();
 	textMesh.draw();
 	unbindFontTexture();
+
+	if(overTLIcon){
+		tlIcon.setColor(thisTextColor);
+		tlIcon.draw(b.x, b.y + 1 + spacingNextElement);
+	}
 
 	if(!minimized){
 		for(std::size_t i = 0; i < collection.size(); i++){
@@ -507,3 +555,47 @@ void ofxGuiGroup::setPosition(const ofPoint& p){
 void ofxGuiGroup::setPosition(float x, float y){
 	setPosition(ofVec2f(x, y));
 }
+
+#if OFX_TIMELINE
+void ofxGuiGroup::setTimeline(ofxTimeline * timeline){
+	ofxBaseGui::setTimeline(timeline);
+	for(auto * control: collection){
+		control->setTimeline(timeline);
+	}
+}
+
+void ofxGuiGroup::setTimelined(ofxTimeline * timeline, bool timelined){
+	if(timeline==nullptr){
+		this->timeline = nullptr;
+		this->timelined = false;
+	}
+	this->timelined = timelined;
+	if(timelined){
+		auto currentPage = timeline->getPage(timeline->getCurrentPageName());
+		if(currentPage->getTracks().empty()){
+			timeline->setPageName(parameters.getHierarchicName());
+		}else{
+			auto * page = timeline->getPage(parameters.getHierarchicName());
+			if(!page){
+				timeline->addPage(parameters.getHierarchicName());
+			}
+		}
+		timeline->setCurrentPage(timeline->getCurrentPageName());
+	}
+	for(auto & c: collection){
+		c->setTimelined(timeline, timelined);
+	}
+}
+
+bool ofxGuiGroup::refreshTimelined(ofxTimeline * timeline){
+	this->timeline = timeline;
+	if(timeline->getPage(parameters.getHierarchicName())){
+		this->timelined = true;
+	}
+	auto anyTimelined = false;
+	for(auto * control: collection){
+		anyTimelined |= control->refreshTimelined(timeline);
+	}
+	return this->timelined || anyTimelined;
+}
+#endif

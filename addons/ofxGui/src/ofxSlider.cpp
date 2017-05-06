@@ -21,9 +21,6 @@ namespace{
 
 template<typename Type>
 ofxSlider<Type>::ofxSlider(){
-	bUpdateOnReleaseOnly = false;
-	bGuiActive = false;
-	mouseInside = false;
 }
 
 template<typename Type>
@@ -95,6 +92,14 @@ bool ofxSlider<Type>::mouseMoved(ofMouseEventArgs & mouse){
 		setNeedsRedraw();
 	}
 	this->mouseInside = mouseInside;
+
+	if(usingTimeline()){
+		auto overTLIcon = getTLIconBox(b.position.xy()).inside(mouse);
+		if(overTLIcon != this->overTLIcon){
+			setNeedsRedraw();
+		}
+		this->overTLIcon = overTLIcon;
+	}
 	return mouseInside;
 }
 
@@ -115,6 +120,12 @@ bool ofxSlider<Type>::mousePressed(ofMouseEventArgs & mouse){
 			if(bUpdateOnReleaseOnly){
 				value.disableEvents();
 			}
+
+#if OFX_TIMELINE
+			if(usingTimeline() && isGuiDrawing() && overTLIcon){
+				return bGuiActive = pressedOnTLIcon = true;
+			}
+#endif
 			if(setValue(mouse.x, mouse.y, true)){
 				return true;
 			}else{
@@ -128,12 +139,11 @@ bool ofxSlider<Type>::mousePressed(ofMouseEventArgs & mouse){
 
 template<typename Type>
 bool ofxSlider<Type>::mouseDragged(ofMouseEventArgs & mouse){
+	mouseMoved(mouse);
+	pressedOnTLIcon = false;
 	if(state==Slider){
-		if(setValue(mouse.x, mouse.y, false)){
-			return true;
-		}else{
-			return false;
-		}
+		mouseDragging = setValue(mouse.x, mouse.y, false);
+		return mouseDragging;
 	}else{
 		return isGuiDrawing() && input.mouseDragged(mouse);
 	}
@@ -145,8 +155,17 @@ bool ofxSlider<Type>::mouseReleased(ofMouseEventArgs & mouse){
 		if(bUpdateOnReleaseOnly){
 			value.enableEvents();
 		}
-		bool attended = setValue(mouse.x, mouse.y, false);
 
+#if OFX_TIMELINE
+		if(usingTimeline() && isGuiDrawing() && pressedOnTLIcon && overTLIcon){
+			bGuiActive = pressedOnTLIcon = false;
+			setTimelined(timeline, !timelined);
+			return true;
+		}
+#endif
+
+		bool attended = setValue(mouse.x, mouse.y, false);
+		mouseDragging = false;
 		bGuiActive = false;
 		if(attended){
 			return true;
@@ -157,6 +176,39 @@ bool ofxSlider<Type>::mouseReleased(ofMouseEventArgs & mouse){
 		return isGuiDrawing() && input.mouseReleased(mouse);
 	}
 }
+
+#if OFX_TIMELINE
+template<typename Type>
+void ofxSlider<Type>::setTimelined(ofxTimeline * timeline, bool timelined){
+	this->timeline = timeline;
+	if(timeline==nullptr){
+		this->timelined = false;
+		return;
+	}
+	this->timelined = timelined;
+	if(timelined){
+		tlCurves = timeline->addCurves(value);
+	}else{
+		timeline->remove(value);
+		tlCurves = nullptr;
+	}
+	setNeedsRedraw();
+	timeline->setOffset(glm::vec2(0, ofGetHeight() - timeline->getHeight()));
+}
+
+template<typename Type>
+bool ofxSlider<Type>::refreshTimelined(ofxTimeline * timeline){
+	this->timeline = timeline;
+	if(timeline->getTrack(value)){
+		this->timelined = true;
+		tlCurves = timeline->linkCurves(value);
+		return true;
+	}else{
+		this->timelined = false;
+		return false;
+	}
+}
+#endif
 
 template<typename Type>
 typename std::enable_if<std::is_integral<Type>::value, Type>::type
@@ -209,30 +261,56 @@ void ofxSlider<Type>::generateDraw(){
 	bg.clear();
 	bar.clear();
 
-	bg.setFillColor(thisBackgroundColor);
+	bg.setFillColor(timelined ? thisTimelinedBgColor : thisBackgroundColor);
 	bg.setFilled(true);
 	bg.rectangle(b);
 
-	float valAsPct = ofMap( value, value.getMin(), value.getMax(), 0, b.width-2, true );
-	bar.setFillColor(thisFillColor);
+	float valAsPct = ofMap( value, value.getMin(), value.getMax(), 0, 1, true );
+#if OFX_TIMELINE
+	if(timelined && mouseDragging){
+		auto kf = tlCurves->getNearestKeyframe(timeline->getCurrentTime());
+		if(kf){
+			valAsPct = kf->value;
+		}
+	}
+#endif
+
+	bar.setFillColor(timelined ? thisTimelinedColor : thisFillColor);
 	bar.setFilled(true);
-	bar.rectangle(b.x+1, b.y+1, valAsPct, b.height-2);
+	bar.rectangle(b.x+1, b.y+1, valAsPct * (b.width - 2), b.height-2);
 
 	generateText();
 	input.generateDraw();
 }
 
-
 template<typename Type>
 void ofxSlider<Type>::generateText(){	
 	string valStr = toString(value.get());
+
+#if OFX_TIMELINE
+	if(timelined && mouseDragging){
+		auto kf = tlCurves->getNearestKeyframe(timeline->getCurrentTime());
+		if(kf){
+			valStr = toString(ofMap(kf->value, 0, 1, value.getMin(), value.getMax(), true));
+		}
+	}
+#endif
+
 	auto inputWidth = getTextBoundingBox(valStr,0,0).width;
 	auto label = getTextBoundingBox(getName(), b.x + textPadding, b.y + b.height / 2 + 4);
 	auto value = getTextBoundingBox(valStr, b.x + b.width - textPadding - inputWidth, b.y + b.height / 2 + 4);
 	overlappingLabel = label.getMaxX() > value.x;
 
 	textMesh.clear();
-	if(!mouseInside || !overlappingLabel){
+
+	auto showName = true;
+	if(overTLIcon && !mouseDragging){
+		showName = false;
+	}
+	if(overlappingLabel && mouseInside){
+		showName = false;
+	}
+	if(showName){
 		std::string name;
 		if(overlappingLabel){
 			for(auto c: ofUTF8Iterator(getName())){
@@ -249,7 +327,12 @@ void ofxSlider<Type>::generateText(){
 		}
 		textMesh.append(getTextMesh(name, b.x + textPadding, b.y + b.height / 2 + 4));
 	}
-	if(!overlappingLabel || mouseInside){
+
+	auto showValue = true;
+	if(overlappingLabel && !mouseInside){
+		showValue = false;
+	}
+	if(showValue){
 		textMesh.append(getTextMesh(valStr, b.x + b.width - textPadding - getTextBoundingBox(valStr,0,0).width, b.y + b.height / 2 + 4));
 	}
 }
@@ -287,6 +370,10 @@ void ofxSlider<Type>::render(){
 		ofSetColor(c);
 		if(blendMode!=OF_BLENDMODE_ALPHA){
 			ofEnableBlendMode(blendMode);
+		}
+		if(ofxBaseGui::usingTimeline() && ((overTLIcon && !mouseDragging) || (overlappingLabel && mouseInside))){
+			tlIcon.setStrokeColor(thisTextColor);
+			tlIcon.draw(b.x, b.y);
 		}
 	}else{
 		input.draw();

@@ -30,6 +30,7 @@ public:
 
 	virtual string type() const;
 	virtual string getEscapedName() const;
+	virtual string getHierarchicName() const;
 
 	virtual void setParent(ofParameterGroup & _parent) = 0;
 	vector<string> getGroupHierarchyNames() const;
