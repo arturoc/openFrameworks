@@ -265,7 +265,7 @@ void ofxSlider<Type>::generateDraw(){
 	bg.setFilled(true);
 	bg.rectangle(b);
 
-	float valAsPct = ofMap( value, value.getMin(), value.getMax(), 0, 1, true );
+	float valAsPct = ofClamp(value.getPctScaled(),0,1);
 #if OFX_TIMELINE
 	if(timelined && mouseDragging){
 		auto kf = tlCurves->getNearestKeyframe(timeline->getCurrentTime());
@@ -395,7 +395,7 @@ bool ofxSlider<Type>::setValue(float mx, float my, bool bCheck){
 		}
 	}
 	if( bGuiActive ){
-		value = ofMap(mx, b.x, b.x + b.width, value.getMin(), value.getMax(), true);
+		value.setPctScaled(ofMap(mx, b.x, b.x + b.width, 0, 1, true));
 		return true;
 	}
 	return false;
