@@ -73,6 +73,18 @@ void ofxButton::setTimelined(ofxTimeline * timeline, bool timelined){
 	setNeedsRedraw();
 	timeline->setOffset(glm::vec2(0, ofGetHeight() - timeline->getHeight()));
 }
+
+bool ofxButton::refreshTimelined(ofxTimeline * timeline){
+	this->timeline = timeline;
+	if(timeline->getTrack(parameter)){
+		this->timelined = true;
+		timeline->linkBangs(parameter);
+		return true;
+	}else{
+		this->timelined = false;
+		return false;
+	}
+}
 #endif
 
 bool ofxButton::mouseMoved(ofMouseEventArgs & args){

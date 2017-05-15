@@ -31,6 +31,7 @@ public:
 
 #if OFX_TIMELINE
 	virtual void setTimelined(ofxTimeline * timeline, bool timelined);
+	virtual bool refreshTimelined(ofxTimeline * timeline);
 #endif
 
 private:
