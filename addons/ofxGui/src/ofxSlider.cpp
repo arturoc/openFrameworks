@@ -291,7 +291,9 @@ void ofxSlider<Type>::generateText(){
 	if(timelined && mouseDragging){
 		auto kf = tlCurves->getNearestKeyframe(timeline->getCurrentTime());
 		if(kf){
-			valStr = toString(ofMap(kf->value, 0, 1, value.getMin(), value.getMax(), true));
+			ofParameter<Type> scale{"",value.get(),value.getMin(),value.getMax(),value.getScale()};
+			scale.setPctScaled(kf->value);
+			valStr = toString(scale.get());
 		}
 	}
 #endif
