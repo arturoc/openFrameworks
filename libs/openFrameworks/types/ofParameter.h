@@ -568,7 +568,7 @@ private:
 			ofParameterScale scale;
 			Scale():scale(ofParameterScale::Linear){}
 			Scale(ofParameterScale scale):scale(scale){}
-			Scale<T> & operator=(ofParameterScale scale){
+			Scale<T,T> & operator=(ofParameterScale scale){
 				this->scale = scale;
 				return *this;
 			}
@@ -582,7 +582,7 @@ private:
 	public:
 		Scale(){}
 		Scale(ofParameterScale){}
-		Scale<T> & operator=(ofParameterScale){
+		Scale<T,T> & operator=(ofParameterScale){
 			return *this;
 		}
 		operator ofParameterScale(){
