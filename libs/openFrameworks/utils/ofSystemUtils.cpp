@@ -52,6 +52,7 @@
 #define SAVE_BUTTON GTK_STOCK_SAVE
 #define CANCEL_BUTTON GTK_STOCK_CANCEL
 #endif
+#endif
 
 namespace{
 #ifdef TARGET_WIN32
@@ -95,6 +96,7 @@ void restoreAppWindowFocus(){
 }
 #endif
 
+#if defined( TARGET_LINUX ) && defined (OF_USING_GTK)
 gboolean init_gtk(gpointer userdata){
 	int argc=0; char **argv = nullptr;
 	gtk_init (&argc, &argv);
