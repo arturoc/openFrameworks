@@ -3,6 +3,7 @@
 
 #include "ofxSlider.h"
 #include "ofxButton.h"
+#include "ofxLabel.h"
 #include "ofParameterGroup.h"
 #include "ofParameter.h"
 
@@ -28,6 +29,11 @@ class ofxGuiGroup : public ofxBaseGui {
 		template<typename T>
 		void add(ofParameter <T> & parameter){
 			add(defaultControl(parameter), b.width);
+		}
+
+		template<typename F>
+		void add(ofReadOnlyParameter <std::string, F> & parameter){
+			add(new ofxLabel(parameter));
 		}
 
 

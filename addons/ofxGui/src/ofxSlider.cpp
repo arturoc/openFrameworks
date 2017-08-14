@@ -245,6 +245,7 @@ bool ofxSlider<Type>::mouseScrolled(ofMouseEventArgs & args){
 	}
 }
 
+
 template<typename Type>
 double ofxSlider<Type>::operator=(Type v){
 	value = v;
@@ -284,7 +285,7 @@ void ofxSlider<Type>::generateDraw(){
 }
 
 template<typename Type>
-void ofxSlider<Type>::generateText(){	
+void ofxSlider<Type>::generateText(){
 	string valStr = toString(value.get());
 
 #if OFX_TIMELINE
@@ -459,3 +460,5 @@ template class ofxSlider<int64_t>;
 template class ofxSlider<uint64_t>;
 template class ofxSlider<float>;
 template class ofxSlider<double>;
+
+template class ofxSlider<typename std::conditional<std::is_same<uint32_t, size_t>::value || std::is_same<uint64_t, size_t>::value, bool, size_t>::type>;
