@@ -28,7 +28,7 @@ class ofxGuiGroup : public ofxBaseGui {
 
 		template<typename T>
 		void add(ofParameter <T> & parameter){
-			add(defaultControl(parameter), b.width);
+			add(defaultControl(parameter));
 		}
 
 		template<typename F>
@@ -45,6 +45,11 @@ class ofxGuiGroup : public ofxBaseGui {
 		static ofxButton * defaultControl(ofParameter <void> & parameter, float width = defaultWidth, float height = defaultHeight);
 		static ofxToggle * defaultControl(ofParameter <bool> & parameter, float width = defaultWidth, float height = defaultHeight);
 		static ofxTextField * defaultControl(ofParameter <std::string> & parameter, float width = defaultWidth, float height = defaultHeight);
+		template<typename F>
+		static ofxLabel * defaultControl(ofReadOnlyParameter <std::string, F> & parameter, float width = defaultWidth, float height = defaultHeight){
+			return new ofxLabel(parameter, width, height);
+		}
+
 		static ofxVecSlider_<ofVec2f> * defaultControl(ofParameter <ofVec2f> & parameter, float width = defaultWidth, float height = defaultHeight);
 		static ofxVecSlider_<ofVec3f> *  defaultControl(ofParameter <ofVec3f> & parameter, float width = defaultWidth, float height = defaultHeight);
 		static ofxVecSlider_<ofVec4f> *  defaultControl(ofParameter <ofVec4f> & parameter, float width = defaultWidth, float height = defaultHeight);

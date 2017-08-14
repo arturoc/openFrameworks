@@ -72,7 +72,7 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, const std
 			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <size_t> ).name()){
 			auto p = _parameters.get<size_t>(i);
-			add(p);
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <float> ).name()){
 			auto p = _parameters.getFloat(i);
 			control = defaultControl(p);
@@ -105,7 +105,10 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, const std
 			control = defaultControl(p);
 		}else if(type == typeid(ofParameter <string> ).name()){
 			auto p = _parameters.getString(i);
-			add(p);
+			control = defaultControl(p);
+		}else if(typeid(string).name() == _parameters[i].valueType() && _parameters[i].isReadOnly()){
+			auto p = _parameters.get(i).castReadOnly<string,void>();
+			control = defaultControl(p);
 		}else if(type == typeid(ofParameterGroup).name()){
 			auto p = _parameters.getGroup(i);
 			control = defaultControl(p);

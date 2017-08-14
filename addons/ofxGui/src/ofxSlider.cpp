@@ -208,6 +208,11 @@ bool ofxSlider<Type>::refreshTimelined(ofxTimeline * timeline){
 		return false;
 	}
 }
+
+template<>
+bool ofxSlider<bool>::refreshTimelined(ofxTimeline * timeline){
+	return false;
+}
 #endif
 
 template<typename Type>
