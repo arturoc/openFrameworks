@@ -352,7 +352,7 @@ ofRectangle ofEasyCam::getControlArea() const {
 
 //----------------------------------------
 bool ofEasyCam::isMoving() const {
-	return (bDoRotate || bDoTranslate || bDoScrollZoom || bIsBeingScrolled || bApplyInertia);
+	return (currentTransformType != TRANSFORM_NONE);
 }
 
 //----------------------------------------
