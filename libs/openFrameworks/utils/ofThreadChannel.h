@@ -41,12 +41,15 @@ public:
 	:closed(false)
 	,maxSize(0){}
 
-	/// Create a default ofThreadChannel.
+	/// Create a bounded ofThreadChannel.
 	///
 	/// ofThreadChannel must be instantiated with a template parameter such as:
 	/// ~~~~{.cpp}
-	/// 	ofThreadChannel<ofPixels> myThreadChannel;
+	/// 	ofThreadChannel<ofPixels> myThreadChannel{maxSize};
 	/// ~~~~
+	///
+	/// where `maxSize` indicates the maximum size allowed before the channel
+	/// blocks sending
 	ofThreadChannel(size_t maxSize)
 	:closed(false)
 	,maxSize(maxSize){}
