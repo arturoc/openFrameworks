@@ -7,7 +7,7 @@
 #include "ofUtils.h"
 
 
-/// \brief Safely send data between threads without additional synchronization.
+/// Safely send data between threads without additional synchronization.
 ///
 /// ofThreadChannel makes it easy to safely and efficiently share data between
 /// threads without the need for shared memory, mutexes, or other
@@ -31,16 +31,27 @@
 template<typename T>
 class ofThreadChannel{
 public:
-	/// \brief Create a default ofThreadChannel.
+	/// Create a default ofThreadChannel.
 	///
 	/// ofThreadChannel must be instantiated with a template parameter such as:
 	/// ~~~~{.cpp}
 	/// 	ofThreadChannel<ofPixels> myThreadChannel;
 	/// ~~~~
 	ofThreadChannel()
-	:closed(false){}
+	:closed(false)
+	,maxSize(0){}
 
-	/// \brief Block the receiving thread until a new sent value is available.
+	/// Create a default ofThreadChannel.
+	///
+	/// ofThreadChannel must be instantiated with a template parameter such as:
+	/// ~~~~{.cpp}
+	/// 	ofThreadChannel<ofPixels> myThreadChannel;
+	/// ~~~~
+	ofThreadChannel(size_t maxSize)
+	:closed(false)
+	,maxSize(maxSize){}
+
+	/// Block the receiving thread until a new sent value is available.
 	///
 	/// The receiving thread will block until a new sent value is available. In
 	/// order to receive data, the user must create an instance of the data
@@ -77,13 +88,14 @@ public:
 		if(!closed){
 			std::swap(sentValue,queue.front());
 			queue.pop();
+			conditionBound.notify_one();
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	/// \brief If available, receive a new sent value without blocking.
+	/// If available, receive a new sent value without blocking.
 	///
 	/// ofThreadChannel::tryReceive is similar to ofThreadChannel::receive,
 	/// except that it will not block the receiving thread.  If no data is
@@ -121,13 +133,14 @@ public:
         if(!queue.empty()){
 			std::swap(sentValue,queue.front());
 			queue.pop();
+			conditionBound.notify_one();
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	/// \brief If available, receive a new sent value or wait for a user-specified duration.
+	/// If available, receive a new sent value or wait for a user-specified duration.
 	///
 	/// ofThreadChannel::tryReceive is similar to ofThreadChannel::receive,
 	/// except that it will block the receiving thread for a maximum of
@@ -174,13 +187,14 @@ public:
 		if(!closed){
 			std::swap(sentValue,queue.front());
 			queue.pop();
+			conditionBound.notify_one();
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	/// \brief Send a value to the receiver by making a copy.
+	/// Send a value to the receiver by making a copy.
 	///
 	/// This method copies the contents of the sent value, leaving the original
 	/// data unchanged.
@@ -211,12 +225,15 @@ public:
 		if(closed){
 			return false;
 		}
+		while(maxSize>0 && queue.size()>maxSize){
+			conditionBound.wait(lock);
+		}
 		queue.push(value);
         condition.notify_one();
 		return true;
 	}
 
-	/// \brief Send a value to the receiver without making a copy.
+	/// Send a value to the receiver without making a copy.
 	///
 	/// This method moves the contents of the sent value using `std::move`
 	/// semantics. This avoids copying the data, but the original data data will
@@ -252,12 +269,15 @@ public:
 		if(closed){
 			return false;
 		}
+		while(maxSize>0 && queue.size()>maxSize){
+			conditionBound.wait(lock);
+		}
 		queue.push(std::move(value));
         condition.notify_one();
 		return true;
 	}
 
-	/// \brief Close the ofThreadChannel.
+	/// Close the ofThreadChannel.
 	///
 	/// Closing the ofThreadChannel means that no new messages can be sent or
 	/// received. All threads waiting to receive new values will be notified and
@@ -270,7 +290,7 @@ public:
 	}
 
 
-	/// \brief Queries empty channel.
+	/// Queries empty channel.
 	///
 	/// This call is only an approximation, since messages come from a different
 	/// thread the channel can return true when calling empty() and then receive
@@ -280,16 +300,21 @@ public:
 	}
 
 private:
-	/// \brief The FIFO data queue.
+	/// The FIFO data queue.
 	std::queue<T> queue;
 
-	/// \brief The mutext to protect the data.
+	/// The condition's mutex.
 	std::mutex mutex;
 
-	/// \brief The condition even to notify receivers.
+	/// The condition even to notify receivers.
 	std::condition_variable condition;
 
-	/// \brief True if the channel is closed.
+	/// The condition even to notify senders.
+	std::condition_variable conditionBound;
+
+	/// True if the channel is closed.
 	bool closed;
+
+	size_t maxSize;
 
 };
