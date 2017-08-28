@@ -18,9 +18,6 @@
 #include <shlobj.h>
 #include <tchar.h>
 #include <stdio.h>
-#include <locale>
-#include <sstream>
-#include <string>
 
 #endif
 
@@ -34,28 +31,10 @@
 	#include <Cocoa/Cocoa.h>
 #endif
 
-
-#if defined( TARGET_LINUX ) && defined (OF_USING_GTK)
-#include <gtk/gtk.h>
-#include "ofGstUtils.h"
-#include <thread>
-#include <X11/Xlib.h>
-
-#if GTK_MAJOR_VERSION>=3
-#define OPEN_BUTTON "_Open"
-#define SELECT_BUTTON "_Select All"
-#define SAVE_BUTTON "_Save"
-#define CANCEL_BUTTON "_Cancel"
-#else
-#define OPEN_BUTTON GTK_STOCK_OPEN
-#define SELECT_BUTTON GTK_STOCK_SELECT_ALL
-#define SAVE_BUTTON GTK_STOCK_SAVE
-#define CANCEL_BUTTON GTK_STOCK_CANCEL
-#endif
-#endif
-
-namespace{
 #ifdef TARGET_WIN32
+#include <locale>
+#include <sstream>
+#include <string>
 
 std::string convertWideToNarrow( const wchar_t *s, char dfault = '?',
                       const std::locale& loc = std::locale() )
@@ -88,7 +67,7 @@ std::wstring convertNarrowToWide( const std::string& as ){
 #endif
 
 #if defined( TARGET_OSX )
-void restoreAppWindowFocus(){
+static void restoreAppWindowFocus(){
 	NSWindow * appWindow = (NSWindow *)ofGetCocoaWindow();
 	if(appWindow) {
 		[appWindow makeKeyAndOrderFront:nil];
@@ -97,6 +76,23 @@ void restoreAppWindowFocus(){
 #endif
 
 #if defined( TARGET_LINUX ) && defined (OF_USING_GTK)
+#include <gtk/gtk.h>
+#include "ofGstUtils.h"
+#include <thread>
+#include <X11/Xlib.h>
+
+#if GTK_MAJOR_VERSION>=3
+#define OPEN_BUTTON "_Open"
+#define SELECT_BUTTON "_Select All"
+#define SAVE_BUTTON "_Save"
+#define CANCEL_BUTTON "_Cancel"
+#else
+#define OPEN_BUTTON GTK_STOCK_OPEN
+#define SELECT_BUTTON GTK_STOCK_SELECT_ALL
+#define SAVE_BUTTON GTK_STOCK_SAVE
+#define CANCEL_BUTTON GTK_STOCK_CANCEL
+#endif
+
 gboolean init_gtk(gpointer userdata){
 	int argc=0; char **argv = nullptr;
 	gtk_init (&argc, &argv);
@@ -199,7 +195,7 @@ gboolean text_dialog_gtk(gpointer userdata){
 	return G_SOURCE_REMOVE;
 }
 
-void initGTK(){
+static void initGTK(){
 	static bool initialized = false;
 	if(!initialized){
 		#if !defined(TARGET_RASPBERRY_PI) 
@@ -213,7 +209,7 @@ void initGTK(){
 
 }
 
-string gtkFileDialog(GtkFileChooserAction action,string windowTitle,string defaultName=""){
+static string gtkFileDialog(GtkFileChooserAction action,string windowTitle,string defaultName=""){
 	initGTK();
 	FileDialogData dialogData;
 	dialogData.action = action;
@@ -245,7 +241,6 @@ void resetLocale(std::locale locale){
 }
 
 #endif
-}
 
 #ifdef TARGET_ANDROID
 #include "ofxAndroidUtils.h"
@@ -488,8 +483,8 @@ ofFileDialogResult ofSystemLoadDialog(string windowTitle, bool bFolderSelection,
 	//----------------------------------------------------------------------------------------
 #if defined( TARGET_LINUX ) && defined (OF_USING_GTK)
 		auto locale = std::locale();
-		if(bFolderSelection) results.filePath = gtkFileDialog(GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,windowTitle,defaultPath);
-		else results.filePath = gtkFileDialog(GTK_FILE_CHOOSER_ACTION_OPEN,windowTitle,defaultPath);
+		if(bFolderSelection) results.filePath = gtkFileDialog(GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,windowTitle,ofToDataPath(defaultPath));
+		else results.filePath = gtkFileDialog(GTK_FILE_CHOOSER_ACTION_OPEN,windowTitle,ofToDataPath(defaultPath));
 		resetLocale(locale);
 #endif
 	//----------------------------------------------------------------------------------------
@@ -571,7 +566,7 @@ ofFileDialogResult ofSystemSaveDialog(string defaultName, string messageName){
 	//----------------------------------------------------------------------------------------
 #if defined( TARGET_LINUX ) && defined (OF_USING_GTK)
 	auto locale = std::locale();
-	results.filePath = gtkFileDialog(GTK_FILE_CHOOSER_ACTION_SAVE, messageName,defaultName);
+	results.filePath = gtkFileDialog(GTK_FILE_CHOOSER_ACTION_SAVE, messageName, ofToDataPath(defaultName));
 	resetLocale(locale);
 #endif
 	//----------------------------------------------------------------------------------------
