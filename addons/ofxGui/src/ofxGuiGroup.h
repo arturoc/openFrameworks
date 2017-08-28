@@ -3,6 +3,7 @@
 
 #include "ofxSlider.h"
 #include "ofxButton.h"
+#include "ofxLabel.h"
 #include "ofParameterGroup.h"
 #include "ofParameter.h"
 
@@ -49,6 +50,10 @@ class ofxGuiGroup : public ofxBaseGui {
 		static ofxColorSlider_<unsigned short> * defaultControl(ofParameter <ofShortColor> & parameter, float width = defaultWidth, float height = defaultHeight);
 		static ofxColorSlider_<float> * defaultControl(ofParameter <ofFloatColor> & parameter, float width = defaultWidth, float height = defaultHeight);
 
+		template<typename F>
+		static ofxLabel * defaultControl(ofReadOnlyParameter <std::string, F> & parameter, float width = defaultWidth, float height = defaultHeight){
+			return new ofxLabel(parameter, width, height);
+		}
 		void minimize();
 		void maximize();
 		void minimizeAll();

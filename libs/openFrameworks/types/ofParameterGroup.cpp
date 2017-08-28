@@ -42,7 +42,13 @@ void ofParameterGroup::remove(const string &name){
 }
 
 void ofParameterGroup::clear(){
+	auto name = this->getName();
 	obj.reset(new Value);
+	setName(name);
+}
+
+string ofParameterGroup::valueType() const{
+	return typeid(*this).name();
 }
 
 const ofParameter<void> & ofParameterGroup::getVoid(const string& name) const	{

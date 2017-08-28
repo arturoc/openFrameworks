@@ -29,6 +29,7 @@ public:
 	virtual void fromString(const string & str) = 0;
 
 	virtual string type() const;
+	virtual string valueType() const = 0;
 	virtual string getEscapedName() const;
 	virtual string getHierarchicName() const;
 
@@ -43,6 +44,16 @@ public:
 	template<typename ParameterType>
 	const ofParameter<ParameterType> & cast() const{
 		return static_cast<const ofParameter<ParameterType> &>(*this);
+	}
+
+	template<typename ParameterType, typename Friend>
+	ofReadOnlyParameter<ParameterType, Friend> & castReadOnly(){
+		return static_cast<ofReadOnlyParameter<ParameterType, Friend> &>(*this);
+	}
+
+	template<typename ParameterType, typename Friend>
+	const ofReadOnlyParameter<ParameterType, Friend> & castReadOnly() const{
+		return static_cast<const ofReadOnlyParameter<ParameterType, Friend> &>(*this);
 	}
 
 	ofParameterGroup & castGroup();
@@ -94,6 +105,7 @@ public:
 	}
 
 	void add(ofAbstractParameter & param);
+	string valueType() const;
 
 	void remove(ofAbstractParameter & param);
 	void remove(std::size_t index);
@@ -186,6 +198,18 @@ public:
 
 	template<typename ParameterType>
 	ofParameter<ParameterType> & get(std::size_t pos);
+
+	template<typename ParameterType, typename Friend>
+	const ofReadOnlyParameter<ParameterType, Friend> & getReadOnly(const string& name) const;
+
+	template<typename ParameterType, typename Friend>
+	const ofReadOnlyParameter<ParameterType, Friend> & getReadOnly(std::size_t pos) const;
+
+	template<typename ParameterType, typename Friend>
+	ofReadOnlyParameter<ParameterType, Friend> & getReadOnly(const string& name);
+
+	template<typename ParameterType, typename Friend>
+	ofReadOnlyParameter<ParameterType, Friend> & getReadOnly(std::size_t pos);
 
 	std::size_t size() const;
 	string getName(std::size_t position) const;
@@ -280,6 +304,25 @@ ofParameter<ParameterType> & ofParameterGroup::get(std::size_t pos){
 }
 
 
+template<typename ParameterType, typename Friend>
+const ofReadOnlyParameter<ParameterType, Friend> & ofParameterGroup::getReadOnly(const string& name) const{
+	return static_cast<const ofReadOnlyParameter<ParameterType,Friend>& >(get(name));
+}
+
+template<typename ParameterType, typename Friend>
+const ofReadOnlyParameter<ParameterType, Friend> & ofParameterGroup::getReadOnly(std::size_t pos) const{
+	return static_cast<const ofReadOnlyParameter<ParameterType,Friend>& >(get(pos));
+}
+
+template<typename ParameterType, typename Friend>
+ofReadOnlyParameter<ParameterType, Friend> & ofParameterGroup::getReadOnly(const string& name){
+	return static_cast<const ofReadOnlyParameter<ParameterType,Friend>& >(get(name));
+}
+
+template<typename ParameterType, typename Friend>
+ofReadOnlyParameter<ParameterType, Friend> & ofParameterGroup::getReadOnly(std::size_t pos){
+	return static_cast<const ofReadOnlyParameter<ParameterType,Friend>& >(get(pos));
+}
 
 
 /*! \cond PRIVATE */
@@ -490,6 +533,7 @@ public:
 	void disableEvents();
 	bool isSerializable() const;
 	bool isReadOnly() const;
+	string valueType() const;
 
 	void makeReferenceTo(ofParameter<ParameterType> & mom);
 
@@ -801,6 +845,11 @@ bool ofParameter<ParameterType>::isReadOnly() const{
 }
 
 template<typename ParameterType>
+string ofParameter<ParameterType>::valueType() const{
+	return typeid(ParameterType).name();
+}
+
+template<typename ParameterType>
 void ofParameter<ParameterType>::setMin(const ParameterType & min){
 	obj->min = min;
 }
@@ -1086,6 +1135,7 @@ public:
 	void disableEvents();
 	bool isSerializable() const;
 	bool isReadOnly() const;
+	string valueType() const;
 
 	void makeReferenceTo(ofParameter<void> & mom);
 
@@ -1143,8 +1193,8 @@ template<typename ParameterType,typename Friend>
 class ofReadOnlyParameter: public ofAbstractParameter{
 public:
 	ofReadOnlyParameter();
-	ofReadOnlyParameter(ofParameter<ParameterType> & p);
-	ofReadOnlyParameter(ofReadOnlyParameter<ParameterType,Friend> & p);
+//	ofReadOnlyParameter(ofParameter<ParameterType> & p);
+//	ofReadOnlyParameter(ofReadOnlyParameter<ParameterType,Friend> & p);
 	ofReadOnlyParameter(const ParameterType & v);
 	ofReadOnlyParameter(const string& name, const ParameterType & v);
 	ofReadOnlyParameter(const string& name, const ParameterType & v, const ParameterType & min, const ParameterType & max);
@@ -1167,9 +1217,13 @@ public:
 	template<class ListenerClass, typename ListenerMethod>
 	void removeListener(ListenerClass * listener, ListenerMethod method, int prio=OF_EVENT_ORDER_AFTER_APP);
 
+	template<typename... Args>
+	ofEventListener newListener(Args...args);
+
 	shared_ptr<ofAbstractParameter> newReference() const;
 	bool isSerializable() const;
 	bool isReadOnly() const;
+	string valueType() const;
 
 protected:
 	void setName(const string & name);
@@ -1177,7 +1231,8 @@ protected:
 	void disableEvents();
 	void setSerializable(bool s);
 
-	void makeReferenceTo(ofReadOnlyParameter<ParameterType,Friend> mom);
+	template<typename OtherFriend>
+	void makeReferenceTo(ofReadOnlyParameter<ParameterType,OtherFriend> mom);
 	void makeReferenceTo(ofParameter<ParameterType> mom);
 
 	ofReadOnlyParameter<ParameterType,Friend> & operator=(const ofReadOnlyParameter<ParameterType,Friend>& v);
@@ -1238,19 +1293,21 @@ protected:
 	friend class ofParameter;
 	friend class ofParameterGroup;
 	friend Friend;
+	template<typename T, typename OtherFriend>
+	friend class ofReadOnlyParameter;
 };
 
 
 template<typename ParameterType,typename Friend>
 inline ofReadOnlyParameter<ParameterType,Friend>::ofReadOnlyParameter(){}
 
-template<typename ParameterType,typename Friend>
-inline ofReadOnlyParameter<ParameterType,Friend>::ofReadOnlyParameter(ofParameter<ParameterType> & p)
-:parameter(p){}
+//template<typename ParameterType,typename Friend>
+//inline ofReadOnlyParameter<ParameterType,Friend>::ofReadOnlyParameter(ofParameter<ParameterType> & p)
+//:parameter(p){}
 
-template<typename ParameterType,typename Friend>
-inline ofReadOnlyParameter<ParameterType,Friend>::ofReadOnlyParameter(ofReadOnlyParameter<ParameterType,Friend> & p)
-:parameter(p){}
+//template<typename ParameterType,typename Friend>
+//inline ofReadOnlyParameter<ParameterType,Friend>::ofReadOnlyParameter(ofReadOnlyParameter<ParameterType,Friend> & p)
+//:parameter(p){}
 
 template<typename ParameterType,typename Friend>
 inline ofReadOnlyParameter<ParameterType,Friend>::ofReadOnlyParameter(const ParameterType & v)
@@ -1304,6 +1361,11 @@ inline string ofReadOnlyParameter<ParameterType,Friend>::toString() const{
 	return parameter.toString();
 }
 
+template<typename ParameterType,typename Friend>
+string ofReadOnlyParameter<ParameterType,Friend>::valueType() const{
+	return typeid(ParameterType).name();
+}
+
 
 template<typename ParameterType,typename Friend>
 template<class ListenerClass, typename ListenerMethod>
@@ -1318,6 +1380,12 @@ inline void ofReadOnlyParameter<ParameterType,Friend>::removeListener(ListenerCl
 	parameter.removeListener(listener,method,prio);
 }
 
+
+template<typename ParameterType,typename Friend>
+template<typename... Args>
+inline ofEventListener ofReadOnlyParameter<ParameterType,Friend>::newListener(Args...args) {
+	return parameter.newListener(args...);
+}
 
 template<typename ParameterType,typename Friend>
 inline void ofReadOnlyParameter<ParameterType,Friend>::setName(const string & name){
@@ -1350,7 +1418,8 @@ inline void ofReadOnlyParameter<ParameterType,Friend>::setSerializable(bool s){
 }
 
 template<typename ParameterType,typename Friend>
-inline void ofReadOnlyParameter<ParameterType,Friend>::makeReferenceTo(ofReadOnlyParameter<ParameterType,Friend> mom){
+template<typename OtherFriend>
+inline void ofReadOnlyParameter<ParameterType,Friend>::makeReferenceTo(ofReadOnlyParameter<ParameterType,OtherFriend> mom){
 	parameter.makeReferenceTo(mom.parameter);
 }
 
