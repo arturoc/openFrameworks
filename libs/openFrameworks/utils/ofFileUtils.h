@@ -2,12 +2,12 @@
 
 #include "ofConstants.h"
 
-#if OF_USING_STD_FS
-	#include <experimental/filesystem>
-	namespace std {
-		namespace filesystem = std::experimental::filesystem;
-	}
-#else
+//#if OF_USING_STD_FS
+//	#include <experimental/filesystem>
+//	namespace std {
+//		namespace filesystem = std::experimental::filesystem;
+//	}
+//#else
 	#if !_MSC_VER
 	#define BOOST_NO_CXX11_SCOPED_ENUMS
 	#define BOOST_NO_SCOPED_ENUMS
@@ -16,7 +16,7 @@
 	namespace std {
 		namespace filesystem = boost::filesystem;
 	}
-#endif
+//#endif
 
 //----------------------------------------------------------
 // ofBuffer
