@@ -190,7 +190,7 @@ static ofPath makeContoursForCharacter(FT_Face face){
 	};
 	auto conicTo = [](const FT_Vector*cp, const FT_Vector*to, void * userData){
 		ofPath * charOutlines = static_cast<ofPath*>(userData);
-		auto lastP = charOutlines->getCommands().back().to;
+		const auto & lastP = charOutlines->getCommands().back().to;
 		charOutlines->quadBezierTo(lastP, {cp->x/64, -cp->y/64}, {to->x/64, -to->y/64});
 		return 0;
 	};
