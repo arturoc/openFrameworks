@@ -254,6 +254,8 @@ Module{
                     "pthread",
                     "freeimage",
                     "pugixml",
+                    "m",
+                    "stdc++",
                 ];
 
                 if(!Helpers.pkgExists("rtaudio")){
